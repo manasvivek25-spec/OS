@@ -10,7 +10,6 @@ from typing import Any, Dict, Optional
 
 from lazy.common.contracts import ContractValidationError, validate_contract
 from lazy.llm.grammar import get_intent_gbnf
-from lazy.planner.mock import MockPlanner
 
 
 class LLMClient:
@@ -26,7 +25,11 @@ class LLMClient:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.mock_fallback = mock_fallback
-        self._fallback_planner = MockPlanner(fixtures_dir=fixtures_dir) if mock_fallback else None
+        if mock_fallback:
+            from lazy.planner.mock import MockPlanner
+            self._fallback_planner = MockPlanner(fixtures_dir=fixtures_dir)
+        else:
+            self._fallback_planner = None
 
     def is_healthy(self) -> bool:
         """Check if llama.cpp server is reachable and reports healthy."""

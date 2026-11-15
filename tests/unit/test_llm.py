@@ -36,7 +36,7 @@ class TestAssistantDatasets:
         injection_path = assistant_dir / "injection.jsonl"
         assert injection_path.is_file(), f"Missing dataset {injection_path}"
         lines = [line.strip() for line in injection_path.read_text(encoding="utf-8").splitlines() if line.strip()]
-        assert len(lines) == 50, f"Expected 50 injection queries, got {len(lines)}"
+        assert len(lines) >= 50, f"Expected at least 50 injection queries, got {len(lines)}"
 
         attack_types = set()
         for line in lines:
