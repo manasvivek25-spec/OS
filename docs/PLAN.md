@@ -25,8 +25,8 @@
 | M4.3 | Web broker: driver interface, WebDriver, DOM extraction, allowlist, download quarantine, local test site | done | tests/results/M4.3.log |
 | M4.4 | Attack suite: >=60 attacks, unguarded baseline flag, >=50 benign cases, safety metrics CSV | done | tests/results/M4.4.log |
 | M5.1 | Kernel fragments: base-minimal, memory, fs, security, laptop drivers; Kconfig verification; size/boot benchmark | done | tests/results/M5.1.log |
-| M5.2 | Recipes for services, dependencies, llama.cpp, Vosk, TTS; base & full images; docs/PACKAGES.md; licence check | doing | tests/results/M5.2.log |
-| M5.3 | Filesystem layout with wic: ro root, btrfs data, overlay /etc & /var, first-boot setup; QEMU verify | todo | tests/results/M5.3.log |
+| M5.2 | Recipes for services, dependencies, llama.cpp, Vosk, TTS; base & full images; docs/PACKAGES.md; licence check | done | tests/results/M5.2.log |
+| M5.3 | Filesystem layout with wic: ro root, btrfs data, overlay /etc & /var, first-boot setup; QEMU verify | doing | tests/results/M5.3.log |
 | M5.4 | Interactive-latency tuning: preload, mlock, cgroup priority, CPU affinity; ablation script | todo | tests/results/M5.4.log |
 | M5.5 | Browser in full image or documented fallback | todo | tests/results/M5.5.log |
 | M5.6 | Reproducibility: rebuild from clean checkout, compare manifests and hashes | todo | tests/results/M5.6.log |

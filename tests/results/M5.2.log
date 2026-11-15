@@ -1,0 +1,28 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+=== Lazy OS BitBake Recipes & Package Manifest Verification (M5.2) ===
+[1/5] Checking BitBake recipe files...
+  Recipe found: lazy-core_1.0.bb
+  Recipe found: llama-cpp_b3800.bb
+  Recipe found: vosk-api_0.3.45.bb
+  Recipe found: lazy-model-smollm_1.0.bb
+  Recipe found: lazy-voice-model_1.0.bb
+  Recipe found: lazy-image-base.bb
+  Recipe found: lazy-image-full.bb
+[2/5] Auditing recipe syntax, licensing, and metadata...
+  lazy-core_1.0.bb: Valid BitBake metadata (License: MIT)
+  llama-cpp_b3800.bb: Valid BitBake metadata (License: MIT)
+  vosk-api_0.3.45.bb: Valid BitBake metadata (License: Apache-2.0)
+  lazy-model-smollm_1.0.bb: Valid BitBake metadata (License: Apache-2.0)
+  lazy-voice-model_1.0.bb: Valid BitBake metadata (License: Apache-2.0)
+  lazy-image-base.bb: Valid BitBake metadata (License: MIT)
+  lazy-image-full.bb: Valid BitBake metadata (License: MIT)
+[3/5] Verifying useradd and systemd integration in lazy-core...
+  All 16 dedicated unprivileged service users properly declared in USERADD_PARAM
+  All 15 Lazy OS systemd services enabled in SYSTEMD_SERVICE
+[4/5] Verifying base vs full image profile differentiation...
+  Image profile separation verified: Base (headless minimal) vs Full (with resident AI stack)
+[5/5] Auditing docs/PACKAGES.md and docs/LICENCES.md...
+  Documentation audit passed: PACKAGES.md and LICENCES.md fully compliant
+
+M5.2 VERIFICATION PASSED: All BitBake recipes, image profiles, package manifests, and licenses verified.
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
