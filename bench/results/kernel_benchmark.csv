@@ -1,0 +1,9 @@
+metric,stock_reference_kernel,lazy_os_custom_kernel,unit,reduction_pct,status
+kernel_image_vmlinux_mb,48.2,19.6,MB,59.3,pass
+modules_directory_size_mb,142.5,38.2,MB,73.2,pass
+built_in_kconfig_symbols,2180,642,count,70.6,pass
+boot_time_qemux86_64_sec,3.82,0.94,sec,75.4,pass
+memory_cgroup_accounting,disabled,enabled,feature,N/A,pass
+security_landlock_lsm,disabled,enabled,feature,N/A,pass
+seccomp_bpf_filter,enabled,enabled,feature,N/A,pass
+root_fs_support,ext4,squashfs+btrfs+overlay,feature,N/A,pass
