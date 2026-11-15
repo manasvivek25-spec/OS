@@ -1,0 +1,143 @@
+=== RUN 1 OUTPUT ===
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+c[?7l[2J[0mSeaBIOS (version 1.16.3-debian-1.16.3-2)
+Booting from ROM...
+c[?7l[2J[OK] Mounted real persistent Btrfs partition on /data from /dev/vda3
+======================================================================
+        LAZY OS // v0.2-command-center (Persistent Btrfs /data)       
+======================================================================
+[OK] Linux Kernel 6.8.0-149-generic loaded.
+[OK] /data mount: /dev/vda3 on /data type btrfs (rw,relatime,discard=async,space_cache=v2,subvolid=5,subvol=/)
+[OK] Gateway & REST API listening on 0.0.0.0:8765 (guest).
+
+lazyos@lazy-os:~$ 
+
+
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+sh: can't access tty; job control turned off
+/ # [6n
+/ # echo '=== RUN1: MOUNT INSPECTION ==='
+=== RUN1: MOUNT INSPECTION ===
+/ # findmnt /data || mount | grep /data
+TARGET SOURCE   FSTYPE OPTIONS
+/data  /dev/vda3
+                btrfs  rw,relatime,discard=async,space_cache=v2,subvolid=5,subvo
+/ # df -h /data
+Filesystem                Size      Used Available Use% Mounted on
+/dev/vda3               128.0M      5.8M     47.0M  11% /data
+/ # lsblk
+NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINTS
+sr0     11:0    1 1024M  1 rom  
+vda    253:0    0  256M  0 disk 
+|-vda1 253:1    0   16M  0 part 
+|-vda2 253:2    0  100M  0 part 
+`-vda3 253:3    0  128M  0 part /data
+/ # echo '=== RUN1: WRITE PERSISTENT FILE ==='
+=== RUN1: WRITE PERSISTENT FILE ===
+/ # echo 'BTRFS_PERSISTENCE_TEST_PASSED_20261116' > /data/persistent_test.txt
+/ # sync
+/ # cat /data/persistent_test.txt
+BTRFS_PERSISTENCE_TEST_PASSED_20261116
+/ # echo '=== RUN1 COMPLETE, POWERING OFF ==='
+=== RUN1 COMPLETE, POWERING OFF ===
+/ # sleep 1
+/ # poweroff -f
+[    3.190365] reboot: Power down
+
+=== RUN 2 OUTPUT ===
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+c[?7l[2J[0mSeaBIOS (version 1.16.3-debian-1.16.3-2)
+Booting from ROM...
+c[?7l[2J[OK] Mounted real persistent Btrfs partition on /data from /dev/vda3
+======================================================================
+        LAZY OS // v0.2-command-center (Persistent Btrfs /data)       
+======================================================================
+[OK] Linux Kernel 6.8.0-149-generic loaded.
+[OK] /data mount: /dev/vda3 on /data type btrfs (rw,relatime,discard=async,space_cache=v2,subvolid=5,subvol=/)
+[OK] Gateway & REST API listening on 0.0.0.0:8765 (guest).
+
+lazyos@lazy-os:~$ 
+
+
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+sh: can't access tty; job control turned off
+/ # [6n
+/ # echo '=== RUN2: REBOOT VERIFICATION ==='
+=== RUN2: REBOOT VERIFICATION ===
+/ # findmnt /data || mount | grep /data
+a tree hash:', mutated_hash)
+print('File /data/mutation.txt exists?:', os.path.exists('/data/mutation.txt'))
+
+# Undo / rollback task
+tasks.undo_task(task_id)
+restored_hash = TreeHasher.haTARGET SOURCE   FSTYPE OPTIONS
+/data  /dev/vda3
+                btrfs  rw,relatime,discard=async,space_cache=v2,subvolid=5,subvo
+sh_directory('/data')
+print('Restored /data tree hash:', restored_hash)
+print('File /data/mutation.txt exists after undo?:', os.path.exists('/data/mutation.txt'))
+print('Hashes match initial?:', initial_hash == restored_hash)
+"
+
+echo '=== RUN2 COMPLETE, POWERING OFF ==='
+sleep 1
+poweroff -f
+/ # echo '=== RUN2: READ PERSISTENT FILE ==='
+=== RUN2: READ PERSISTENT FILE ===
+/ # cat /data/persistent_test.txt
+BTRFS_PERSISTENCE_TEST_PASSED_20261116
+/ # 
+/ # echo '=== RUN2: SNAPSHOT ROLLBACK TEST ==='
+=== RUN2: SNAPSHOT ROLLBACK TEST ===
+/ # python3 -c "
+> import os, sys
+> sys.path.insert(0, '/usr/lib/python3/dist-packages')
+> from lazy.tasks.manager import TaskManager
+> from lazy.tasks.backend import TreeHasher
+> 
+> tasks = TaskManager(target_dir='/data', backend_type='copy')
+> task_id = 'b1-verify-task'
+> tasks.create_task(task_id)
+> 
+> initial_hash = TreeHasher.hash_directory('/data')
+> print('Initial /data tree hash:', initial_hash)
+> 
+> # Checkpoint before mutation
+> tasks.checkpoint_before_step(task_id, 'step-1', 0)
+> 
+> # Mutate /data
+> with open('/data/mutation.txt', 'w') as f:
+>     f.write('Temporary file created during task\n')
+> mutated_hash = TreeHasher.hash_directory('/data')
+> print('Mutated /data tree hash:', mutated_hash)
+> print('File /data/mutation.txt exists?:', os.path.exists('/data/mutation.txt')
+
+)
+> 
+> # Undo / rollback task
+> tasks.undo_task(task_id)
+> restored_hash = TreeHasher.hash_directory('/data')
+> print('Restored /data tree hash:', restored_hash)
+> print('File /data/mutation.txt exists after undo?:', os.path.exists('/data/mut
+
+ation.txt'))
+> print('Hashes match initial?:', initial_hash == restored_hash)
+> "
+Initial /data tree hash: 86637d62171b5c904cf144f19c0591f0682f5263ed3d757ba92321c2483e2f60
+Mutated /data tree hash: e2dfdcda5f9287d9c813ce49d6f54236e533b72248569b0ea79ac769c91447c6
+File /data/mutation.txt exists?: True
+Restored /data tree hash: 86637d62171b5c904cf144f19c0591f0682f5263ed3d757ba92321c2483e2f60
+File /data/mutation.txt exists after undo?: False
+Hashes match initial?: True
+/ # 
+/ # echo '=== RUN2 COMPLETE, POWERING OFF ==='
+=== RUN2 COMPLETE, POWERING OFF ===
+/ # sleep 1
+/ # poweroff -f
+[    3.403457] reboot: Power down
