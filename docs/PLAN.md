@@ -4,8 +4,8 @@
 |---|---|---|---|
 | M0.1 | Repo, all docs files, Makefile, scripts/check-env.sh, docs/ENV.md | done | tests/results/M0.1.log |
 | M0.2 | Contracts: JSON Schemas for Intent, Plan, Decision, Event, Task, OutboxItem, Manifest; validator CLI; 30 valid & 30 invalid samples | done | tests/results/M0.2.log |
-| M0.3 | Yocto bootstrap: kas files, pinned layers, minimal QEMU boot with ssh | doing | tests/results/M0.3.log |
-| M1.1 | lazy-audit: hash chain, verifier, tamper tests (modify, delete, reorder, truncate) | todo | tests/results/M1.1.log |
+| M0.3 | Yocto bootstrap: kas files, pinned layers, minimal QEMU boot with ssh | done | tests/results/M0.3.log |
+| M1.1 | lazy-audit: hash chain, verifier, tamper tests (modify, delete, reorder, truncate) | doing | tests/results/M1.1.log |
 | M1.2 | lazy-policy: manifest loader, tiers, effect classes, approval state machine, rate limits, taint tracking, L4 denylist | todo | tests/results/M1.2.log |
 | M1.3 | lazy-tasks: snapshot backends (btrfs, overlay, copy) and undo | todo | tests/results/M1.3.log |
 | M1.4 | Brokers: fs, sys (systemd D-Bus + fake), hw (sysfs injectable root + fake) | todo | tests/results/M1.4.log |

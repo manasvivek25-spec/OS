@@ -1,0 +1,36 @@
+header:
+  version: 14
+
+machine: qemux86-64
+distro: poky
+target: lazy-image-full
+
+repos:
+  poky:
+    url: "https://git.yoctoproject.org/poky"
+    commit: "6b7c1066f778db5a6b3e35400617b10342988fa8"
+    branch: "scarthgap"
+    layers:
+      meta:
+      meta-poky:
+
+  meta-openembedded:
+    url: "https://git.openembedded.org/meta-openembedded"
+    commit: "2db6aece32c7f8ebf6015b468e1b4e21de072e3b"
+    branch: "scarthgap"
+    layers:
+      meta-oe:
+      meta-python:
+      meta-networking:
+      meta-multimedia:
+
+  meta-lazy:
+    path: "yocto/meta-lazy"
+
+local_conf_header:
+  init-system: |
+    INIT_MANAGER = "systemd"
+  image-features: |
+    EXTRA_IMAGE_FEATURES = "debug-tweaks ssh-server-openssh"
+  disk-space: |
+    BB_DISKMON_DIRS = ""

@@ -7,5 +7,8 @@
 
 ## 2026-11-15 - DEC-002: Yocto Release and Pinning
 - **Context**: Default Yocto LTS release must be chosen and pinned with `kas` per section 4.
-- **Decision**: Yocto LTS release `scarthgap` (version 5.0.x), supported until April 2028, with pinned git revisions for `poky` (scarthgap branch) and `meta-openembedded`.
-- **Consequences**: Standardized, rock-solid reproducible builds with active LTS security maintenance.
+- **Decision**: Yocto LTS release `scarthgap` (version 5.0.x), with exact verified upstream commit hashes:
+  - `poky`: `https://git.yoctoproject.org/poky` @ `6b7c1066f778db5a6b3e35400617b10342988fa8` (branch `scarthgap`)
+  - `meta-openembedded`: `https://git.openembedded.org/meta-openembedded` @ `2db6aece32c7f8ebf6015b468e1b4e21de072e3b` (branch `scarthgap`)
+  - `meta-lazy`: local repository layer at `yocto/meta-lazy`
+- **Consequences**: Standardized, rock-solid reproducible builds with active LTS security maintenance. Verified via `git ls-remote` per Rule R5.

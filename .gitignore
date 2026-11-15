@@ -10,3 +10,6 @@ sstate-cache/
 tmp/
 *.tmp
 tests/results/*.tmp
+poky/
+meta-openembedded/
+meta-*/

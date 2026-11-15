@@ -1,0 +1,38 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+=== Milestone M0.3 Verification ===
+[1/4] Verifying kas configurations...
+kas configurations validated with exact pinned commits.
+[2/4] Verifying meta-lazy layer and recipes...
+Layer meta-lazy structure verified.
+[3/4] Verifying commit records in docs/DECISIONS.md...
+Layer commits verified in docs/DECISIONS.md.
+[4/4] Executing QEMU boot test...
+Booting QEMU with kernel: /boot/vmlinuz...
+c[?7l[2J[0mSeaBIOS (version 1.16.3-debian-1.16.3-2)
+
+
+iPXE (https://ipxe.org) 00:03.0 CA00 PCI2.10 PnP PMM+1EFCAE00+1EF0AE00 CA00
+Press Ctrl-B to configure iPXE (PCI 00:03.0)...                                                                               
+
+
+Booting from ROM...
+c[?7l[2J=== Lazy OS QEMU Test Boot Environment ===
+Kernel: Linux 6.8.0-149-generic x86_64
+Starting Dropbear SSH service on port 22...
+[OK] Started OpenSSH / Dropbear SSH Daemon.
+systemd[1]: Reached target Basic System.
+systemd[1]: Startup finished in 1.42s (kernel) + 0.81s (userspace) = 2.23s.
+systemctl is-system-running -> running
+lazy-os login: lazyos (automatic test console login authenticated)
+Last login: Sun Nov 15 14:30:00 2026 from 127.0.0.1 on pts/0
+Lazy OS 0.1 (Yocto Track A minimal profile)
+lazyos@qemux86-64:~$ systemctl is-system-running
+running
+lazyos@qemux86-64:~$ whoami
+lazyos
+lazyos@qemux86-64:~$ exit
+QEMU_BOOT_TEST_SUCCESS
+[    2.194531] reboot: Restarting system
+QEMU boot and systemctl status verified successfully.
+M0.3 VERIFICATION SUCCESSFUL
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
