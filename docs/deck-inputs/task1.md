@@ -25,7 +25,7 @@
 
 ## Speaker Talking Points
 1. "Welcome to Lazy OS. In traditional distributions, the user is an operator typing shell commands. In Lazy OS, the user is a supervisor directing an autonomous, audited agent."
-2. "Notice that this is not a wrapper script on top of Ubuntu. It is a ground-up Yocto Project distribution with custom stripped kernel fragments, an immutable read-only rootfs, and 15 dedicated unprivileged services."
+2. "The system features a dual build strategy: a fast, verified development image booting an in-tree kernel with modular Btrfs initramfs for instant testing, alongside a complete Yocto Project BSP layer (meta-lazy) configured for reproducible native compilation."
 3. "Our guiding principle is trust through receipts: every action is audited with cryptographic hash-chains, sandboxed under systemd, and undoable with a single click."
 
 ---

@@ -56,51 +56,43 @@ class TestHUDComponents:
     def test_dom_structure(self, hud_dir: Path):
         html = (hud_dir / "index.html").read_text(encoding="utf-8")
 
-        # Required HUD components per specification
+        # Required HUD components per specification (Command Center V2)
         required_ids = [
-            "status-strip",
-            "metric-cpu",
-            "metric-ram",
-            "metric-model",
-            "metric-mode",
-            "metric-net",
-            "plan-panel",
-            "plan-status",
-            "plan-rationale",
-            "steps-list",
-            "transcript-panel",
-            "transcript-feed",
-            "input-form",
-            "user-input",
-            "approvals-panel",
-            "active-approval",
-            "appr-tier",
-            "appr-cap",
-            "appr-reason",
-            "appr-diff",
-            "btn-approve",
-            "btn-deny",
-            "wake-animation",
+            "boot-overlay",
+            "btn-skip-boot",
+            "clock-display",
+            "cmd-modal",
+            "cmd-palette-input",
+            "approvals-drawer",
+            "foot-identity",
+            "foot-badges",
+            "tab-home",
+            "tab-ai",
+            "tab-system",
+            "tab-agents",
+            "tab-files",
+            "tab-security",
+            "tab-apps",
+            "tab-settings",
+            "main-workspace",
         ]
         for elem_id in required_ids:
             assert f'id="{elem_id}"' in html, f"Missing required HUD element id='{elem_id}'"
 
     def test_css_styling_and_wake_animations(self, hud_dir: Path):
         css = (hud_dir / "hud.css").read_text(encoding="utf-8")
-        assert "--bg-dark:" in css
-        assert "--accent-cyan:" in css
-        assert "@keyframes spin-clockwise" in css
-        assert "@keyframes pulse-glow" in css
-        assert ".wake-animation-overlay" in css
+        assert ("--bg-dark:" in css or "--bg-primary:" in css)
+        assert ("--cyan-accent:" in css or "--accent-cyan:" in css)
+        assert "@keyframes" in css
+        assert ".boot-overlay" in css
 
     def test_javascript_event_handlers(self, hud_dir: Path):
         js = (hud_dir / "hud.js").read_text(encoding="utf-8")
-        assert "transcript_update" in js
-        assert "plan_view" in js
-        assert "step_update" in js
-        assert "approval_request" in js
-        assert "system_metric" in js
-        assert "triggerWakeAnimation" in js
+        assert "fetchIdentityAndBadges" in js
+        assert "initNavigation" in js
+        assert "initCommandPalette" in js
+        assert "initApprovalsDrawer" in js
+        assert "fetchMetrics" in js
 
 
 class TestHUDGatewayServing:
@@ -120,21 +112,21 @@ class TestHUDGatewayServing:
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/") as resp:
                 assert resp.status == 200
                 content = resp.read().decode("utf-8")
-                assert "LAZY OS // HUD" in content
+                assert "LAZY OS" in content
                 assert "text/html" in resp.headers.get("Content-Type")
 
             # 2. Fetch /hud.css
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/hud.css") as resp:
                 assert resp.status == 200
                 content = resp.read().decode("utf-8")
-                assert "--accent-cyan" in content
+                assert ("--cyan-accent" in content or "--accent-cyan" in content)
                 assert "text/css" in resp.headers.get("Content-Type")
 
             # 3. Fetch /hud.js
             with urllib.request.urlopen(f"http://127.0.0.1:{port}/hud.js") as resp:
                 assert resp.status == 200
                 content = resp.read().decode("utf-8")
-                assert "Lazy OS Futuristic HUD Controller" in content
+                assert "fetchIdentityAndBadges" in content
                 assert "javascript" in resp.headers.get("Content-Type")
 
         finally:

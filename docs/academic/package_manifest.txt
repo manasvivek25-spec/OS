@@ -1,0 +1,145 @@
+======================================================================
+     LAZY OS v2 BOOTED IMAGE PACKAGE & COMPONENT MANIFEST             
+======================================================================
+Rootfs Source: /mnt/c/Users/len/OS/build/v2/lazy-os-rootfs
+Kernel Version: 6.8.0-149-generic
+======================================================================
+
+--- 1. SYSTEM BINARIES & UTILITIES ---
+  bin/awk -> /bin/busybox
+  bin/bash -> /bin/busybox
+  bin/blkid -> /bin/busybox
+  bin/btrfs -> /usr/bin/btrfs
+  bin/busybox (2124608 bytes)
+  bin/cat -> /bin/busybox
+  bin/chmod -> /bin/busybox
+  bin/chown -> /bin/busybox
+  bin/clear -> /bin/busybox
+  bin/cp -> /bin/busybox
+  bin/cut -> /bin/busybox
+  bin/date -> /bin/busybox
+  bin/df -> /bin/busybox
+  bin/echo -> /bin/busybox
+  bin/env -> /bin/busybox
+  bin/false -> /bin/busybox
+  bin/find -> /bin/busybox
+  bin/findmnt -> /usr/bin/findmnt
+  bin/free -> /bin/busybox
+  bin/grep -> /bin/busybox
+  bin/head -> /bin/busybox
+  bin/hostname -> /bin/busybox
+  bin/id -> /bin/busybox
+  bin/insmod -> /bin/busybox
+  bin/kill -> /bin/busybox
+  bin/losetup -> /bin/busybox
+  bin/ls -> /bin/busybox
+  bin/lsblk -> /usr/bin/lsblk
+  bin/lsmod -> /bin/busybox
+  bin/mkdir -> /bin/busybox
+  bin/mknod -> /bin/busybox
+  bin/modprobe -> /bin/busybox
+  bin/mount -> /bin/busybox
+  bin/mv -> /bin/busybox
+  bin/poweroff -> /bin/busybox
+  bin/ps -> /bin/busybox
+  bin/pwd -> /bin/busybox
+  bin/python3 -> /usr/bin/python3
+  bin/reboot -> /bin/busybox
+  bin/rm -> /bin/busybox
+  bin/rmdir -> /bin/busybox
+  bin/rmmod -> /bin/busybox
+  bin/sed -> /bin/busybox
+  bin/sh -> /bin/busybox
+  bin/sleep -> /bin/busybox
+  bin/sort -> /bin/busybox
+  bin/sync -> /bin/busybox
+  bin/tail -> /bin/busybox
+  bin/tee -> /bin/busybox
+  bin/test -> /bin/busybox
+  bin/touch -> /bin/busybox
+  bin/tr -> /bin/busybox
+  bin/true -> /bin/busybox
+  bin/umount -> /bin/busybox
+  bin/uname -> /bin/busybox
+  bin/uniq -> /bin/busybox
+  bin/wc -> /bin/busybox
+  bin/whoami -> /bin/busybox
+  sbin/insmod -> /bin/busybox
+  sbin/mknod -> /bin/busybox
+  sbin/mount -> /bin/busybox
+  sbin/poweroff -> /bin/busybox
+  sbin/reboot -> /bin/busybox
+  sbin/umount -> /bin/busybox
+  usr/bin/btrfs (1025280 bytes)
+  usr/bin/env -> /bin/busybox
+  usr/bin/findmnt (69280 bytes)
+  usr/bin/lazy-guest-daemon.py (595 bytes)
+  usr/bin/lsblk (149896 bytes)
+  usr/bin/python3 (8020928 bytes)
+
+--- 2. IN-TREE KERNEL MODULES ---
+  btrfs.ko (4166.4 KB)
+  libcrc32c.ko (8.5 KB)
+  raid6_pq.ko (151.4 KB)
+  xor.ko (26.6 KB)
+
+--- 3. SHARED LIBRARIES ---
+  libblkid.so.1
+  libbz2.so.1.0
+  libc.so.6
+  libcap.so.2
+  libcrypto.so.3
+  libexpat.so.1
+  libffi.so.8
+  libgcc_s.so.1
+  liblzma.so.5
+  liblzo2.so.2
+  libm.so.6
+  libmount.so.1
+  libpcre2-8.so.0
+  libpthread.so.0
+  libselinux.so.1
+  libsmartcols.so.1
+  libssl.so.3
+  libudev.so.1
+  libuuid.so.1
+  libz.so.1
+  libzstd.so.1
+  ld-linux-x86-64.so.2
+
+--- 4. PYTHON DIST-PACKAGES & MODULES ---
+  _yaml
+  attr
+  attrs
+  jsonschema
+  jsonschema_specifications
+  lazy
+  referencing
+  rpds
+  typing_extensions.py
+  yaml
+
+--- 5. LAZY OS CORE PACKAGES (src/lazy) ---
+  lazy.audit
+  lazy.brokers
+  lazy.common
+  lazy.dialogue
+  lazy.docs
+  lazy.gateway
+  lazy.llm
+  lazy.niche
+  lazy.outbox
+  lazy.pipeline
+  lazy.planner
+  lazy.policy
+  lazy.routines
+  lazy.secrets
+  lazy.systemd
+  lazy.tasks
+  lazy.tuning
+  lazy.voice
+
+--- 6. COMMAND CENTER SPA (hud/) ---
+  hud.css (15.9 KB)
+  hud.js (24.3 KB)
+  index.html (21.0 KB)

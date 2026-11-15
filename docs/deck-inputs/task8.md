@@ -9,20 +9,18 @@
 
 ## Slide Content & Bullets
 
-### 1. Empirical Comparison vs Stock Debian 12 Minimal
-- The university Track A specification mandates $\ge 40\%$ reduction across key OS metrics.
-- Lazy OS Base results in QEMU:
-  - **Compressed Image Size**: **38.0 MB vs 148.0 MB** (**-74.3%**, target $\ge 40\%$)
-  - **Idle RAM Utilization**: **74.0 MB vs 215.0 MB** (**-65.6%**, target $\ge 40\%$)
-  - **Cold Boot Time**: **0.94 s vs 3.82 s** (**-75.4%**, target $\ge 40\%$)
-  - **Installed Package Count**: **54 vs 224 packages** (**-75.9%**, target $\ge 40\%$)
+### 1. Empirical Evaluation & Rigorous Benchmark Standards (bench/METHOD.md)
+- In accordance with Truth Rules T1-T4, benchmarks reflect 5 cold-boot runs under strict unified definitions:
+  - **Lazy OS v2 Cold Boot Time**: **1.57 s ± 0.96 s** (from VM start to gateway port readiness).
+  - **Lazy OS v2 Idle RAM Utilization**: **81.80 MB ± 3.42 MB** (measured via `free -m` with in-tree Btrfs kernel modules loaded).
+  - **Bootable Payload Size**: **39.75 MB** (14.41 MB kernel + 25.36 MB compressed initramfs; uncompressed rootfs: 84.0 MB).
+  - **Stock Debian 12 Minimal**: Marked **Not Measured** under unified automated endpoints pending cloud testbed run. Earlier V1 claims (0.94s, 74 MB RAM) noted as unverified development approximations in `docs/reports/results.md`.
 
 ### 2. End-to-End Safety & Accuracy Verification
-- **40-Task Benchmark Suite**: 100% success rate in both Mock mode (28.01 ms mean) and LLM mode (65.74 ms mean).
-- **Adversarial Attack Suite**: 70 attacks across 7 categories:
-  - Guarded Lazy OS Unsafe-Action Rate: **0.00%** (0 breaches).
-  - Unguarded Baseline: **57.14%** (40 breaches).
-  - Benign False-Block Rate: **0.00%** (0/100).
+- **Canonical E2E Demonstration**: 8/8 operations passed (100% compliance via `scripts/demo-e2e.py`).
+- **Command Center SPA**: 8 dedicated modules verified with SHA-256 screenshot manifests and WCAG AAA compliance (15.68:1 contrast).
+- **Adversarial Safety**: Policy engine enforces L0-L4 permission barriers; untrusted input strictly isolated as quoted data.
+- **Persistent Storage**: Real block device `/dev/vda3` formatted as Btrfs and mounted on `/data`, surviving reboot with zero-copy snapshot rollback.
 
 ### 3. Bit-for-Bit Reproducibility (Milestone M5.6)
 - Upstream Yocto LTS `scarthgap` layers pinned via `kas` to exact immutable commit SHAs.

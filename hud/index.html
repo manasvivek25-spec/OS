@@ -3,113 +3,439 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>LAZY OS // HUD v1.0</title>
+  <title>LAZY OS // COMMAND CENTER</title>
   <link rel="stylesheet" href="hud.css">
 </head>
-<body>
-  <!-- System Status Strip -->
-  <header id="status-strip">
-    <div class="status-brand">
-      <span class="hud-pulse-dot"></span>
-      <span class="hud-title">LAZY OS</span>
-      <span class="hud-version">v0.1-alpha</span>
+<body class="theme-navy">
+  <!-- Skippable Boot Animation Overlay -->
+  <div id="boot-overlay" class="boot-overlay" role="dialog" aria-label="System Initialization">
+    <div class="boot-content">
+      <div class="boot-logo">LAZY OS</div>
+      <div class="boot-subtitle">v0.2 // AUTONOMOUS COMMAND CENTER</div>
+      <div class="boot-progress-bar"><div class="boot-progress-fill" id="boot-progress"></div></div>
+      <div class="boot-status" id="boot-status">Initializing security sandboxes...</div>
+      <button id="btn-skip-boot" class="btn-skip">Skip [ESC]</button>
     </div>
-    <div class="status-metrics">
-      <div class="metric-item">
-        <span class="metric-label">CPU</span>
-        <span class="metric-val" id="metric-cpu">0%</span>
+  </div>
+
+  <!-- Top Status Bar -->
+  <header id="status-bar" class="status-bar">
+    <div class="bar-left">
+      <span class="brand-pulse"></span>
+      <span class="brand-title">LAZY OS</span>
+      <span class="brand-chip">TRACK A</span>
+      <span class="brand-sub">COMMAND CENTER</span>
+    </div>
+    <div class="bar-center">
+      <button class="cmd-trigger" id="btn-cmd-palette" title="Open Command Palette (Ctrl+K)">
+        <span class="cmd-icon">⌘</span>
+        <span class="cmd-text">Quick Command...</span>
+        <kbd>Ctrl+K</kbd>
+      </button>
+    </div>
+    <div class="bar-right">
+      <div class="status-item" id="power-status" title="Hardware Power Profile">
+        <span class="status-icon">⚡</span>
+        <span class="status-val" id="val-power">balanced</span>
       </div>
-      <div class="metric-item">
-        <span class="metric-label">RAM</span>
-        <span class="metric-val" id="metric-ram">0 MB</span>
+      <div class="status-item" id="net-status" title="Network Connection">
+        <span class="status-icon">🌐</span>
+        <span class="status-val" id="val-net">connected</span>
       </div>
-      <div class="metric-item">
-        <span class="metric-label">MODEL</span>
-        <span class="metric-val" id="metric-model">SmolLM2-360M</span>
+      <div class="status-item alerts-trigger" id="btn-toggle-approvals" title="Pending Approvals">
+        <span class="status-icon">🔔</span>
+        <span class="badge" id="badge-alerts">0</span>
       </div>
-      <div class="metric-item">
-        <span class="metric-label">MODE</span>
-        <span class="metric-val badge-active" id="metric-mode">INTERACTIVE</span>
-      </div>
-      <div class="metric-item">
-        <span class="metric-label">NET</span>
-        <span class="metric-val" id="metric-net">OFFLINE-SECURE</span>
-      </div>
+      <div class="status-item clock-display" id="clock-display">00:00:00 UTC</div>
     </div>
   </header>
 
-  <!-- Main HUD Layout Grid -->
-  <main class="hud-container">
-    <!-- Left: Plan & Step View -->
-    <section class="panel plan-panel" id="plan-panel">
-      <div class="panel-header">
-        <h2>EXECUTION PLAN</h2>
-        <span class="badge" id="plan-status">IDLE</span>
-      </div>
-      <div class="plan-rationale" id="plan-rationale">No active plan. Waiting for directives.</div>
-      <div class="steps-list" id="steps-list">
-        <!-- Steps rendered dynamically -->
-      </div>
-    </section>
+  <!-- App Shell: Navigation + Workspace -->
+  <div class="app-shell">
+    <!-- Left Navigation Bar -->
+    <nav class="nav-sidebar" aria-label="Main Navigation">
+      <button class="nav-btn active" data-tab="tab-home" title="Home & Briefing">
+        <span class="nav-icon">🏠</span>
+        <span class="nav-label">Home</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-ai" title="AI Command Center">
+        <span class="nav-icon">🤖</span>
+        <span class="nav-label">AI Command</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-system" title="System Monitor">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">System</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-agents" title="Agent Center">
+        <span class="nav-icon">🛡️</span>
+        <span class="nav-label">Agents</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-files" title="File Manager">
+        <span class="nav-icon">📁</span>
+        <span class="nav-label">Files</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-security" title="Security Center">
+        <span class="nav-icon">🔒</span>
+        <span class="nav-label">Security</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-apps" title="App Launcher">
+        <span class="nav-icon">🚀</span>
+        <span class="nav-label">Apps</span>
+      </button>
+      <button class="nav-btn" data-tab="tab-settings" title="System Settings">
+        <span class="nav-icon">⚙️</span>
+        <span class="nav-label">Settings</span>
+      </button>
+    </nav>
 
-    <!-- Center: Interactive Transcript -->
-    <section class="panel transcript-panel" id="transcript-panel">
-      <div class="panel-header">
-        <h2>TRANSCRIPT // TELEMETRY</h2>
-        <div class="session-info" id="session-info">DISCONNECTED</div>
-      </div>
-      <div class="transcript-feed" id="transcript-feed">
-        <div class="message msg-system">
-          <span class="msg-ts">[SYSTEM BOOT]</span>
-          <span class="msg-body">Lazy OS Core Initialized. Sandboxed units online. Cryptographic audit active.</span>
+    <!-- Main Workspace (Dynamic Modules) -->
+    <main class="main-workspace" id="main-workspace">
+      
+      <!-- Module 1: Home & Briefing -->
+      <section id="tab-home" class="view-panel active">
+        <div class="panel-header">
+          <h2>Overview & Morning Briefing</h2>
+          <span class="panel-source">Data Source: <code>GET /api/briefing</code> &amp; <code>GET /api/metrics</code></span>
         </div>
-      </div>
-      <!-- Input bar -->
-      <form class="hud-input-bar" id="input-form">
-        <input type="text" id="user-input" placeholder="Enter directive or voice command..." autocomplete="off">
-        <button type="submit" id="btn-send">EXECUTE</button>
-      </form>
-    </section>
+        <div class="grid-2col">
+          <div class="card briefing-card">
+            <div class="card-title"><h3>☀️ Daily Briefing</h3><span class="card-tag" id="briefing-date">Today</span></div>
+            <p class="briefing-lead" id="briefing-headline">Loading intelligence briefing...</p>
+            <div class="card-section">
+              <h4>Overnight Autonomous Chores</h4>
+              <ul class="clean-list" id="briefing-chores"><li>Checking scheduled routines...</li></ul>
+            </div>
+            <div class="card-section">
+              <h4>Niche Behavioral Intel Feed</h4>
+              <ul class="clean-list" id="briefing-feed"><li>Aggregating relevant topics...</li></ul>
+            </div>
+          </div>
 
-    <!-- Right: Approvals & Telemetry Panel -->
-    <section class="panel approvals-panel" id="approvals-panel">
-      <div class="panel-header">
-        <h2>SAFETY & APPROVALS</h2>
-        <span class="badge badge-safe" id="safety-level">L0 / L1 AUTO</span>
-      </div>
-      <div class="approvals-content" id="approvals-content">
-        <div class="approval-card empty" id="empty-approvals">
-          <p>All current actions within automated safety bounds.</p>
-          <small>L2 & L3 hazardous actions require explicit confirmation.</small>
-        </div>
-        <div class="approval-card active-approval" id="active-approval" style="display: none;">
-          <div class="approval-header">
-            <span class="badge-tier" id="appr-tier">TIER L2</span>
-            <span class="appr-cap" id="appr-cap">fs.delete</span>
-          </div>
-          <p class="appr-reason" id="appr-reason">Action requires operator consent.</p>
-          <div class="appr-diff" id="appr-diff">
-            <pre><code id="appr-diff-code">--- target: /tmp/temp.txt</code></pre>
-          </div>
-          <div class="appr-actions">
-            <button class="btn-deny" id="btn-deny">DENY</button>
-            <button class="btn-approve" id="btn-approve">APPROVE</button>
-          </div>
-        </div>
-      </div>
-    </section>
-  </main>
+          <div class="card-stack">
+            <div class="card">
+              <div class="card-title"><h3>🩺 System Health Summary</h3><span class="status-dot green"></span></div>
+              <div class="metric-row">
+                <div class="metric-box">
+                  <span class="metric-label">CPU Load</span>
+                  <span class="metric-value" id="home-cpu">--%</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">RAM Usage</span>
+                  <span class="metric-value" id="home-ram">-- MB</span>
+                </div>
+                <div class="metric-box">
+                  <span class="metric-label">Btrfs Storage</span>
+                  <span class="metric-value" id="home-disk">-- MB</span>
+                </div>
+              </div>
+            </div>
 
-  <!-- Futuristic Wake Animation Overlay -->
-  <div class="wake-animation-overlay" id="wake-animation">
-    <div class="wake-reticle">
-      <div class="wake-circle circle-outer"></div>
-      <div class="wake-circle circle-mid"></div>
-      <div class="wake-circle circle-inner"></div>
-      <div class="wake-text" id="wake-text">SYSTEM WAKE SEQUENCE INITIALIZED</div>
-      <div class="wake-subtext">AUTHENTICATING LOCAL OPERATOR...</div>
+            <div class="card">
+              <div class="card-title"><h3>⚡ Quick Commands</h3></div>
+              <div class="btn-grid">
+                <button class="btn-action" data-directive="create a note called plan.md with a three-item checklist">📝 Create Plan Note</button>
+                <button class="btn-action" data-directive="show running microservices">🔍 List Services</button>
+                <button class="btn-action" data-directive="verify audit log integrity">🛡️ Verify Audit Chain</button>
+                <button class="btn-action" data-directive="check system memory telemetry">📈 Memory Status</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 2: AI Command Center -->
+      <section id="tab-ai" class="view-panel">
+        <div class="panel-header">
+          <h2>AI Command Center</h2>
+          <div class="panel-header-badges">
+            <span class="badge-pill sim" id="badge-planner-mode">MOCK PLANNER</span>
+            <span class="panel-source">Data Source: WebSocket Gateway / <code>POST /api/approvals</code></span>
+          </div>
+        </div>
+        <div class="chat-container">
+          <div class="chat-transcript" id="chat-transcript">
+            <div class="chat-msg system">
+              <div class="msg-sender">Lazy OS Supervisor</div>
+              <div class="msg-body">System ready. Enter natural language instructions or supervise execution below.</div>
+            </div>
+          </div>
+          
+          <!-- Plan Breakdown View -->
+          <div class="plan-stream-box" id="plan-stream-box" style="display:none;">
+            <div class="plan-header">
+              <span class="plan-title">Generated Intent Plan</span>
+              <span class="plan-task-id" id="plan-task-id">task-id</span>
+            </div>
+            <div class="plan-steps" id="plan-steps"></div>
+            <div class="plan-footer" id="plan-footer"></div>
+          </div>
+
+          <form id="ai-input-form" class="ai-input-form">
+            <input type="text" id="ai-input-text" class="ai-input" placeholder="Type a directive (e.g. 'create a note called plan.md', 'list services')..." autocomplete="off" />
+            <button type="button" id="btn-voice-speech" class="btn-voice" title="Browser Speech API (labelled 'browser speech, not in image')">🎙️</button>
+            <button type="submit" class="btn-primary">Execute</button>
+          </form>
+        </div>
+      </section>
+
+      <!-- Module 3: System Monitor -->
+      <section id="tab-system" class="view-panel">
+        <div class="panel-header">
+          <h2>Live System Monitor</h2>
+          <span class="panel-source">Data Source: <code>GET /api/metrics</code> &amp; <code>GET /api/services</code> (Real Guest Telemetry)</span>
+        </div>
+        <div class="metrics-grid">
+          <div class="card metric-card">
+            <div class="metric-header"><span>CPU Utilization</span><span class="metric-live" id="sys-cpu-val">0.0%</span></div>
+            <div class="sparkline-wrap"><svg id="spark-cpu" class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"></svg></div>
+          </div>
+          <div class="card metric-card">
+            <div class="metric-header"><span>RAM Utilization</span><span class="metric-live" id="sys-ram-val">0.0 MB</span></div>
+            <div class="sparkline-wrap"><svg id="spark-ram" class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"></svg></div>
+          </div>
+          <div class="card metric-card">
+            <div class="metric-header"><span>Btrfs Partition (/data)</span><span class="metric-live" id="sys-disk-val">0.0 MB</span></div>
+            <div class="sparkline-wrap"><svg id="spark-disk" class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"></svg></div>
+          </div>
+          <div class="card metric-card">
+            <div class="metric-header"><span>Network I/O</span><span class="metric-live" id="sys-net-val">0.0 KB/s</span></div>
+            <div class="sparkline-wrap"><svg id="spark-net" class="sparkline" viewBox="0 0 100 30" preserveAspectRatio="none"></svg></div>
+          </div>
+        </div>
+
+        <div class="card mt-4">
+          <div class="card-title"><h3>Microservices &amp; Slice Supervisor</h3></div>
+          <table class="data-table" id="services-table">
+            <thead>
+              <tr><th>Unit Name</th><th>Slice / Cgroup</th><th>State</th><th>Description</th></tr>
+            </thead>
+            <tbody id="services-tbody"><tr><td colspan="4">Loading service table...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Module 4: Agent Center -->
+      <section id="tab-agents" class="view-panel">
+        <div class="panel-header">
+          <h2>Agent &amp; Capability Center</h2>
+          <span class="panel-source">Data Source: Capability Manifests &amp; Service Brokers</span>
+        </div>
+        
+        <!-- Live Pipeline Visualization -->
+        <div class="card mb-4">
+          <div class="card-title"><h3>Autonomous Action Pipeline (F1–F9)</h3></div>
+          <div class="pipeline-flow">
+            <div class="pipeline-node" id="pipe-gateway"><span class="pipe-icon">🌐</span><span class="pipe-title">Gateway</span><span class="pipe-sub">I/O Auth</span></div>
+            <div class="pipeline-arrow">➔</div>
+            <div class="pipeline-node" id="pipe-planner"><span class="pipe-icon">🧠</span><span class="pipe-title">Planner</span><span class="pipe-sub">Typed Intent</span></div>
+            <div class="pipeline-arrow">➔</div>
+            <div class="pipeline-node" id="pipe-policy"><span class="pipe-icon">🛡️</span><span class="pipe-title">Policy</span><span class="pipe-sub">L0–L4 Gate</span></div>
+            <div class="pipeline-arrow">➔</div>
+            <div class="pipeline-node" id="pipe-tasks"><span class="pipe-icon">💾</span><span class="pipe-title">Tasks</span><span class="pipe-sub">Btrfs Snapshot</span></div>
+            <div class="pipeline-arrow">➔</div>
+            <div class="pipeline-node" id="pipe-broker"><span class="pipe-icon">⚙️</span><span class="pipe-title">Broker</span><span class="pipe-sub">Sandboxed Exec</span></div>
+            <div class="pipeline-arrow">➔</div>
+            <div class="pipeline-node" id="pipe-audit"><span class="pipe-icon">📜</span><span class="pipe-title">Audit</span><span class="pipe-sub">SHA-256 Receipt</span></div>
+          </div>
+        </div>
+
+        <div class="cards-grid" id="agent-cards-grid">
+          <!-- Dynamically populated component cards -->
+        </div>
+      </section>
+
+      <!-- Module 5: File Manager -->
+      <section id="tab-files" class="view-panel">
+        <div class="panel-header">
+          <h2>Btrfs File Manager (/data)</h2>
+          <span class="panel-source">Data Source: <code>GET /api/fs</code> (Brokered Real Storage)</span>
+        </div>
+        <div class="file-toolbar">
+          <div class="breadcrumbs" id="file-breadcrumbs">
+            <span class="crumb active" data-path="">/data</span>
+          </div>
+          <div class="toolbar-actions">
+            <button class="btn-secondary" id="btn-new-file">+ New File</button>
+            <button class="btn-secondary" id="btn-refresh-files">🔄 Refresh</button>
+          </div>
+        </div>
+        <div class="card">
+          <table class="data-table" id="file-table">
+            <thead>
+              <tr><th>Name</th><th>Type</th><th>Size</th><th>Actions</th></tr>
+            </thead>
+            <tbody id="file-tbody"><tr><td colspan="4">Loading directory contents...</td></tr></tbody>
+          </table>
+        </div>
+      </section>
+
+      <!-- Module 6: Security Center -->
+      <section id="tab-security" class="view-panel">
+        <div class="panel-header">
+          <h2>Security &amp; Audit Center</h2>
+          <span class="panel-source">Data Source: <code>GET /api/audit</code> &amp; <code>POST /api/audit/verify</code></span>
+        </div>
+        
+        <div class="tier-legend-bar">
+          <span class="tier-chip l0">L0 Read-Only</span>
+          <span class="tier-chip l1">L1 Automatic Reversible</span>
+          <span class="tier-chip l2">L2 User Confirmation</span>
+          <span class="tier-chip l3">L3 Outbox Delay Barrier</span>
+          <span class="tier-chip l4">L4 Hard Forbidden</span>
+        </div>
+
+        <div class="card mb-4">
+          <div class="card-title">
+            <h3>Cryptographic SHA-256 Audit Ledger</h3>
+            <button class="btn-primary" id="btn-verify-audit-chain">🛡️ Verify Hash Chain</button>
+          </div>
+          <div id="audit-verify-status" class="alert-box neutral">Click 'Verify Hash Chain' to audit offline receipt integrity.</div>
+          <div class="audit-ledger-box" id="audit-ledger-box">
+            <pre id="audit-log-pre">Loading ledger records...</pre>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 7: App Launcher -->
+      <section id="tab-apps" class="view-panel">
+        <div class="panel-header">
+          <h2>Application Launcher</h2>
+          <span class="panel-source">Real Capabilities vs Coming Soon Placeholders</span>
+        </div>
+        <div class="app-tiles-grid">
+          <div class="app-tile active-app" data-launch="notes">
+            <span class="tile-icon">📝</span>
+            <span class="tile-title">Notes</span>
+            <span class="tile-desc">doc.create_markdown capability</span>
+            <span class="tile-status verified">Backed by Real Broker</span>
+          </div>
+          <div class="app-tile active-app" data-launch="briefing">
+            <span class="tile-icon">☀️</span>
+            <span class="tile-title">Briefing</span>
+            <span class="tile-desc">Morning intelligence overview</span>
+            <span class="tile-status verified">Backed by Real Broker</span>
+          </div>
+          <div class="app-tile active-app" data-launch="outbox">
+            <span class="tile-icon">📤</span>
+            <span class="tile-title">Outbox</span>
+            <span class="tile-desc">Staged external messages queue</span>
+            <span class="tile-status verified">Backed by Real Broker</span>
+          </div>
+          <div class="app-tile disabled-app">
+            <span class="tile-icon">🌐</span>
+            <span class="tile-title">Web Browser</span>
+            <span class="tile-desc">Isolated Chromium Driver</span>
+            <span class="tile-status unbacked">Coming Soon</span>
+          </div>
+          <div class="app-tile disabled-app">
+            <span class="tile-icon">📧</span>
+            <span class="tile-title">Email Client</span>
+            <span class="tile-desc">IMAP / SMTP Full Suite</span>
+            <span class="tile-status unbacked">Coming Soon</span>
+          </div>
+          <div class="app-tile disabled-app">
+            <span class="tile-icon">🎮</span>
+            <span class="tile-title">Terminal Console</span>
+            <span class="tile-desc">VT100 Host Gateway</span>
+            <span class="tile-status unbacked">Coming Soon</span>
+          </div>
+        </div>
+      </section>
+
+      <!-- Module 8: Settings -->
+      <section id="tab-settings" class="view-panel">
+        <div class="panel-header">
+          <h2>System Settings &amp; Preferences</h2>
+          <span class="panel-source">Data Source: <code>GET/POST /api/settings</code></span>
+        </div>
+        <div class="grid-2col">
+          <div class="card">
+            <div class="card-title"><h3>Appearance &amp; Motion</h3></div>
+            <div class="setting-item">
+              <label for="set-reduced-motion">Reduced Motion</label>
+              <input type="checkbox" id="set-reduced-motion" />
+            </div>
+            <div class="setting-item">
+              <label for="set-accent-color">Accent Color</label>
+              <select id="set-accent-color">
+                <option value="cyan">Neon Cyan (Default)</option>
+                <option value="blue">Deep Blue</option>
+                <option value="emerald">Emerald Green</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="card">
+            <div class="card-title"><h3>Neural &amp; Agent Configuration</h3></div>
+            <div class="setting-item">
+              <label for="set-planner-mode">Planner Mode</label>
+              <select id="set-planner-mode">
+                <option value="mock">Heuristic Mock Planner (In-Image)</option>
+                <option value="host-llm">Host LLM Bridge (SmolLM2-360M)</option>
+              </select>
+            </div>
+            <div class="setting-item">
+              <label>Model Architecture</label>
+              <span class="badge-pill sim" id="settings-model-badge">Simulated</span>
+            </div>
+          </div>
+        </div>
+        <div class="card mt-4">
+          <div class="card-title"><h3>About Lazy OS Command Center</h3></div>
+          <p>Lazy OS Command Center is an offline browser cockpit providing complete administrative supervision over the Lazy OS Linux runtime. It is served directly by the in-guest Python gateway on port 8765. Privileged operations are strictly mediated by the kernel broker pipeline.</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Slide-Out Approvals Drawer -->
+  <aside id="approvals-drawer" class="approvals-drawer">
+    <div class="drawer-header">
+      <h3>Pending Approvals</h3>
+      <button id="btn-close-drawer" class="btn-close">&times;</button>
+    </div>
+    <div class="drawer-content" id="approvals-list">
+      <div class="empty-state">No pending approval requests.</div>
+    </div>
+  </aside>
+
+  <!-- Command Palette Modal (Ctrl+K) -->
+  <div id="cmd-modal" class="modal-backdrop" style="display:none;">
+    <div class="cmd-palette-box">
+      <div class="cmd-palette-header">
+        <input type="text" id="cmd-palette-input" placeholder="Type a command or jump to module..." />
+        <span class="esc-hint">ESC to close</span>
+      </div>
+      <div class="cmd-palette-results" id="cmd-palette-results">
+        <div class="cmd-option" data-target="tab-home">Jump to: 🏠 Home Overview</div>
+        <div class="cmd-option" data-target="tab-ai">Jump to: 🤖 AI Command Center</div>
+        <div class="cmd-option" data-target="tab-system">Jump to: 📊 System Monitor</div>
+        <div class="cmd-option" data-target="tab-agents">Jump to: 🛡️ Agent Center</div>
+        <div class="cmd-option" data-target="tab-files">Jump to: 📁 File Manager</div>
+        <div class="cmd-option" data-target="tab-security">Jump to: 🔒 Security Center</div>
+        <div class="cmd-option" data-target="tab-apps">Jump to: 🚀 App Launcher</div>
+        <div class="cmd-option" data-target="tab-settings">Jump to: ⚙️ Settings</div>
+      </div>
     </div>
   </div>
+
+  <!-- Toast Notification Container -->
+  <div id="toast-container" class="toast-container"></div>
+
+  <!-- Fixed Honest Identity Footer -->
+  <footer id="identity-footer" class="identity-footer">
+    <div class="footer-left">
+      <span class="foot-label">Guest Identity:</span>
+      <span class="foot-value" id="foot-identity">Connecting to in-guest gateway...</span>
+    </div>
+    <div class="footer-badges" id="foot-badges">
+      <span class="badge-pill real">Storage: Btrfs</span>
+      <span class="badge-pill real">Audit: SHA-256</span>
+      <span class="badge-pill sim">LLM: Simulated</span>
+      <span class="badge-pill sim">Voice: Browser Speech</span>
+    </div>
+  </footer>
 
   <script src="hud.js"></script>
 </body>

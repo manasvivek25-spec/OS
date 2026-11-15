@@ -1,0 +1,155 @@
+{
+  "title": "Lazy OS v2 Command Center UI Screen Manifest",
+  "generated_at": "2026-11-15T20:38:51.788433+00:00",
+  "target_url": "http://127.0.0.1:8766",
+  "guest_identity": {
+    "hostname": "lazy-os",
+    "kernel_release": "6.8.0-149-generic",
+    "boot_id": "f027f847-6b41-4c21-873c-ce545164389a",
+    "uptime": 16.55,
+    "mounts": [
+      {
+        "device": "rootfs",
+        "mountpoint": "/",
+        "fstype": "rootfs"
+      },
+      {
+        "device": "proc",
+        "mountpoint": "/proc",
+        "fstype": "proc"
+      },
+      {
+        "device": "sysfs",
+        "mountpoint": "/sys",
+        "fstype": "sysfs"
+      },
+      {
+        "device": "devtmpfs",
+        "mountpoint": "/dev",
+        "fstype": "devtmpfs"
+      },
+      {
+        "device": "tmpfs",
+        "mountpoint": "/run",
+        "fstype": "tmpfs"
+      },
+      {
+        "device": "tmpfs",
+        "mountpoint": "/tmp",
+        "fstype": "tmpfs"
+      },
+      {
+        "device": "/dev/vda3",
+        "mountpoint": "/data",
+        "fstype": "btrfs"
+      }
+    ],
+    "image_build_id": "lazy-os-v2-command-center",
+    "git_commit": "v2-command-center"
+  },
+  "accessibility_audit": {
+    "wcag_level": "AAA",
+    "contrast": {
+      "background": "#0a0e17",
+      "foreground": "#e2e8f0",
+      "measured_ratio": "15.68:1",
+      "standard_minimum": "7.0:1 (AAA)",
+      "status": "PASS"
+    },
+    "focus_visible": {
+      "selector": ":focus-visible",
+      "outline": "2px solid #00d2ff (Cyan)",
+      "defined_in_css": true,
+      "status": "PASS"
+    },
+    "reduced_motion": {
+      "media_query_supported": true,
+      "runtime_class_supported": true,
+      "status": "PASS"
+    },
+    "aria_elements_count": 2,
+    "aria_roles_count": 1
+  },
+  "screenshots": [
+    {
+      "module_id": "tab-home",
+      "title": "Home & Briefing",
+      "description": "Wake-up briefing card, quick commands, and system health status.",
+      "filename": "01_home.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-home",
+      "dimensions": "1440x900",
+      "filesize_kb": 76.4,
+      "sha256": "ff93ee63a7e945285bbec0f89e4bcb9d5470c86fa2f23a8347fb692de5d9502c"
+    },
+    {
+      "module_id": "tab-ai",
+      "title": "AI Command Center",
+      "description": "Natural language prompt bar, streaming plan view, and interactive pipeline.",
+      "filename": "02_ai_command.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-ai",
+      "dimensions": "1440x900",
+      "filesize_kb": 48.2,
+      "sha256": "5876420e8dc9faa2e532756b60511dfd3c8921b9f8ecc7f469fdb2dd05f82846"
+    },
+    {
+      "module_id": "tab-system",
+      "title": "System Monitor",
+      "description": "Live CPU/RAM/Disk/Network SVG sparklines and 15 guest service status indicators.",
+      "filename": "03_system_monitor.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-system",
+      "dimensions": "1440x900",
+      "filesize_kb": 113.3,
+      "sha256": "c8636c56235c777b92f183f177696d2fc790075d2b5e92a2c7c3210ac6a85c75"
+    },
+    {
+      "module_id": "tab-agents",
+      "title": "Agent Center",
+      "description": "Component activity cards and live 5-stage pipeline with real broker metrics.",
+      "filename": "04_agent_center.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-agents",
+      "dimensions": "1440x900",
+      "filesize_kb": 73.4,
+      "sha256": "71b53866d3c2fc7b19ebcc2a51465c698b8e7a96eb5cd2003a61b2d440dfd8bb"
+    },
+    {
+      "module_id": "tab-files",
+      "title": "File Manager",
+      "description": "Persistent Btrfs /data browser, editor, and policy-governed delete action.",
+      "filename": "05_file_manager.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-files",
+      "dimensions": "1440x900",
+      "filesize_kb": 46.5,
+      "sha256": "df62dd92b9e51f1595b0f24dd4e9390601813885546034ee6172c8a27f70035f"
+    },
+    {
+      "module_id": "tab-security",
+      "title": "Security Center",
+      "description": "L0-L4 permission legend, cryptographic audit ledger, and chain verification.",
+      "filename": "06_security_center.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-security",
+      "dimensions": "1440x900",
+      "filesize_kb": 53.0,
+      "sha256": "5df45378a08ef3a8b86bc3045963a7f53a6b53d92adc91e584e13f11c3201da1"
+    },
+    {
+      "module_id": "tab-apps",
+      "title": "App Launcher",
+      "description": "Capability-backed applications (Notes, Briefing, Outbox) and coming-soon tiles.",
+      "filename": "07_app_launcher.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-apps",
+      "dimensions": "1440x900",
+      "filesize_kb": 60.2,
+      "sha256": "bb9a5c9d8f9b1c3536abb898e05f381bbbaf1c810a84fa3f59d3128f1caa1e0c"
+    },
+    {
+      "module_id": "tab-settings",
+      "title": "Settings",
+      "description": "Appearance, theme, reduced motion toggle, and guest identity info.",
+      "filename": "08_settings.png",
+      "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-settings",
+      "dimensions": "1440x900",
+      "filesize_kb": 63.9,
+      "sha256": "5ae1953e0bf95dd5b42f562452bea12539d3e78a35001657412608694ca4a811"
+    }
+  ]
+}

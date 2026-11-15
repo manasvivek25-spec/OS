@@ -8,6 +8,7 @@ from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
 
 from lazy.audit.verifier import verify_audit_log
+from lazy.audit.ledger import AuditLedger
 from lazy.brokers.fs_broker import FSBroker
 from lazy.policy.engine import PolicyEngine
 from lazy.policy.manifest import ManifestLoader
@@ -43,6 +44,7 @@ class GatewayAPIHandler:
 
         self.tasks = task_manager or TaskManager(target_dir=str(self.data_dir), backend_type="copy")
         self.fs = fs_broker or FSBroker(root_dir=str(self.data_dir))
+        self.audit = AuditLedger(self.audit_log_path)
         self.settings: Dict[str, Any] = {
             "accent_color": "cyan",
             "reduced_motion": False,
@@ -213,21 +215,23 @@ class GatewayAPIHandler:
         return self._json_resp(list(self.pending_approvals.values()))
 
     def _post_approvals(self, payload: Dict[str, Any]) -> Tuple[int, Dict[str, str], bytes]:
-        req_id = payload.get("id")
+        req_id = payload.get("approval_id") or payload.get("id")
         action = payload.get("action")  # "approve" or "deny"
         if not req_id or req_id not in self.pending_approvals:
             return 404, {"Content-Type": "application/json"}, json.dumps({"error": "Approval request not found"}).encode()
 
         item = self.pending_approvals.pop(req_id)
+        intent = item.get("intent", {})
+        cap = intent.get("capability", "unknown")
+        params = intent.get("params", {})
         if action == "approve":
             # Execute requested intent through broker
-            intent = item.get("intent", {})
-            cap = intent.get("capability")
-            params = intent.get("params", {})
             if cap == "fs.delete":
                 self.fs.handle_fs_delete(params)
+            self.audit.append(f"{cap}.approved", "user", params)
             return self._json_resp({"status": "approved", "result": f"Executed {cap}"})
         else:
+            self.audit.append(f"{cap}.denied", "user", params)
             return self._json_resp({"status": "denied", "result": "Action rejected by user"})
 
     def _get_audit(self, params: Dict[str, str]) -> Tuple[int, Dict[str, str], bytes]:
@@ -243,19 +247,27 @@ class GatewayAPIHandler:
         return self._json_resp(records[-limit:])
 
     def _post_audit_verify(self) -> Tuple[int, Dict[str, str], bytes]:
-        if not self.audit_log_path.exists():
-            return self._json_resp({"is_valid": True, "total_records": 0, "message": "Log empty or genesis"})
         res = verify_audit_log(str(self.audit_log_path))
         return self._json_resp({
+            "valid": res.is_valid,
             "is_valid": res.is_valid,
             "total_records": res.total_records,
-            "errors": res.errors
+            "errors": [res.reason] if res.reason else []
         })
+
+    def _resolve_target(self, subpath: str) -> Path:
+        if not subpath:
+            return self.data_dir
+        if subpath.startswith(str(self.data_dir)):
+            rel = os.path.relpath(subpath, str(self.data_dir))
+            clean = "" if rel == "." else rel
+        else:
+            clean = subpath.lstrip("/")
+        return (self.data_dir / clean).resolve()
 
     def _get_fs(self, params: Dict[str, str]) -> Tuple[int, Dict[str, str], bytes]:
         subpath = params.get("path", "")
-        clean = subpath.lstrip("/")
-        target = self.data_dir / clean
+        target = self._resolve_target(subpath)
         if not target.exists():
             return 404, {"Content-Type": "application/json"}, json.dumps({"error": f"Path '{subpath}' not found"}).encode()
 
@@ -288,6 +300,7 @@ class GatewayAPIHandler:
             return 403, {"Content-Type": "application/json"}, json.dumps({"error": "Policy Denied", "decision": decision}).encode()
 
         res = self.fs.handle_fs_write(payload)
+        self.audit.append("fs.write", "hud", payload)
         return self._json_resp({"status": "created", "result": res, "decision": decision})
 
     def _delete_fs(self, payload: Dict[str, Any]) -> Tuple[int, Dict[str, str], bytes]:
@@ -310,6 +323,7 @@ class GatewayAPIHandler:
                 "intent": intent,
                 "created_at": time.strftime("%Y-%m-%dT%H:%M:%SZ")
             }
+            self.audit.append("fs.delete.pending", "hud", payload)
             return 202, {"Content-Type": "application/json"}, json.dumps({
                 "status": "pending_approval",
                 "approval_id": app_id,
@@ -317,6 +331,7 @@ class GatewayAPIHandler:
             }).encode()
 
         res = self.fs.handle_fs_delete(payload)
+        self.audit.append("fs.delete", "hud", payload)
         return self._json_resp({"status": "deleted", "result": res})
 
     def _get_capabilities(self) -> Tuple[int, Dict[str, str], bytes]:

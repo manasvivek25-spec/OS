@@ -1,0 +1,174 @@
+{
+  "timestamp": "2026-11-15T20:47:13.100919+00:00",
+  "target_url": "http://127.0.0.1:8766",
+  "overall_status": "PASS",
+  "steps": [
+    {
+      "step": 1,
+      "name": "Identity & Badges",
+      "status": "PASS",
+      "data": {
+        "identity": {
+          "hostname": "lazy-os",
+          "kernel_release": "6.8.0-149-generic",
+          "boot_id": "44f6290f-0362-4904-ae4e-28fc6833b09f",
+          "uptime": 43.81,
+          "mounts": [
+            {
+              "device": "rootfs",
+              "mountpoint": "/",
+              "fstype": "rootfs"
+            },
+            {
+              "device": "proc",
+              "mountpoint": "/proc",
+              "fstype": "proc"
+            },
+            {
+              "device": "sysfs",
+              "mountpoint": "/sys",
+              "fstype": "sysfs"
+            },
+            {
+              "device": "devtmpfs",
+              "mountpoint": "/dev",
+              "fstype": "devtmpfs"
+            },
+            {
+              "device": "tmpfs",
+              "mountpoint": "/run",
+              "fstype": "tmpfs"
+            },
+            {
+              "device": "tmpfs",
+              "mountpoint": "/tmp",
+              "fstype": "tmpfs"
+            },
+            {
+              "device": "/dev/vda3",
+              "mountpoint": "/data",
+              "fstype": "btrfs"
+            }
+          ],
+          "image_build_id": "lazy-os-v2-command-center",
+          "git_commit": "v2-command-center"
+        },
+        "build_info": {
+          "kernel": {
+            "status": "real",
+            "label": "Host Kernel",
+            "source": "Ubuntu 6.8 with custom initramfs"
+          },
+          "storage": {
+            "status": "real",
+            "label": "Btrfs Partition",
+            "source": "/dev/vda3 persistent mount on /data"
+          },
+          "audit": {
+            "status": "real",
+            "label": "SHA-256 Hash Chain",
+            "source": "lazy.audit cryptographically chained ledger"
+          },
+          "snapshots": {
+            "status": "real",
+            "label": "Snapshot Rollback",
+            "source": "lazy.tasks instant zero-loss undo"
+          },
+          "llm": {
+            "status": "simulated",
+            "label": "Mock Heuristic",
+            "source": "Rule-based planner (Host LLM available)"
+          },
+          "voice": {
+            "status": "simulated",
+            "label": "Browser Speech API",
+            "source": "Web Speech API (not in image)"
+          },
+          "web_driver": {
+            "status": "real",
+            "label": "Pure Python Driver",
+            "source": "lazy.brokers.web isolated sandbox"
+          },
+          "comms": {
+            "status": "real",
+            "label": "Maildir & Chat",
+            "source": "lazy.brokers.comms local drivers"
+          }
+        }
+      }
+    },
+    {
+      "step": 2,
+      "name": "Directive L1 Note Creation",
+      "status": "PASS",
+      "data": {
+        "type": "file",
+        "path": "/data/plan.md",
+        "size": 159,
+        "content": "# Lazy OS Execution Plan\n- [x] 1. Kernel and Btrfs Storage Verification\n- [x] 2. Command Center Offline SPA Launch\n- [ ] 3. Academic Deck and Provenance Audit\n"
+      }
+    },
+    {
+      "step": 3,
+      "name": "L2 Deletion Approved",
+      "status": "PASS",
+      "data": {
+        "status": "approved",
+        "result": "Executed fs.delete"
+      }
+    },
+    {
+      "step": 4,
+      "name": "L2 Deletion Denied",
+      "status": "PASS",
+      "data": {
+        "type": "file",
+        "path": "/data/safe_doc.txt",
+        "size": 43,
+        "content": "CONFIDENTIAL_OPERATING_SYSTEM_SPECIFICATION"
+      }
+    },
+    {
+      "step": 5,
+      "name": "Agent Center Activity",
+      "status": "PASS",
+      "service_count": 15,
+      "capabilities_count": 37
+    },
+    {
+      "step": 6,
+      "name": "System Monitor Metrics",
+      "status": "PASS",
+      "metrics": {
+        "cpu_percent": 4.2,
+        "memory": {
+          "used_mb": 234.7,
+          "total_mb": 961.1,
+          "percent": 24.4
+        },
+        "disk": {
+          "used_mb": 5.8,
+          "total_mb": 128.0,
+          "percent": 4.5
+        },
+        "network": {
+          "rx_kb": 124.5,
+          "tx_kb": 89.2
+        }
+      }
+    },
+    {
+      "step": 7,
+      "name": "Audit Verification & Tamper Detection",
+      "status": "PASS",
+      "audit_verified": true,
+      "tamper_detected": true
+    },
+    {
+      "step": 8,
+      "name": "Task Undo & Tree Restoration",
+      "status": "PASS",
+      "restored": true
+    }
+  ]
+}

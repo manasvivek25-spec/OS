@@ -173,78 +173,28 @@ lazyos:x:1000:1000:Lazy OS User:/home/lazyos:/bin/sh
 
 # 9. In-Guest Service Daemon
 guest_daemon_src = """#!/usr/bin/python3
-import sys
 import os
-import json
+import sys
 import time
 from pathlib import Path
-from http.server import ThreadingHTTPServer, SimpleHTTPRequestHandler
+from lazy.gateway.server import GatewayServer
 
-HUD_DIR = "/usr/share/lazy/hud"
-GIT_COMMIT = "v2-command-center"
-
-class LazyGatewayHandler(SimpleHTTPRequestHandler):
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, directory=HUD_DIR, **kwargs)
-
-    def do_GET(self):
-        clean_path = self.path.split("?")[0]
-        if clean_path == "/api/identity":
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            
-            boot_id = Path("/proc/sys/kernel/random/boot_id").read_text().strip() if Path("/proc/sys/kernel/random/boot_id").exists() else "unknown"
-            uptime_s = float(Path("/proc/uptime").read_text().split()[0]) if Path("/proc/uptime").exists() else 0.0
-            
-            # Read real mounts
-            mounts = []
-            if Path("/proc/mounts").exists():
-                for line in Path("/proc/mounts").read_text().splitlines():
-                    parts = line.split()
-                    if len(parts) >= 3:
-                        mounts.append({"device": parts[0], "mountpoint": parts[1], "fstype": parts[2]})
-                        
-            payload = {
-                "hostname": os.uname().nodename,
-                "kernel_release": os.uname().release,
-                "boot_id": boot_id,
-                "uptime": uptime_s,
-                "mounts": mounts,
-                "image_build_id": "lazy-os-v2-dev",
-                "git_commit": GIT_COMMIT
-            }
-            self.wfile.write(json.dumps(payload, indent=2).encode("utf-8"))
-            return
-
-        elif clean_path == "/api/build-info":
-            self.send_response(200)
-            self.send_header("Content-Type", "application/json")
-            self.end_headers()
-            
-            # Subsystems status
-            info = {
-                "kernel": {"status": "real", "source": "Ubuntu 6.8 host kernel with custom initramfs"},
-                "storage": {"status": "real", "source": "Persistent Btrfs block partition on /dev/vda3"},
-                "audit": {"status": "real", "source": "Cryptographic SHA-256 hash-chained ledger"},
-                "snapshots": {"status": "real", "source": "Btrfs & Copy-on-Write task undo backend"},
-                "llm": {"status": "simulated", "source": "Heuristic Mock Planner (Host bridge available)"},
-                "voice": {"status": "simulated", "source": "Browser Speech API / synthetic fallback"},
-                "web_driver": {"status": "real", "source": "Pure Python DOM parser with quarantine isolation"},
-                "comms": {"status": "real", "source": "Maildir & local chat brokers"}
-            }
-            self.wfile.write(json.dumps(info, indent=2).encode("utf-8"))
-            return
-
-        # Fallback to static HUD assets
-        super().do_GET()
-
-def run_server():
-    httpd = ThreadingHTTPServer(("0.0.0.0", 8765), LazyGatewayHandler)
-    httpd.serve_forever()
+def main():
+    hud_dir = Path("/usr/share/lazy/hud")
+    repo_root = Path("/")
+    server = GatewayServer(host="0.0.0.0", port=8765, hud_dir=hud_dir)
+    server.api_handler.repo_root = repo_root
+    server.api_handler.data_dir = Path("/data")
+    server.start()
+    print("Lazy OS Gateway Daemon online on 0.0.0.0:8765")
+    while True:
+        try:
+            time.sleep(3600)
+        except KeyboardInterrupt:
+            break
 
 if __name__ == "__main__":
-    run_server()
+    main()
 """
 (ROOTFS / "usr/bin/lazy-guest-daemon.py").write_text(guest_daemon_src)
 (ROOTFS / "usr/bin/lazy-guest-daemon.py").chmod(0o755)
@@ -314,7 +264,9 @@ fi
 
 if /bin/busybox grep -q "lazy_interactive" /proc/cmdline; then
     /bin/busybox echo "lazyos@lazy-os:~$ "
-    exec /bin/busybox cttyhack /bin/busybox sh
+    while true; do
+        /bin/busybox cttyhack /bin/busybox sh 2>/dev/null || /bin/busybox sleep 3600
+    done
 else
     /bin/busybox echo "Batch run completed. Powering down."
     /bin/busybox poweroff -f
