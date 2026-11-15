@@ -1,0 +1,7 @@
+{
+  "verdict": "allow",
+  "tier": "L0",
+  "effect_class": "reversible",
+  "reason": "missing intent_id",
+  "approval_mode": "automatic"
+}

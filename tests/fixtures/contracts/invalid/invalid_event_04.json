@@ -1,0 +1,8 @@
+{
+  "id": "e1",
+  "ts": "invalid_date",
+  "type": "test",
+  "severity": "info",
+  "source": "src",
+  "data": {}
+}

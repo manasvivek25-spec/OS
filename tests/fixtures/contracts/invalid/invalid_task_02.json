@@ -1,0 +1,14 @@
+{
+  "id": "t1",
+  "status": "running",
+  "steps": [
+    {
+      "step_index": -1,
+      "intent_id": "i1",
+      "status": "pending"
+    }
+  ],
+  "checkpoints": [],
+  "created_at": "2026-11-15T12:00:00Z",
+  "updated_at": "2026-11-15T12:00:00Z"
+}

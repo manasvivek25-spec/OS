@@ -1,0 +1,18 @@
+{
+  "id": "outbox-004",
+  "kind": "chat",
+  "to": "@alerts",
+  "subject": "",
+  "body": "System backup finished.",
+  "attachments": [],
+  "created": "2026-11-15T12:30:00Z",
+  "send_after": "2026-11-15T12:31:00Z",
+  "status": "sent",
+  "approvals": [
+    {
+      "approver": "local_user",
+      "ts": "2026-11-15T12:30:30Z",
+      "mode": "user_text"
+    }
+  ]
+}

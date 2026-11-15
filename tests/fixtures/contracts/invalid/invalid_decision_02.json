@@ -1,0 +1,8 @@
+{
+  "intent_id": "i1",
+  "verdict": "allow",
+  "tier": "L99",
+  "effect_class": "reversible",
+  "reason": "ok",
+  "approval_mode": "automatic"
+}

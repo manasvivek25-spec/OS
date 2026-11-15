@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lazyos.local/contracts/v1/plan.schema.json",
+  "title": "Plan",
+  "type": "object",
+  "required": ["id", "steps", "rationale"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "$ref": "intent.schema.json"
+      }
+    },
+    "rationale": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": false
+}

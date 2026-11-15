@@ -1,0 +1,8 @@
+{
+  "intent_id": "intent-002",
+  "verdict": "allow",
+  "tier": "L1",
+  "effect_class": "compensable",
+  "reason": "Hardware brightness adjustment is L1 automatic.",
+  "approval_mode": "automatic"
+}

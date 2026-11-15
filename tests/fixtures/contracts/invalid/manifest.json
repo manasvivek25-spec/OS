@@ -1,0 +1,126 @@
+[
+  {
+    "filename": "invalid_intent_01.json",
+    "expected_schema": "intent"
+  },
+  {
+    "filename": "invalid_intent_02.json",
+    "expected_schema": "intent"
+  },
+  {
+    "filename": "invalid_intent_03.json",
+    "expected_schema": "intent"
+  },
+  {
+    "filename": "invalid_intent_04.json",
+    "expected_schema": "intent"
+  },
+  {
+    "filename": "invalid_intent_05.json",
+    "expected_schema": "intent"
+  },
+  {
+    "filename": "invalid_plan_01.json",
+    "expected_schema": "plan"
+  },
+  {
+    "filename": "invalid_plan_02.json",
+    "expected_schema": "plan"
+  },
+  {
+    "filename": "invalid_plan_03.json",
+    "expected_schema": "plan"
+  },
+  {
+    "filename": "invalid_plan_04.json",
+    "expected_schema": "plan"
+  },
+  {
+    "filename": "invalid_decision_01.json",
+    "expected_schema": "decision"
+  },
+  {
+    "filename": "invalid_decision_02.json",
+    "expected_schema": "decision"
+  },
+  {
+    "filename": "invalid_decision_03.json",
+    "expected_schema": "decision"
+  },
+  {
+    "filename": "invalid_decision_04.json",
+    "expected_schema": "decision"
+  },
+  {
+    "filename": "invalid_decision_05.json",
+    "expected_schema": "decision"
+  },
+  {
+    "filename": "invalid_event_01.json",
+    "expected_schema": "event"
+  },
+  {
+    "filename": "invalid_event_02.json",
+    "expected_schema": "event"
+  },
+  {
+    "filename": "invalid_event_03.json",
+    "expected_schema": "event"
+  },
+  {
+    "filename": "invalid_event_04.json",
+    "expected_schema": "event"
+  },
+  {
+    "filename": "invalid_event_05.json",
+    "expected_schema": "event"
+  },
+  {
+    "filename": "invalid_task_01.json",
+    "expected_schema": "task"
+  },
+  {
+    "filename": "invalid_task_02.json",
+    "expected_schema": "task"
+  },
+  {
+    "filename": "invalid_task_03.json",
+    "expected_schema": "task"
+  },
+  {
+    "filename": "invalid_task_04.json",
+    "expected_schema": "task"
+  },
+  {
+    "filename": "invalid_outbox_01.json",
+    "expected_schema": "outbox_item"
+  },
+  {
+    "filename": "invalid_outbox_02.json",
+    "expected_schema": "outbox_item"
+  },
+  {
+    "filename": "invalid_outbox_03.json",
+    "expected_schema": "outbox_item"
+  },
+  {
+    "filename": "invalid_outbox_04.json",
+    "expected_schema": "outbox_item"
+  },
+  {
+    "filename": "invalid_manifest_01.yaml",
+    "expected_schema": "capability_manifest"
+  },
+  {
+    "filename": "invalid_manifest_02.yaml",
+    "expected_schema": "capability_manifest"
+  },
+  {
+    "filename": "invalid_manifest_03.yaml",
+    "expected_schema": "capability_manifest"
+  },
+  {
+    "filename": "invalid_manifest_04.yaml",
+    "expected_schema": "capability_manifest"
+  }
+]

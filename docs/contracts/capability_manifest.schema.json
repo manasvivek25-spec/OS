@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lazyos.local/contracts/v1/capability_manifest.schema.json",
+  "title": "CapabilityManifest",
+  "type": "object",
+  "required": ["name", "params_schema", "tier", "effect_class", "approval_mode", "sandbox_profile", "undo_method", "taint_rules"],
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z0-9_]+\\.[a-z0-9_]+$"
+    },
+    "description": {
+      "type": "string"
+    },
+    "params_schema": {
+      "type": "object"
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["L0", "L1", "L2", "L3", "L4"]
+    },
+    "effect_class": {
+      "type": "string",
+      "enum": ["reversible", "compensable", "irreversible"]
+    },
+    "approval_mode": {
+      "type": "string",
+      "enum": ["automatic", "user_confirm", "outbox_delay", "denied"]
+    },
+    "sandbox_profile": {
+      "type": "string"
+    },
+    "undo_method": {
+      "type": "string"
+    },
+    "taint_rules": {
+      "type": "object",
+      "properties": {
+        "disallow_untrusted_keys": {
+          "type": "array",
+          "items": { "type": "string" }
+        },
+        "require_user_confirmation": {
+          "type": "boolean"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

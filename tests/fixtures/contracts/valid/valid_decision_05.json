@@ -1,0 +1,8 @@
+{
+  "intent_id": "intent-deny-example",
+  "verdict": "deny",
+  "tier": "L4",
+  "effect_class": "irreversible",
+  "reason": "Prohibited attempt to overwrite policy engine manifests.",
+  "approval_mode": "denied"
+}

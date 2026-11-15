@@ -1,0 +1,8 @@
+approval_mode: automatic
+effect_class: reversible
+name: fs.read
+params_schema: {}
+sandbox_profile: ro
+taint_rules: {}
+tier: L99
+undo_method: none

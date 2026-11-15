@@ -1,0 +1,22 @@
+{
+  "id": "plan-004",
+  "steps": [
+    {
+      "id": "intent-004",
+      "ts": "2026-11-15T12:15:00Z",
+      "task_id": "task-103",
+      "requester": "routine",
+      "capability": "web.read",
+      "params": {
+        "url": "https://news.ycombinator.com/rss"
+      },
+      "provenance": [
+        {
+          "source": "morning_briefing",
+          "trusted": true
+        }
+      ]
+    }
+  ],
+  "rationale": "Fetch news feed for daily morning digest."
+}

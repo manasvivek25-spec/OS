@@ -1,0 +1,23 @@
+{
+  "id": "plan-001",
+  "steps": [
+    {
+      "id": "intent-001",
+      "ts": "2026-11-15T12:00:00Z",
+      "task_id": "task-100",
+      "requester": "text",
+      "capability": "fs.read",
+      "params": {
+        "path": "/home/user/notes.txt"
+      },
+      "provenance": [
+        {
+          "source": "user_prompt",
+          "trusted": true,
+          "detail": "Direct CLI entry"
+        }
+      ]
+    }
+  ],
+  "rationale": "Read document to extract relevant notes for user."
+}

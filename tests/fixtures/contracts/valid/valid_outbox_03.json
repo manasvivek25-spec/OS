@@ -1,0 +1,12 @@
+{
+  "id": "outbox-003",
+  "kind": "mail",
+  "to": "colleague@example.org",
+  "subject": "Code Review",
+  "body": "Check out the PR diff.",
+  "attachments": [],
+  "created": "2026-11-15T12:20:00Z",
+  "send_after": "2026-11-15T12:25:00Z",
+  "status": "cancelled",
+  "approvals": []
+}

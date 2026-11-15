@@ -1,0 +1,9 @@
+{
+  "id": "i1",
+  "ts": "not-a-timestamp",
+  "task_id": "t1",
+  "requester": "text",
+  "capability": "fs.read",
+  "params": {},
+  "provenance": []
+}

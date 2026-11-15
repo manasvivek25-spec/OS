@@ -1,0 +1,11 @@
+{
+  "id": "event-004",
+  "ts": "2026-11-15T12:03:00Z",
+  "type": "tasks.snapshot_created",
+  "severity": "info",
+  "source": "lazy-tasks",
+  "data": {
+    "snapshot_id": "snap-001",
+    "backend": "copy"
+  }
+}

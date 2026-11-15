@@ -1,0 +1,11 @@
+{
+  "id": "o1",
+  "kind": "mail",
+  "to": "x",
+  "subject": "",
+  "body": "",
+  "attachments": [],
+  "send_after": "2026-11-15T12:05:00Z",
+  "status": "pending",
+  "approvals": []
+}

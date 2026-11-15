@@ -1,0 +1,11 @@
+{
+  "id": "event-001",
+  "ts": "2026-11-15T12:00:00Z",
+  "type": "audit.record_created",
+  "severity": "info",
+  "source": "lazy-audit",
+  "data": {
+    "seq": 1,
+    "record_hash": "a1b2c3d4"
+  }
+}

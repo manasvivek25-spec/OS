@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lazyos.local/contracts/v1/outbox_item.schema.json",
+  "title": "OutboxItem",
+  "type": "object",
+  "required": ["id", "kind", "to", "subject", "body", "attachments", "created", "send_after", "status", "approvals"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["mail", "chat"]
+    },
+    "to": {
+      "type": "string",
+      "minLength": 1
+    },
+    "subject": {
+      "type": "string"
+    },
+    "body": {
+      "type": "string"
+    },
+    "attachments": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "created": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "send_after": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "approved", "cancelled", "sent"]
+    },
+    "approvals": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["approver", "ts", "mode"],
+        "properties": {
+          "approver": { "type": "string" },
+          "ts": { "type": "string", "format": "date-time" },
+          "mode": { "type": "string", "enum": ["user_hud", "user_text", "user_voice_override"] }
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

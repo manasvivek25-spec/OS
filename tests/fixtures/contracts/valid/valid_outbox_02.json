@@ -1,0 +1,12 @@
+{
+  "id": "outbox-002",
+  "kind": "chat",
+  "to": "@team_chat",
+  "subject": "",
+  "body": "Daily briefing chore executed successfully.",
+  "attachments": [],
+  "created": "2026-11-15T12:10:00Z",
+  "send_after": "2026-11-15T12:11:00Z",
+  "status": "approved",
+  "approvals": []
+}

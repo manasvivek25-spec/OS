@@ -1,0 +1,16 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+collecting ... collected 6 items
+
+tests/unit/test_contracts.py::test_all_contract_schemas_exist_and_load PASSED [ 16%]
+tests/unit/test_contracts.py::test_valid_samples_pass_validation PASSED  [ 33%]
+tests/unit/test_contracts.py::test_invalid_samples_fail_validation PASSED [ 50%]
+tests/unit/test_contracts.py::test_strict_mode_raises_exception PASSED   [ 66%]
+tests/unit/test_contracts.py::test_unknown_schema_type_raises PASSED     [ 83%]
+tests/unit/test_contracts.py::test_cli_validator PASSED                  [100%]
+
+============================== 6 passed in 2.05s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

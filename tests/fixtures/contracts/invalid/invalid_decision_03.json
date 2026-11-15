@@ -1,0 +1,8 @@
+{
+  "intent_id": "i1",
+  "verdict": "allow",
+  "tier": "L1",
+  "effect_class": "destructive",
+  "reason": "ok",
+  "approval_mode": "automatic"
+}

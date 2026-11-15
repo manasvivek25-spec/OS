@@ -1,0 +1,11 @@
+{
+  "id": "event-003",
+  "ts": "2026-11-15T12:02:00Z",
+  "type": "hardware.brightness_changed",
+  "severity": "debug",
+  "source": "lazy-broker-hw",
+  "data": {
+    "old": 50,
+    "new": 80
+  }
+}

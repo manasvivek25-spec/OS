@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lazyos.local/contracts/v1/task.schema.json",
+  "title": "Task",
+  "type": "object",
+  "required": ["id", "status", "steps", "checkpoints", "created_at", "updated_at"],
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "type": "string",
+      "enum": ["pending", "running", "paused", "completed", "failed", "cancelled"]
+    },
+    "steps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["step_index", "intent_id", "status"],
+        "properties": {
+          "step_index": { "type": "integer", "minimum": 0 },
+          "intent_id": { "type": "string" },
+          "status": { "type": "string", "enum": ["pending", "running", "done", "failed", "undone"] },
+          "checkpoint_id": { "type": "string" },
+          "result": { "type": "object" }
+        }
+      }
+    },
+    "checkpoints": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "ts", "backend", "reference"],
+        "properties": {
+          "id": { "type": "string" },
+          "ts": { "type": "string", "format": "date-time" },
+          "backend": { "type": "string", "enum": ["btrfs", "overlay", "copy"] },
+          "reference": { "type": "string" },
+          "pre_hash": { "type": "string" }
+        }
+      }
+    },
+    "created_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "updated_at": {
+      "type": "string",
+      "format": "date-time"
+    }
+  },
+  "additionalProperties": false
+}

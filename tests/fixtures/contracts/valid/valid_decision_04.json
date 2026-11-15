@@ -1,0 +1,8 @@
+{
+  "intent_id": "intent-004",
+  "verdict": "allow",
+  "tier": "L0",
+  "effect_class": "reversible",
+  "reason": "Reading RSS feed is safe read-only retrieval.",
+  "approval_mode": "automatic"
+}

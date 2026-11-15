@@ -1,0 +1,24 @@
+approval_mode: outbox_delay
+description: Send email via outbox delay
+effect_class: irreversible
+name: mail.send
+params_schema:
+  properties:
+    body:
+      type: string
+    subject:
+      type: string
+    to:
+      type: string
+  required:
+  - to
+  - subject
+  - body
+  type: object
+sandbox_profile: comms_isolated
+taint_rules:
+  disallow_untrusted_keys:
+  - to
+  require_user_confirmation: true
+tier: L3
+undo_method: outbox_cancel

@@ -1,0 +1,8 @@
+{
+  "intent_id": "intent-003",
+  "verdict": "ask",
+  "tier": "L2",
+  "effect_class": "compensable",
+  "reason": "System service restart requires explicit user confirmation.",
+  "approval_mode": "user_confirm"
+}

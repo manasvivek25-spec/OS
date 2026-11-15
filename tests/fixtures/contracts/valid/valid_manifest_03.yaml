@@ -1,0 +1,18 @@
+approval_mode: user_confirm
+description: Restart systemd service
+effect_class: compensable
+name: sys.service_restart
+params_schema:
+  properties:
+    service:
+      type: string
+  required:
+  - service
+  type: object
+sandbox_profile: system_admin
+taint_rules:
+  disallow_untrusted_keys:
+  - service
+  require_user_confirmation: true
+tier: L2
+undo_method: service_restore_previous_state

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://lazyos.local/contracts/v1/decision.schema.json",
+  "title": "Decision",
+  "type": "object",
+  "required": ["intent_id", "verdict", "tier", "effect_class", "reason", "approval_mode"],
+  "properties": {
+    "intent_id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "verdict": {
+      "type": "string",
+      "enum": ["allow", "ask", "deny"]
+    },
+    "tier": {
+      "type": "string",
+      "enum": ["L0", "L1", "L2", "L3", "L4"]
+    },
+    "effect_class": {
+      "type": "string",
+      "enum": ["reversible", "compensable", "irreversible"]
+    },
+    "reason": {
+      "type": "string"
+    },
+    "approval_mode": {
+      "type": "string",
+      "enum": ["automatic", "user_confirm", "outbox_delay", "denied"]
+    }
+  },
+  "additionalProperties": false
+}

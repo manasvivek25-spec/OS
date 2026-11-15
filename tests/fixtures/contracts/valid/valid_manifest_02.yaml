@@ -1,0 +1,21 @@
+approval_mode: automatic
+description: Write or overwrite file contents
+effect_class: reversible
+name: fs.write
+params_schema:
+  properties:
+    content:
+      type: string
+    path:
+      type: string
+  required:
+  - path
+  - content
+  type: object
+sandbox_profile: writable_data
+taint_rules:
+  disallow_untrusted_keys:
+  - path
+  require_user_confirmation: false
+tier: L1
+undo_method: snapshot_revert

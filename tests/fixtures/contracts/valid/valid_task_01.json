@@ -1,0 +1,26 @@
+{
+  "id": "task-001",
+  "status": "completed",
+  "steps": [
+    {
+      "step_index": 0,
+      "intent_id": "intent-001",
+      "status": "done",
+      "checkpoint_id": "snap-001",
+      "result": {
+        "status": "ok"
+      }
+    }
+  ],
+  "checkpoints": [
+    {
+      "id": "snap-001",
+      "ts": "2026-11-15T12:00:00Z",
+      "backend": "copy",
+      "reference": "/tmp/checkpoints/snap-001",
+      "pre_hash": "hash123"
+    }
+  ],
+  "created_at": "2026-11-15T12:00:00Z",
+  "updated_at": "2026-11-15T12:01:00Z"
+}

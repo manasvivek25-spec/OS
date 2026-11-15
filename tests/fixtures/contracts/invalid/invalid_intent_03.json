@@ -1,0 +1,9 @@
+{
+  "id": "i1",
+  "ts": "2026-11-15T12:00:00Z",
+  "task_id": "t1",
+  "requester": "telepathy",
+  "capability": "fs.read",
+  "params": {},
+  "provenance": []
+}

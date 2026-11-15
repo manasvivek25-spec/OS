@@ -1,0 +1,17 @@
+{
+  "id": "intent-005",
+  "ts": "2026-11-15T12:20:00Z",
+  "task_id": "task-104",
+  "requester": "text",
+  "capability": "code.write",
+  "params": {
+    "path": "/home/user/script.py",
+    "content": "print('hello')"
+  },
+  "provenance": [
+    {
+      "source": "user_text",
+      "trusted": true
+    }
+  ]
+}

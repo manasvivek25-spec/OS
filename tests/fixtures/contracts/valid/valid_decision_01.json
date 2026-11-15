@@ -1,0 +1,8 @@
+{
+  "intent_id": "intent-001",
+  "verdict": "allow",
+  "tier": "L0",
+  "effect_class": "reversible",
+  "reason": "Read-only file inspection is permitted automatically.",
+  "approval_mode": "automatic"
+}

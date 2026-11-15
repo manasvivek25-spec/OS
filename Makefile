@@ -1,5 +1,6 @@
 # Lazy OS Master Makefile
 SHELL := /bin/bash
+export PYTHONPATH := $(CURDIR)/src:$(PYTHONPATH)
 PYTHON ?= python3
 VENV ?= .venv
 VENV_BIN ?= $(VENV)/bin

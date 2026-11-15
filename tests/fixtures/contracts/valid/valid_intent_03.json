@@ -1,0 +1,16 @@
+{
+  "id": "intent-003",
+  "ts": "2026-11-15T12:10:00Z",
+  "task_id": "task-102",
+  "requester": "hud",
+  "capability": "sys.service_restart",
+  "params": {
+    "service": "bluetooth"
+  },
+  "provenance": [
+    {
+      "source": "hud_click",
+      "trusted": true
+    }
+  ]
+}

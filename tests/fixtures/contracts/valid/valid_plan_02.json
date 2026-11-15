@@ -1,0 +1,22 @@
+{
+  "id": "plan-002",
+  "steps": [
+    {
+      "id": "intent-002",
+      "ts": "2026-11-15T12:05:00Z",
+      "task_id": "task-101",
+      "requester": "voice",
+      "capability": "hw.backlight_set",
+      "params": {
+        "brightness": 80
+      },
+      "provenance": [
+        {
+          "source": "voice_wake",
+          "trusted": true
+        }
+      ]
+    }
+  ],
+  "rationale": "Adjust display brightness per voice command."
+}

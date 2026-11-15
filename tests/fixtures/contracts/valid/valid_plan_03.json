@@ -1,0 +1,40 @@
+{
+  "id": "plan-003",
+  "steps": [
+    {
+      "id": "intent-001",
+      "ts": "2026-11-15T12:00:00Z",
+      "task_id": "task-100",
+      "requester": "text",
+      "capability": "fs.read",
+      "params": {
+        "path": "/home/user/notes.txt"
+      },
+      "provenance": [
+        {
+          "source": "user_prompt",
+          "trusted": true,
+          "detail": "Direct CLI entry"
+        }
+      ]
+    },
+    {
+      "id": "intent-005",
+      "ts": "2026-11-15T12:20:00Z",
+      "task_id": "task-104",
+      "requester": "text",
+      "capability": "code.write",
+      "params": {
+        "path": "/home/user/script.py",
+        "content": "print('hello')"
+      },
+      "provenance": [
+        {
+          "source": "user_text",
+          "trusted": true
+        }
+      ]
+    }
+  ],
+  "rationale": "Read template and generate python script."
+}

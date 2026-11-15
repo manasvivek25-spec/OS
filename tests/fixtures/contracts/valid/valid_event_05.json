@@ -1,0 +1,11 @@
+{
+  "id": "event-005",
+  "ts": "2026-11-15T12:04:00Z",
+  "type": "security.l4_attempt_blocked",
+  "severity": "warning",
+  "source": "lazy-policy",
+  "data": {
+    "target": "policy.yaml",
+    "verdict": "deny"
+  }
+}
