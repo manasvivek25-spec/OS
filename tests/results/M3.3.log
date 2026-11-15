@@ -1,0 +1,18 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 7 items
+
+tests/unit/test_routines.py::TestChoreManager::test_tidy_downloads_with_undo PASSED [ 14%]
+tests/unit/test_routines.py::TestChoreManager::test_backup_documents PASSED [ 28%]
+tests/unit/test_routines.py::TestChoreManager::test_digest_logs PASSED   [ 42%]
+tests/unit/test_routines.py::TestChoreManager::test_check_updates PASSED [ 57%]
+tests/unit/test_routines.py::TestBriefingGenerator::test_tasks_markdown_parser PASSED [ 71%]
+tests/unit/test_routines.py::TestBriefingGenerator::test_briefing_narrative_generation PASSED [ 85%]
+tests/unit/test_routines.py::TestRoutinesEngineIntegration::test_overnight_sequence_and_morning_briefing PASSED [100%]
+
+============================== 7 passed in 0.23s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

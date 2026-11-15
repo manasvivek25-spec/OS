@@ -1,0 +1,29 @@
+# Lazy OS Routines and Overnight Chores Configuration
+triggers:
+  overnight_chores:
+    schedule: "03:00"
+    timer_unit: "lazy-chores.timer"
+    enabled: true
+    chores:
+      - tidy_downloads
+      - backup_documents
+      - digest_logs
+      - check_updates
+  morning_briefing:
+    schedule: "07:30"
+    timer_unit: "lazy-briefing.timer"
+    enabled: true
+    greeting: "Good morning. Here is your Lazy OS wake-up briefing."
+
+chores:
+  tidy_downloads:
+    max_age_days: 7
+    archive_subfolder: "Archive"
+  backup_documents:
+    compression: "gz"
+    keep_versions: 5
+  digest_logs:
+    max_lines: 500
+    alert_on_error: true
+  check_updates:
+    local_manifest: "yocto/meta-lazy/conf/layer.conf"
