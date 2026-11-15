@@ -1,0 +1,72 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+=== Lazy OS Interactive Latency Tuning Verification (M5.4) ===
+[1/5] Auditing Systemd units for interactive-latency directives...
+  Systemd service and slice configurations verified.
+[2/5] Running latency tuning unit tests...
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 13 items
+
+tests/unit/test_latency_tuning.py::TestMemoryLocking::test_page_preload_and_fault PASSED [  7%]
+tests/unit/test_latency_tuning.py::TestMemoryLocking::test_empty_buffer_fault PASSED [ 15%]
+tests/unit/test_latency_tuning.py::TestMemoryLocking::test_mlock_and_munlock_execution PASSED [ 23%]
+tests/unit/test_latency_tuning.py::TestMemoryLocking::test_locked_memory_kb_format PASSED [ 30%]
+tests/unit/test_latency_tuning.py::TestCpuAffinity::test_available_cpus PASSED [ 38%]
+tests/unit/test_latency_tuning.py::TestCpuAffinity::test_set_and_get_affinity PASSED [ 46%]
+tests/unit/test_latency_tuning.py::TestCpuAffinity::test_service_affinity_mapping PASSED [ 53%]
+tests/unit/test_latency_tuning.py::TestCpuAffinity::test_apply_service_affinity PASSED [ 61%]
+tests/unit/test_latency_tuning.py::TestCgroupsAndPriority::test_cgroup_profiles PASSED [ 69%]
+tests/unit/test_latency_tuning.py::TestCgroupsAndPriority::test_service_profile_mapping PASSED [ 76%]
+tests/unit/test_latency_tuning.py::TestCgroupsAndPriority::test_apply_nice_graceful_handling PASSED [ 84%]
+tests/unit/test_latency_tuning.py::TestModelWarmup::test_warmup_execution PASSED [ 92%]
+tests/unit/test_latency_tuning.py::TestSystemdLatencyDirectives::test_service_tuning_directives PASSED [100%]
+
+============================== 13 passed in 0.31s ==============================
+[3/5] Executing tune-latency.sh setup and warmup...
+=== Lazy OS Interactive Latency Tuning ===
+[1/4] Checking locked memory limits (mlock)...
+  Current ulimit -l: 65536
+  Note: LimitMEMLOCK=infinity is enforced inside systemd service units.
+[2/4] Verifying Cgroup v2 CPU and IO scheduling weights...
+  Cgroup v2 hierarchy detected.
+  Available controllers: cpuset cpu io memory hugetlb pids rdma
+  Interactive slice weight: CPUWeight=500, IOWeight=500
+  Background slice weight: CPUWeight=50, IOWeight=50
+[3/4] Configuring CPU affinity masks...
+  Detected 16 logical CPU core(s).
+  Interactive affinity: Cores 0,1 (pinned for LLM, Planner, Gateway, Voice)
+  Background affinity: Cores 2,3 (pinned for Chores, Routines, Fetcher)
+[4/4] Executing warm-up sequence and preloading...
+<frozen runpy>:128: RuntimeWarning: 'lazy.tuning.warmup' found in sys.modules after import of package 'lazy.tuning', but prior to execution of 'lazy.tuning.warmup'; this may result in unpredictable behaviour
+Lazy OS Model Warm-up Status: ok
+Memory Locked: True (20488 kB)
+Duration: 4.94 ms
+=== Interactive Latency Tuning Successfully Configured ===
+[4/5] Running 5-configuration latency ablation experiment (20 trials per condition)...
+Starting Latency Tuning Ablation (5 configs x 2 loads x 20 trials)...
+  [1_baseline_untuned  ] load=idle            -> TTFT p50= 32.2ms p95= 52.0ms | TTFW p50= 10.1ms p95= 16.9ms
+  [1_baseline_untuned  ] load=background_load -> TTFT p50= 28.1ms p95= 31.4ms | TTFW p50=  7.7ms p95=  8.1ms
+  [+preload_mlock      ] load=idle            -> TTFT p50= 11.9ms p95= 14.1ms | TTFW p50=  6.6ms p95=  7.0ms
+  [+preload_mlock      ] load=background_load -> TTFT p50= 12.1ms p95= 41.6ms | TTFW p50=  7.0ms p95=  7.3ms
+  [+cgroup_priority    ] load=idle            -> TTFT p50= 29.7ms p95= 84.3ms | TTFW p50=  9.6ms p95= 13.8ms
+  [+cgroup_priority    ] load=background_load -> TTFT p50= 46.7ms p95= 52.0ms | TTFW p50=  9.7ms p95= 11.3ms
+  [+cpu_affinity       ] load=idle            -> TTFT p50= 33.1ms p95=117.3ms | TTFW p50=  8.8ms p95= 11.0ms
+  [+cpu_affinity       ] load=background_load -> TTFT p50= 30.2ms p95= 47.3ms | TTFW p50=  8.3ms p95=  9.7ms
+  [all_tuned           ] load=idle            -> TTFT p50= 12.6ms p95= 31.7ms | TTFW p50=  7.0ms p95= 11.3ms
+  [all_tuned           ] load=background_load -> TTFT p50= 13.0ms p95= 24.4ms | TTFW p50=  6.9ms p95=  7.3ms
+
+Ablation latency metrics successfully saved to: /mnt/c/Users/len/OS/bench/results/latency_ablation.csv
+[5/5] Auditing latency ablation results in bench/results/latency_ablation.csv...
+
+Measured Latency Comparison:
+  Baseline Untuned TTFT (p50): 32.22 ms
+  Preload + mlock TTFT (p50):  11.92 ms
+  Preload Latency Reduction:   63.0%
+
+All latency ablation constraints verified successfully.
+
+M5.4 VERIFICATION PASSED: Interactive-latency tuning, model warmup, mlock, cgroups, affinity, and ablation verified.
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

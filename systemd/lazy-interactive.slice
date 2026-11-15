@@ -1,0 +1,8 @@
+[Unit]
+Description=Lazy OS Interactive Services Slice (High Priority)
+DefaultDependencies=no
+Before=slices.target
+
+[Slice]
+CPUWeight=500
+IOWeight=500

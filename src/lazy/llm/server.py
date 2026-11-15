@@ -22,6 +22,7 @@ class LLMServerProcess:
         threads: int = 4,
         context_size: int = 2048,
         llama_server_bin: Optional[str] = None,
+        mlock: bool = True,
     ):
         self.model_path = Path(model_path)
         self.host = host
@@ -29,6 +30,7 @@ class LLMServerProcess:
         self.threads = threads
         self.context_size = context_size
         self.llama_server_bin = llama_server_bin or shutil.which("llama-server") or "llama-server"
+        self.mlock = mlock
         self._proc: Optional[subprocess.Popen] = None
 
     @property
@@ -52,6 +54,8 @@ class LLMServerProcess:
             "-c", str(self.context_size),
             "-ngl", "0",
         ]
+        if self.mlock:
+            cmd.append("--mlock")
 
         self._proc = subprocess.Popen(
             cmd,

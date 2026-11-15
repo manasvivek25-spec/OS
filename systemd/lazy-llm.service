@@ -30,10 +30,13 @@ RestrictAddressFamilies=AF_UNIX
 SystemCallFilter=@system-service ~@privileged ~@resources
 SystemCallArchitectures=native
 
-# Resource Isolation (Warm resident model)
+# Resource Isolation (Warm resident model with interactive tuning)
 MemoryMax=1024M
-CPUWeight=200
+CPUWeight=500
+IOWeight=500
 TasksMax=64
+LimitMEMLOCK=infinity
+CPUAffinity=0-1
 
 [Install]
 WantedBy=multi-user.target

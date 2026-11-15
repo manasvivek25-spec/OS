@@ -30,9 +30,11 @@ RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
 SystemCallFilter=@system-service ~@privileged ~@resources
 SystemCallArchitectures=native
 
-# Resource Isolation
+# Resource Isolation (Interactive Priority)
 MemoryMax=256M
-CPUWeight=100
+CPUWeight=400
+IOWeight=400
+CPUAffinity=0-1
 TasksMax=64
 
 [Install]

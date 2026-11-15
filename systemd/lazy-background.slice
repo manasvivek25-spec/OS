@@ -1,0 +1,8 @@
+[Unit]
+Description=Lazy OS Background Chores and Routines Slice (Low Priority)
+DefaultDependencies=no
+Before=slices.target
+
+[Slice]
+CPUWeight=50
+IOWeight=50
