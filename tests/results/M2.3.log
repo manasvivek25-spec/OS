@@ -1,0 +1,25 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 14 items
+
+tests/unit/test_dialogue.py::TestCorrectionEngine::test_path_substitution PASSED [  7%]
+tests/unit/test_dialogue.py::TestCorrectionEngine::test_brightness_override PASSED [ 14%]
+tests/unit/test_dialogue.py::TestCorrectionEngine::test_volume_override PASSED [ 21%]
+tests/unit/test_dialogue.py::TestCorrectionEngine::test_service_override PASSED [ 28%]
+tests/unit/test_dialogue.py::TestCorrectionEngine::test_unmatched_text PASSED [ 35%]
+tests/unit/test_dialogue.py::TestDialogueManager::test_plan_view_generation PASSED [ 42%]
+tests/unit/test_dialogue.py::TestDialogueManager::test_clarifying_question_and_option_selection PASSED [ 50%]
+tests/unit/test_dialogue.py::TestDialogueManager::test_control_commands_pause_resume_stop PASSED [ 57%]
+tests/unit/test_dialogue.py::TestDialogueManager::test_control_command_undo PASSED [ 64%]
+tests/unit/test_dialogue.py::TestDialogueManager::test_quiet_mode_toggle_and_narration_suppression PASSED [ 71%]
+tests/unit/test_dialogue.py::TestDialogueManager::test_correction_rule_application PASSED [ 78%]
+tests/unit/test_dialogue.py::TestGoldenTranscripts::test_golden_clarification_flow PASSED [ 85%]
+tests/unit/test_dialogue.py::TestGoldenTranscripts::test_golden_midflight_correction_flow PASSED [ 92%]
+tests/unit/test_dialogue.py::TestGoldenTranscripts::test_golden_pause_and_cancel_flow PASSED [100%]
+
+============================== 14 passed in 2.42s ==============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

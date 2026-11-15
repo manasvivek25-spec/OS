@@ -1,0 +1,40 @@
+# Dialogue Manager Correction Rules for Lazy OS
+rules:
+  - id: corr-path-substitute
+    trigger_patterns:
+      - "(?:no,?\\s+)?(?:not|use)\\s+(?P<path>\\S+)\\s+instead"
+      - "use path\\s+(?P<path>\\S+)"
+      - "save to\\s+(?P<path>\\S+)\\s+instead"
+    target_param: "path"
+    description: "Overrides the target file or directory path"
+
+  - id: corr-brightness-override
+    trigger_patterns:
+      - "(?:no,?\\s+)?make it\\s+(?P<brightness>\\d+)\\s*(?:percent|%)?"
+      - "i meant brightness\\s+(?P<brightness>\\d+)"
+    target_param: "brightness"
+    cast_type: "int"
+    description: "Adjusts requested backlight brightness percentage"
+
+  - id: corr-volume-override
+    trigger_patterns:
+      - "(?:no,?\\s+)?set volume to\\s+(?P<volume>\\d+)"
+      - "make volume\\s+(?P<volume>\\d+)"
+      - "i meant volume\\s+(?P<volume>\\d+)"
+    target_param: "volume"
+    cast_type: "int"
+    description: "Adjusts requested audio volume percentage"
+
+  - id: corr-service-override
+    trigger_patterns:
+      - "(?:no,?\\s+)?restart\\s+(?P<service>[a-zA-Z0-9_-]+)\\s+instead"
+      - "i meant service\\s+(?P<service>[a-zA-Z0-9_-]+)"
+    target_param: "service"
+    description: "Switches target service unit name"
+
+  - id: corr-mail-recipient
+    trigger_patterns:
+      - "(?:no,?\\s+)?send it to\\s+(?P<to>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+)\\s+instead"
+      - "i meant\\s+(?P<to>[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+)"
+    target_param: "to"
+    description: "Overrides email recipient"
