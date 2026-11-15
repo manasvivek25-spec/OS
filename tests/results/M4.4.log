@@ -1,0 +1,17 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 6 items
+
+tests/attacks/test_attack_suite.py::TestAttackSuite::test_minimum_dataset_sizes PASSED [ 16%]
+tests/attacks/test_attack_suite.py::TestAttackSuite::test_threat_categories_diversity PASSED [ 33%]
+tests/attacks/test_attack_suite.py::TestAttackSuite::test_guarded_pipeline_zero_breaches PASSED [ 50%]
+tests/attacks/test_attack_suite.py::TestAttackSuite::test_unguarded_baseline_shows_vulnerability PASSED [ 66%]
+tests/attacks/test_attack_suite.py::TestAttackSuite::test_benign_queries_false_block_rate PASSED [ 83%]
+tests/attacks/test_attack_suite.py::TestAttackSuite::test_safety_metrics_csv_contents PASSED [100%]
+
+============================== 6 passed in 3.63s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
