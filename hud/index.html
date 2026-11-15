@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LAZY OS // HUD v1.0</title>
+  <link rel="stylesheet" href="hud.css">
+</head>
+<body>
+  <!-- System Status Strip -->
+  <header id="status-strip">
+    <div class="status-brand">
+      <span class="hud-pulse-dot"></span>
+      <span class="hud-title">LAZY OS</span>
+      <span class="hud-version">v0.1-alpha</span>
+    </div>
+    <div class="status-metrics">
+      <div class="metric-item">
+        <span class="metric-label">CPU</span>
+        <span class="metric-val" id="metric-cpu">0%</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-label">RAM</span>
+        <span class="metric-val" id="metric-ram">0 MB</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-label">MODEL</span>
+        <span class="metric-val" id="metric-model">SmolLM2-360M</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-label">MODE</span>
+        <span class="metric-val badge-active" id="metric-mode">INTERACTIVE</span>
+      </div>
+      <div class="metric-item">
+        <span class="metric-label">NET</span>
+        <span class="metric-val" id="metric-net">OFFLINE-SECURE</span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main HUD Layout Grid -->
+  <main class="hud-container">
+    <!-- Left: Plan & Step View -->
+    <section class="panel plan-panel" id="plan-panel">
+      <div class="panel-header">
+        <h2>EXECUTION PLAN</h2>
+        <span class="badge" id="plan-status">IDLE</span>
+      </div>
+      <div class="plan-rationale" id="plan-rationale">No active plan. Waiting for directives.</div>
+      <div class="steps-list" id="steps-list">
+        <!-- Steps rendered dynamically -->
+      </div>
+    </section>
+
+    <!-- Center: Interactive Transcript -->
+    <section class="panel transcript-panel" id="transcript-panel">
+      <div class="panel-header">
+        <h2>TRANSCRIPT // TELEMETRY</h2>
+        <div class="session-info" id="session-info">DISCONNECTED</div>
+      </div>
+      <div class="transcript-feed" id="transcript-feed">
+        <div class="message msg-system">
+          <span class="msg-ts">[SYSTEM BOOT]</span>
+          <span class="msg-body">Lazy OS Core Initialized. Sandboxed units online. Cryptographic audit active.</span>
+        </div>
+      </div>
+      <!-- Input bar -->
+      <form class="hud-input-bar" id="input-form">
+        <input type="text" id="user-input" placeholder="Enter directive or voice command..." autocomplete="off">
+        <button type="submit" id="btn-send">EXECUTE</button>
+      </form>
+    </section>
+
+    <!-- Right: Approvals & Telemetry Panel -->
+    <section class="panel approvals-panel" id="approvals-panel">
+      <div class="panel-header">
+        <h2>SAFETY & APPROVALS</h2>
+        <span class="badge badge-safe" id="safety-level">L0 / L1 AUTO</span>
+      </div>
+      <div class="approvals-content" id="approvals-content">
+        <div class="approval-card empty" id="empty-approvals">
+          <p>All current actions within automated safety bounds.</p>
+          <small>L2 & L3 hazardous actions require explicit confirmation.</small>
+        </div>
+        <div class="approval-card active-approval" id="active-approval" style="display: none;">
+          <div class="approval-header">
+            <span class="badge-tier" id="appr-tier">TIER L2</span>
+            <span class="appr-cap" id="appr-cap">fs.delete</span>
+          </div>
+          <p class="appr-reason" id="appr-reason">Action requires operator consent.</p>
+          <div class="appr-diff" id="appr-diff">
+            <pre><code id="appr-diff-code">--- target: /tmp/temp.txt</code></pre>
+          </div>
+          <div class="appr-actions">
+            <button class="btn-deny" id="btn-deny">DENY</button>
+            <button class="btn-approve" id="btn-approve">APPROVE</button>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Futuristic Wake Animation Overlay -->
+  <div class="wake-animation-overlay" id="wake-animation">
+    <div class="wake-reticle">
+      <div class="wake-circle circle-outer"></div>
+      <div class="wake-circle circle-mid"></div>
+      <div class="wake-circle circle-inner"></div>
+      <div class="wake-text" id="wake-text">SYSTEM WAKE SEQUENCE INITIALIZED</div>
+      <div class="wake-subtext">AUTHENTICATING LOCAL OPERATOR...</div>
+    </div>
+  </div>
+
+  <script src="hud.js"></script>
+</body>
+</html>

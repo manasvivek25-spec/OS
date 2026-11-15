@@ -1,0 +1,17 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 6 items
+
+tests/unit/test_hud.py::TestHUDAssets::test_files_exist_and_non_empty PASSED [ 16%]
+tests/unit/test_hud.py::TestHUDAssets::test_strict_offline_zero_external_cdns PASSED [ 33%]
+tests/unit/test_hud.py::TestHUDComponents::test_dom_structure PASSED     [ 50%]
+tests/unit/test_hud.py::TestHUDComponents::test_css_styling_and_wake_animations PASSED [ 66%]
+tests/unit/test_hud.py::TestHUDComponents::test_javascript_event_handlers PASSED [ 83%]
+tests/unit/test_hud.py::TestHUDGatewayServing::test_gateway_serves_hud_assets PASSED [100%]
+
+============================== 6 passed in 0.32s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
