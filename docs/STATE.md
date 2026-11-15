@@ -12,8 +12,8 @@ M6.4: Final verification, tag v0-final, make handoff, FINAL SUMMARY (COMPLETED).
 6. Executed master verification suite: 401/401 tests passing in 111.68s across tests/unit and tests/attacks (0 failures, 100% passing rate), verified M6.4 in tests/results/M6.4.log.
 7. Executed make handoff, generating docs/HANDOFF.md with full session continuity.
 8. Tagged repository release tag v0-final marking completion of all Track A OS requirements.
-9. Executed fresh verification cycle on resumption: `make status` confirmed all 32 milestones marked done in docs/PLAN.md, and `make verify` re-confirmed 401/401 tests passing (100% green, 0 failures, 0 regressions in 119.56s).
-10. Delivered comprehensive FINAL SUMMARY deliverable detailing performance benchmarks, security guarantees, architectural invariants, and verification evidence.
+9. Executed fresh verification cycle on resumption: `make status` confirmed all 32 milestones marked done in docs/PLAN.md, and `make verify` re-confirmed 401/401 tests passing (100% green, 0 failures, 0 regressions in 116.44s).
+10. Delivered comprehensive FINAL SUMMARY deliverable detailing performance benchmarks, security guarantees, architectural invariants, and verification evidence. Live HUD verified on http://127.0.0.1:8765/.
 
 ## Open Problems
 None. All milestones green.
