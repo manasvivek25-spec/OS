@@ -1,0 +1,24 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 13 items
+
+tests/unit/test_niche_feed.py::TestFeedFetcher::test_fetch_fixture_feeds PASSED [  7%]
+tests/unit/test_niche_feed.py::TestFeedFetcher::test_missing_config_graceful_fallback PASSED [ 15%]
+tests/unit/test_niche_feed.py::TestUserProfile::test_profile_viewer_and_editor_api PASSED [ 23%]
+tests/unit/test_niche_feed.py::TestUserProfile::test_signals_extraction_from_local_tasks PASSED [ 30%]
+tests/unit/test_niche_feed.py::TestUserProfile::test_profile_persistence PASSED [ 38%]
+tests/unit/test_niche_feed.py::TestNicheRanker::test_tfidf_cosine_ranking PASSED [ 46%]
+tests/unit/test_niche_feed.py::TestNicheRanker::test_exploration_share_selection PASSED [ 53%]
+tests/unit/test_niche_feed.py::TestNicheRanker::test_online_learning_feedback_loop PASSED [ 61%]
+tests/unit/test_niche_feed.py::TestFeedReader::test_deterministic_summary_with_citations PASSED [ 69%]
+tests/unit/test_niche_feed.py::TestFaithfulnessChecker::test_faithful_summary_passes PASSED [ 76%]
+tests/unit/test_niche_feed.py::TestFaithfulnessChecker::test_hallucinated_citation_detected PASSED [ 84%]
+tests/unit/test_niche_feed.py::TestFaithfulnessChecker::test_unsupported_claim_detected PASSED [ 92%]
+tests/unit/test_niche_feed.py::TestNicheFeedServiceIntegration::test_end_to_end_service_and_briefing PASSED [100%]
+
+============================== 13 passed in 0.38s ==============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

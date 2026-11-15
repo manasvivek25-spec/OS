@@ -1,0 +1,22 @@
+# Lazy OS Niche Feeds Configuration
+feeds:
+  - id: "feed-kernel"
+    name: "Linux Kernel Announcements"
+    url: "file://tests/fixtures/feeds/kernel.json"
+    topic: "kernel"
+    enabled: true
+  - id: "feed-osdev"
+    name: "Operating Systems Development"
+    url: "file://tests/fixtures/feeds/osdev.json"
+    topic: "operating_systems"
+    enabled: true
+  - id: "feed-yocto"
+    name: "Yocto Project Updates"
+    url: "file://tests/fixtures/feeds/yocto.json"
+    topic: "embedded_linux"
+    enabled: true
+
+settings:
+  exploration_share: 0.20
+  top_n_recommendations: 5
+  feedback_learning_rate: 0.15

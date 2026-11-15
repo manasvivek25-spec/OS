@@ -18,8 +18,8 @@
 | M3.1 | HUD: transcript, plan view, step status, approvals diff, status strip, wake animation, futuristic offline style | done | tests/results/M3.1.log |
 | M3.2 | Voice: wake phrase, STT (Vosk), TTS (espeak-ng), fallback, latency probes | done | tests/results/M3.2.log |
 | M3.3 | Routines: wake sequence, briefing, chores in snapshot with undo, systemd timers | done | tests/results/M3.3.log |
-| M3.4 | Niche feed: fetcher, reader (no-tools LLM call), TF-IDF ranking, feedback learning, exploration share, faithfulness checker | doing | tests/results/M3.4.log |
-| M3.5 | systemd sandbox units for every service | todo | tests/results/M3.5.log |
+| M3.4 | Niche feed: fetcher, reader (no-tools LLM call), TF-IDF ranking, feedback learning, exploration share, faithfulness checker | done | tests/results/M3.4.log |
+| M3.5 | systemd sandbox units for every service | doing | tests/results/M3.5.log |
 | M4.1 | lazy-outbox: delay, undo window, approvals, hourly limits, new-recipient approval, attachment rules | todo | tests/results/M4.1.log |
 | M4.2 | Comms broker: maildir, SMTP sink, local chat service, capabilities | todo | tests/results/M4.2.log |
 | M4.3 | Web broker: driver interface, WebDriver, DOM extraction, allowlist, download quarantine, local test site | todo | tests/results/M4.3.log |

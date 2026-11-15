@@ -24,6 +24,14 @@ class FSBroker(BaseBroker):
         if not p.is_absolute():
             return (self.root_dir / p).resolve()
 
+        resolved = p.resolve()
+        root_resolved = self.root_dir.resolve()
+        try:
+            if resolved.is_relative_to(root_resolved):
+                return resolved
+        except (ValueError, AttributeError):
+            pass
+
         if self.root_dir != Path.home():
             for prefix in ["/home/user/", "/tmp/"]:
                 if path_str.startswith(prefix):
@@ -31,7 +39,7 @@ class FSBroker(BaseBroker):
                     return (self.root_dir / rel).resolve()
             if not p.exists():
                 return (self.root_dir / p.name).resolve()
-        return p.resolve()
+        return resolved
 
     def _register_handlers(self) -> None:
         self.register("fs.read", self.handle_fs_read)

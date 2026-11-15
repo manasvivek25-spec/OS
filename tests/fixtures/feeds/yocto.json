@@ -1,0 +1,22 @@
+{
+  "feed_id": "feed-yocto",
+  "title": "Yocto Project Announcements and Releases",
+  "items": [
+    {
+      "id": "yocto-001",
+      "title": "Yocto 5.0 Scarthgap LTS maintenance release 5.0.4",
+      "summary": "Updated BitBake recipes and hardening patches for reproducible embedded builds.",
+      "url": "https://www.yoctoproject.org/software-overview/downloads/",
+      "published": "2026-11-14T12:00:00Z",
+      "content": "The Yocto Project announces release 5.0.4 of Scarthgap LTS. Includes updated security advisories, reproducible build manifest validation, and WIC image layout fixes for read-only root filesystems."
+    },
+    {
+      "id": "yocto-002",
+      "title": "Optimizing QEMU x86_64 kernel boot times under 1 second",
+      "summary": "Stripping unneeded driver modules and enabling initcall debugging for rapid boot.",
+      "url": "https://docs.yoctoproject.org/brief-yoctoprojectqs/index.html",
+      "published": "2026-11-11T08:45:00Z",
+      "content": "Case study on configuring minimal kernel fragments, disabling serial console bloat, and optimizing initramfs for instant containerized and virtual machine initialization."
+    }
+  ]
+}

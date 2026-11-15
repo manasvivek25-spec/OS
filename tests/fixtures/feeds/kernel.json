@@ -1,0 +1,22 @@
+{
+  "feed_id": "feed-kernel",
+  "title": "Linux Kernel Releases",
+  "items": [
+    {
+      "id": "kern-001",
+      "title": "Linux 6.6.87 LTS released with Btrfs snapshot performance fixes",
+      "summary": "Stable release fixing snapshot latency and memory cgroup accounting.",
+      "url": "https://kernel.org/pub/linux/kernel/v6.x/ChangeLog-6.6.87",
+      "published": "2026-11-14T10:00:00Z",
+      "content": "Greg KH announced the release of Linux 6.6.87 LTS. Highlights include significant Btrfs subvolume commit speedups, zram compression improvements, and Landlock LSM seccomp integration."
+    },
+    {
+      "id": "kern-002",
+      "title": "THP Transparent Hugepages optimization for embedded x86_64",
+      "summary": "New kernel config fragment reducing memory fragmentation on low-RAM systems.",
+      "url": "https://kernel.org/doc/Documentation/vm/transhuge.txt",
+      "published": "2026-11-12T14:30:00Z",
+      "content": "Patches upstreamed to improve THP madvise mode responsiveness under memory pressure on systems with 16GB RAM or less."
+    }
+  ]
+}

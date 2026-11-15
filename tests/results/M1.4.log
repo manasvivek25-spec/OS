@@ -15,5 +15,5 @@ tests/unit/test_brokers.py::test_sys_broker_settings_and_process_management PASS
 tests/unit/test_brokers.py::test_hw_broker_injectable_sysfs_root PASSED  [ 87%]
 tests/unit/test_brokers.py::test_base_broker_unhandled_capability PASSED [100%]
 
-============================== 8 passed in 1.19s ===============================
+============================== 8 passed in 1.34s ===============================
 make[1]: Leaving directory '/mnt/c/Users/len/OS'
