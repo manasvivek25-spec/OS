@@ -1,0 +1,22 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 11 items
+
+tests/unit/test_broker_comms.py::TestMaildirDriver::test_deliver_and_list_messages PASSED [  9%]
+tests/unit/test_broker_comms.py::TestMaildirDriver::test_read_message_and_rule_f3_labelling PASSED [ 18%]
+tests/unit/test_broker_comms.py::TestMaildirDriver::test_save_draft PASSED [ 27%]
+tests/unit/test_broker_comms.py::TestLocalChatDriver::test_post_and_read_messages PASSED [ 36%]
+tests/unit/test_broker_comms.py::TestDisabledDriversByDefault::test_imap_and_telegram_disabled_by_default PASSED [ 45%]
+tests/unit/test_broker_comms.py::TestCommsBrokerCapabilities::test_mail_list_and_read PASSED [ 54%]
+tests/unit/test_broker_comms.py::TestCommsBrokerCapabilities::test_mail_draft PASSED [ 63%]
+tests/unit/test_broker_comms.py::TestCommsBrokerCapabilities::test_mail_send_routes_through_outbox PASSED [ 72%]
+tests/unit/test_broker_comms.py::TestCommsBrokerCapabilities::test_chat_read_and_send_routes_through_outbox PASSED [ 81%]
+tests/unit/test_broker_comms.py::TestEndToEndOutboxDelivery::test_email_outbox_approval_and_smtp_delivery PASSED [ 90%]
+tests/unit/test_broker_comms.py::TestEndToEndOutboxDelivery::test_tainted_email_rejected_at_broker PASSED [100%]
+
+============================== 11 passed in 0.46s ==============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
