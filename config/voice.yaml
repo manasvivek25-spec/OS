@@ -1,0 +1,16 @@
+# Lazy OS Voice Configuration
+wake_phrase: "wake up, daddy's home"
+alternative_wake_phrases:
+  - "wake up lazy"
+  - "lazy os wake up"
+stt:
+  engine: "vosk"
+  model_name: "vosk-model-small-en-us-0.15"
+  sample_rate: 16000
+tts:
+  engine: "espeak-ng"
+  voice: "en-us"
+  speed: 160
+  pitch: 50
+fallback:
+  text_always_enabled: true

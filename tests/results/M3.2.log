@@ -1,0 +1,19 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 8 items
+
+tests/unit/test_voice.py::TestTTSEngine::test_synthesize_wav_produces_valid_audio PASSED [ 12%]
+tests/unit/test_voice.py::TestWakeDetector::test_default_wake_phrase_match PASSED [ 25%]
+tests/unit/test_voice.py::TestWakeDetector::test_negative_wake_phrase_match PASSED [ 37%]
+tests/unit/test_voice.py::TestWakeDetector::test_extract_directive PASSED [ 50%]
+tests/unit/test_voice.py::TestSTTEngine::test_transcribe_synthetic_registered_audio PASSED [ 62%]
+tests/unit/test_voice.py::TestVoiceEngineRoundTrip::test_synthetic_audio_roundtrip PASSED [ 75%]
+tests/unit/test_voice.py::TestVoiceEngineRoundTrip::test_text_fallback_pathway PASSED [ 87%]
+tests/unit/test_voice.py::TestVoiceEngineRoundTrip::test_latency_probes_summary PASSED [100%]
+
+============================== 8 passed in 1.27s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
