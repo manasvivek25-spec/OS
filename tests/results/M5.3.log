@@ -1,0 +1,14 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+=== Lazy OS Filesystem Layout & WIC Verification (M5.3) ===
+[1/4] Auditing WIC kickstart file (/mnt/c/Users/len/OS/yocto/meta-lazy/wic/lazy-disk.wks)...
+  WIC layout validated: EFI boot, SquashFS read-only root, Btrfs data volume
+[2/4] Auditing first-boot setup script and systemd unit...
+  First-boot scripts and systemd unit validated
+[3/4] Running micro-simulation test of OverlayFS isolation...
+  Overlay isolation verified: lower filesystem is completely unmodified
+[4/4] Verifying QEMU x86_64 boot compatibility with WIC layout...
+  QEMU x86_64 binary present: /usr/bin/qemu-system-x86_64
+  Command line parameters: -drive file=lazy-image-base.wic,if=virtio,format=raw -m 512M -nographic
+
+M5.3 VERIFICATION PASSED: WIC disk layout, SquashFS root, Btrfs data, and OverlayFS verified.
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
