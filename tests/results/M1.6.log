@@ -1,0 +1,32 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 21 items
+
+tests/unit/test_gateway.py::TestHUDTokenManager::test_random_token_generation PASSED [  4%]
+tests/unit/test_gateway.py::TestHUDTokenManager::test_explicit_token PASSED [  9%]
+tests/unit/test_gateway.py::TestHUDTokenManager::test_constant_time_validation PASSED [ 14%]
+tests/unit/test_gateway.py::TestRPCBus::test_helpers PASSED              [ 19%]
+tests/unit/test_gateway.py::TestRPCBus::test_local_handler_dispatch PASSED [ 23%]
+tests/unit/test_gateway.py::TestRPCBus::test_invalid_json PASSED         [ 28%]
+tests/unit/test_gateway.py::TestRPCBus::test_invalid_request_structure PASSED [ 33%]
+tests/unit/test_gateway.py::TestRPCBus::test_method_not_found PASSED     [ 38%]
+tests/unit/test_gateway.py::TestRPCBus::test_invalid_params_type PASSED  [ 42%]
+tests/unit/test_gateway.py::TestRPCBus::test_unix_socket_routing PASSED  [ 47%]
+tests/unit/test_gateway.py::TestProtocolFraming::test_compute_ws_accept PASSED [ 52%]
+tests/unit/test_gateway.py::TestProtocolFraming::test_encode_decode_roundtrip_unmasked PASSED [ 57%]
+tests/unit/test_gateway.py::TestProtocolFraming::test_encode_decode_roundtrip_masked PASSED [ 61%]
+tests/unit/test_gateway.py::TestProtocolFraming::test_protocol_message_serialization PASSED [ 66%]
+tests/unit/test_gateway.py::TestProtocolFraming::test_protocol_message_invalid_json PASSED [ 71%]
+tests/unit/test_gateway.py::TestGatewayServer::test_http_static_serving PASSED [ 76%]
+tests/unit/test_gateway.py::TestGatewayServer::test_http_css_and_js_serving PASSED [ 80%]
+tests/unit/test_gateway.py::TestGatewayServer::test_http_not_found PASSED [ 85%]
+tests/unit/test_gateway.py::TestGatewayServer::test_websocket_auth_handshake_and_events PASSED [ 90%]
+tests/unit/test_gateway.py::TestGatewayServer::test_websocket_auth_failure PASSED [ 95%]
+tests/unit/test_gateway.py::TestGatewayServer::test_websocket_query_param_auth PASSED [100%]
+
+============================== 21 passed in 0.62s ==============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
