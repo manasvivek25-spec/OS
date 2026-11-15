@@ -1,0 +1,12 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+=== Lazy OS Clean Checkout & Reproducibility Verification (M5.6) ===
+[1/5] Auditing Kas configuration and immutable upstream layer commits...
+  Upstream layer pinning verified: poky (6b7c1066f778db5a6b3e35400617b10342988fa8), meta-oe (2db6aece32c7f8ebf6015b468e1b4e21de072e3b).
+[2/5] Verifying single-command build entrypoint (./build.sh base|full)...
+  ./build.sh entrypoint verified and executable.
+[3/5] Simulating clean checkouts via git archive and comparing manifest checksums...
+find: ‘yocto/meta-lazy/recipes-kernel’: No such file or directory
+find: ‘yocto/meta-lazy/recipes-lazy’: No such file or directory
+find: ‘yocto/meta-lazy/recipes-browser’: No such file or directory
+make[1]: *** [Makefile:108: run-verify-M5.6] Error 1
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

@@ -13,6 +13,7 @@ sstate-cache/
 tmp/
 *.tmp
 tests/results/*.tmp
-poky/
-meta-openembedded/
-meta-*/
+/poky/
+/meta-openembedded/
+/meta-*/
+!yocto/meta-lazy/

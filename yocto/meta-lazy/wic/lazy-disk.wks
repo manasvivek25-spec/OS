@@ -1,0 +1,8 @@
+# Lazy OS Master WIC Partition Layout (Track A, Read-Only Root + Btrfs Data Overlay)
+# Short-description: Create an EFI disk image with SquashFS read-only root and Btrfs data volume
+
+part /boot --source bootimg-efi --sourceparams="loader=grub-efi" --ondisk sda --label efi --active --align 1024 --size 64
+part / --source rootfs --ondisk sda --fstype=squashfs --label root --align 1024
+part /data --ondisk sda --fstype=btrfs --label data --size 4096 --align 1024
+
+bootloader --ptable gpt --timeout=1 --append="rootwait console=ttyS0,115200 console=tty0 quiet ro rootfstype=squashfs"
