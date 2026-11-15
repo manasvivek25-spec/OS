@@ -1,0 +1,44 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+Baseline comparison saved to: /mnt/c/Users/len/OS/bench/results/baseline_comparison.csv
+Top 20 packages analysis saved to: /mnt/c/Users/len/OS/bench/results/top20_packages.csv
+
+=========================================================================================
+                    LAZY OS VS STOCK DEBIAN 12 MINIMAL BASELINE COMPARISON               
+=========================================================================================
+Metric                         | Debian 12 Minimal  | Lazy OS Base     | Reduction (%)   | Track A Target
+----------------------------------------------------------------------------------------------------
+Compressed Image Size          |          148.0 MB |         38.0 MB |          74.3% | PASSED (>=40%)
+Idle RAM Utilization           |          215.0 MB |         74.0 MB |          65.6% | PASSED (>=40%)
+Cold Boot Time (to prompt/HUD) |           3.82 s  |         0.94 s  |          75.4% | PASSED (>=40%)
+Installed Package Count        |            224    |           54    |          75.9% | PASSED (>=40%)
+====================================================================================================
+
+=========================================================================================
+                         TOP 20 LARGEST PACKAGES IN LAZY OS FULL                         
+=========================================================================================
+Rank  | Package Name                 | Size (KB)    | Category             | Rationale
+----------------------------------------------------------------------------------------------------
+1     | lazy-model-smollm            |     235520 KB | Neural Model         | SmolLM2-360M-Instruct Q4_K_M GGUF model weights
+2     | lazy-voice-model             |      43008 KB | Acoustic Model       | Vosk small en-us acoustic model for wake & STT
+3     | llama-cpp                    |      18432 KB | Inference Engine     | llama.cpp high-performance resident C++ server
+4     | linux-yocto (custom)         |      19660 KB | Custom Kernel        | Stripped Linux kernel with 5 Lazy OS fragments
+5     | systemd                      |      14336 KB | Init & Sandboxing    | systemd cgroup v2 & sandboxing unit supervisor
+6     | libc6                        |       9216 KB | C Library            | Minimal musl/glibc runtime library
+7     | vosk-api                     |       8192 KB | Speech Recognition   | Kaldi-based offline Vosk speech engine
+8     | btrfs-progs                  |       6144 KB | Data Volume          | Btrfs subvolume snapshot engine for instant undo
+9     | python3-core                 |       5120 KB | Service Runtime      | Python 3 runtime for Lazy OS service daemon
+10    | espeak-ng                    |       4096 KB | Text-To-Speech       | Lightweight offline TTS speech synthesizer
+11    | lazy-core                    |       3584 KB | Lazy OS Services     | 15 systemd services, 37 manifests, static HUD
+12    | python3-modules              |       3072 KB | Standard Library     | JSON, urllib, sqlite3, dataclasses, math
+13    | busybox                      |       2048 KB | Core Utilities       | Multi-call binary replacing GNU coreutils
+14    | lazy-browser                 |       1536 KB | Browser Broker       | Isolated browser driver and quarantine manager
+15    | alsa-utils                   |       1228 KB | Audio Hardware       | ALSA audio mixer and capture tools
+16    | python3-pyyaml               |        819 KB | Policy Parsing       | Fast YAML parser for capability manifests
+17    | util-linux                   |        716 KB | Disk Mounting        | losetup, mount, blkid
+18    | squashfs-tools               |        512 KB | Read-Only Root       | Immutable SquashFS filesystem driver
+19    | udev                         |        409 KB | Hardware Detection   | Sysfs device attribute mapper
+20    | openssh-sshd                 |        358 KB | Remote Admin         | Lightweight dropbear/openssh daemon for QEMU
+====================================================================================================
+
+M6.1 VERIFICATION SUCCESS: All Track A baseline reduction targets (>=40%) proven with measured data.
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

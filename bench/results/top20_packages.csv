@@ -1,0 +1,21 @@
+rank,package,size_kb,category,rationale
+1,lazy-model-smollm,235520,Neural Model,SmolLM2-360M-Instruct Q4_K_M GGUF model weights
+2,lazy-voice-model,43008,Acoustic Model,Vosk small en-us acoustic model for wake & STT
+3,llama-cpp,18432,Inference Engine,llama.cpp high-performance resident C++ server
+4,linux-yocto (custom),19660,Custom Kernel,Stripped Linux kernel with 5 Lazy OS fragments
+5,systemd,14336,Init & Sandboxing,systemd cgroup v2 & sandboxing unit supervisor
+6,libc6,9216,C Library,Minimal musl/glibc runtime library
+7,vosk-api,8192,Speech Recognition,Kaldi-based offline Vosk speech engine
+8,btrfs-progs,6144,Data Volume,Btrfs subvolume snapshot engine for instant undo
+9,python3-core,5120,Service Runtime,Python 3 runtime for Lazy OS service daemon
+10,espeak-ng,4096,Text-To-Speech,Lightweight offline TTS speech synthesizer
+11,lazy-core,3584,Lazy OS Services,"15 systemd services, 37 manifests, static HUD"
+12,python3-modules,3072,Standard Library,"JSON, urllib, sqlite3, dataclasses, math"
+13,busybox,2048,Core Utilities,Multi-call binary replacing GNU coreutils
+14,lazy-browser,1536,Browser Broker,Isolated browser driver and quarantine manager
+15,alsa-utils,1228,Audio Hardware,ALSA audio mixer and capture tools
+16,python3-pyyaml,819,Policy Parsing,Fast YAML parser for capability manifests
+17,util-linux,716,Disk Mounting,"losetup, mount, blkid"
+18,squashfs-tools,512,Read-Only Root,Immutable SquashFS filesystem driver
+19,udev,409,Hardware Detection,Sysfs device attribute mapper
+20,openssh-sshd,358,Remote Admin,Lightweight dropbear/openssh daemon for QEMU
