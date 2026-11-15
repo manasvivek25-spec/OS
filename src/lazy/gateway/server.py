@@ -17,6 +17,7 @@ from lazy.gateway.protocol import (
 )
 from lazy.gateway.rpc_bus import RPCBus
 from lazy.gateway.token import HUDTokenManager
+from lazy.gateway.api import GatewayAPIHandler
 
 
 class GatewayServer:
@@ -40,6 +41,8 @@ class GatewayServer:
         else:
             repo_root = Path(__file__).resolve().parent.parent.parent.parent
             self.hud_dir = repo_root / "hud"
+
+        self.api_handler = GatewayAPIHandler(repo_root=Path(__file__).resolve().parent.parent.parent.parent)
 
         self._server_sock: Optional[socket.socket] = None
         self._thread: Optional[threading.Thread] = None
@@ -131,15 +134,29 @@ class GatewayServer:
             if headers.get("upgrade", "").lower() == "websocket":
                 self._upgrade_and_handle_ws(client_sock, path, headers)
             else:
-                self._serve_http(client_sock, method, path)
+                self._serve_http(client_sock, method, path, req_data)
         except Exception:
             try:
                 client_sock.close()
             except Exception:
                 pass
 
-    def _serve_http(self, client_sock: socket.socket, method: str, path: str) -> None:
-        """Serve plain static HUD assets."""
+    def _serve_http(self, client_sock: socket.socket, method: str, path: str, req_data: str = "") -> None:
+        """Serve REST API endpoints and static HUD assets."""
+        if path.startswith("/api/"):
+            body_bytes = b""
+            if "\r\n\r\n" in req_data:
+                body_bytes = req_data.split("\r\n\r\n", 1)[1].encode("utf-8")
+            status, resp_headers, body = self.api_handler.handle_request(method, path, body_bytes)
+            status_text = {200: "OK", 202: "Accepted", 403: "Forbidden", 404: "Not Found", 500: "Internal Server Error"}.get(status, "OK")
+            header_lines = [f"HTTP/1.1 {status} {status_text}"]
+            for k, v in resp_headers.items():
+                header_lines.append(f"{k}: {v}")
+            header_lines.append("Connection: close\r\n\r\n")
+            client_sock.sendall("\r\n".join(header_lines).encode("utf-8") + body)
+            client_sock.close()
+            return
+
         clean_path = path.split("?")[0].lstrip("/")
         if clean_path == "" or clean_path == "index.html":
             file_name = "index.html"
@@ -151,16 +168,22 @@ class GatewayServer:
             file_name = "hud.js"
             content_type = "application/javascript; charset=utf-8"
         else:
-            resp = "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n"
-            client_sock.sendall(resp.encode("utf-8"))
-            client_sock.close()
-            return
+            file_name = clean_path
+            ext = os.path.splitext(file_name)[1].lower()
+            content_type = {
+                ".html": "text/html; charset=utf-8",
+                ".css": "text/css; charset=utf-8",
+                ".js": "application/javascript; charset=utf-8",
+                ".json": "application/json",
+                ".png": "image/png",
+                ".svg": "image/svg+xml",
+                ".txt": "text/plain; charset=utf-8"
+            }.get(ext, "application/octet-stream")
 
         target_file = self.hud_dir / file_name
         if not target_file.is_file():
-            body = f"<html><body><h1>Lazy OS HUD</h1><p>{file_name} not found.</p></body></html>".encode("utf-8")
-            resp = f"HTTP/1.1 200 OK\r\nContent-Type: text/html\r\nContent-Length: {len(body)}\r\n\r\n".encode("utf-8") + body
-            client_sock.sendall(resp)
+            resp = "HTTP/1.1 404 Not Found\r\nContent-Length: 0\r\n\r\n"
+            client_sock.sendall(resp.encode("utf-8"))
             client_sock.close()
             return
 

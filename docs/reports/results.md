@@ -1,170 +1,57 @@
-# Lazy OS Comprehensive Evaluation & Benchmark Results (Milestone M6.2)
+# Lazy OS Comprehensive Evaluation & Benchmark Results (V2 Corrected)
 
 > [!NOTE]
-> All quantitative metrics, performance numbers, and safety evaluations in this report are directly compiled from empirical logs and benchmark results saved in `bench/results/*.csv` and `tests/results/*.log`. No values are synthetic or unmeasured.
+> **Audit & Correction Statement (Rule T1 / V2.B4)**:
+> In the V1 report, comparison figures for Stock Debian 12 Minimal (148 MB image, 215 MB RAM, 3.82s boot) and Lazy OS Base (38 MB image, 74 MB RAM, 0.94s boot) were derived from static modeling scripts rather than direct empirical measurements of a booted Debian VM.
+> Below are the audited, empirically measured metrics from 5 cold-boot runs executed in QEMU (Linux 6.8 kernel, KVM, 1024 MB RAM) per [`bench/METHOD.md`](file:///c:/Users/len/OS/bench/METHOD.md). The original V1 claims are preserved in [`docs/archive/results.v1.md`](file:///c:/Users/len/OS/docs/archive/results.v1.md) for full traceability.
 
 ---
 
-## 1. Executive Summary & Track A Compliance
+## 1. Audited Multi-Run Benchmarks (N=5 Runs)
 
-Lazy OS is a custom, application-specific Linux distribution built using Yocto Project (LTS `scarthgap`) tailored for interactive AI supervision and system execution.
+*Source: [`bench/results/v2_baseline_comparison.csv`](file:///c:/Users/len/OS/bench/results/v2_baseline_comparison.csv), raw logs in [`bench/results/v2_runs/`](file:///c:/Users/len/OS/bench/results/v2_runs/)*
 
-### University Track A Requirements Verification Matrix:
-| Requirement | Specification | Measured Lazy OS Metric | Status |
-|---|---|---|---|
-| **Distro Image Size Reduction** | $\ge 40\%$ vs Stock Distro | **74.3% reduction** (38.0 MB vs 148.0 MB) | **PASSED (EXCEEDED)** |
-| **Idle RAM Footprint** | $\ge 40\%$ vs Stock Distro | **65.6% reduction** (74.0 MB vs 215.0 MB) | **PASSED (EXCEEDED)** |
-| **Cold Boot Time Reduction** | $\ge 40\%$ vs Stock Distro | **75.4% reduction** (0.94 s vs 3.82 s) | **PASSED (EXCEEDED)** |
-| **Package Count Reduction** | $\ge 40\%$ vs Stock Distro | **75.9% reduction** (54 vs 224 packages) | **PASSED (EXCEEDED)** |
-| **Custom Kernel Optimization** | Stripped kernel .config fragments | **59.3% vmlinux reduction**, 70.6% symbol reduction | **PASSED** |
-| **Immutable Root & Undo** | Read-only rootfs + Btrfs snapshots | **SquashFS root + Btrfs `/data` + OverlayFS** | **PASSED (Rule F7)** |
-| **Hardening & Sandboxing** | $\ge 3$ Hardening Measures | **10/10 checks** (ProtectSystem, NoNewPriv, AF_UNIX) | **PASSED** |
-| **Prompt Injection Safety** | 0 injection breaches | **0.00% unsafe-action rate** (0/70 breaches) | **PASSED** |
-| **Reproducibility** | One-command clean checkout build | **100.0% SHA-256 match** across clean checkouts | **PASSED** |
+| Metric | Stock Debian 12 Minimal | Lazy OS V2 Base (Empirical $\mu \pm \sigma$) | V1 Claimed (Synthetic) | Measurement Methodology & Notes |
+| :--- | :---: | :---: | :---: | :--- |
+| **Bootable Payload Size** | *Not Measured* | **39.75 MB** | 38.0 MB | Kernel (14.41 MB) + Initramfs with Btrfs modules (25.34 MB) |
+| **Uncompressed Rootfs** | *Not Measured* | **84.00 MB** | — | Total unpacked root filesystem on disk (`du -sm`) |
+| **Idle RAM Footprint** | *Not Measured* | **81.80 ± 3.42 MB** | 74.0 MB | `free -m` used memory after cold boot and daemon startup |
+| **Cold Boot Time** | *Not Measured* | **1.57 ± 0.96 s** | 0.94 s | Measured from QEMU start to `Gateway & REST API listening` |
+| **Active Capabilities**| *Not Measured* | **37 capabilities** | 54 packages | Formally specified capability manifests in `config/capabilities` |
+| **Data Partition Storage**| — | **Persistent Btrfs** | *Simulated tmpfs* | Real block device `/dev/vda3` (128 MB) formatted with Btrfs |
 
----
+$$\mu_{\text{boot}} = 1.57\,\text{s}, \quad \sigma_{\text{boot}} = 0.96\,\text{s}$$
+$$\mu_{\text{RAM}} = 81.80\,\text{MB}, \quad \sigma_{\text{RAM}} = 3.42\,\text{MB}$$
 
-## 2. Distribution Baselines & 40% Comparison (Milestone M6.1)
-*Source: [`bench/results/baseline_comparison.csv`](file:///c:/Users/len/OS/bench/results/baseline_comparison.csv)*
-
-The university Track A specification mandates an application-specific distribution achieving at least a 40% size reduction compared to a stock general-purpose distribution.
-
-```mermaid
-xychart-beta
-    title "Footprint Comparison: Stock Debian 12 Minimal vs Lazy OS Base"
-    x-axis ["Image Size (MB)", "Idle RAM (MB)", "Cold Boot (0.1s)", "Packages (10x)"]
-    y-axis "Value" 0 --> 250
-    bar [148, 215, 38, 22]
-    bar [38, 74, 9, 5]
-```
-
-### Measured Comparison Table:
-| Metric | Stock Debian 12 Minimal | Lazy OS Base | Lazy OS Full (AI Stack) | Track A Reduction Target | Measured Reduction (%) | Compliance Verdict |
-|---|---|---|---|---|---|---|
-| **Compressed Rootfs Size** | **148.0 MB** | **38.0 MB** | **285.0 MB** | $\ge 40.0\%$ | **74.3%** | **PASSED** |
-| **Idle RAM Utilization** | **215.0 MB** | **74.0 MB** | **385.0 MB** (warm LLM) | $\ge 40.0\%$ | **65.6%** | **PASSED** |
-| **Cold Boot Time (to login/HUD)** | **3.82 s** | **0.94 s** | **1.35 s** | $\ge 40.0\%$ | **75.4%** | **PASSED** |
-| **Installed Package Count** | **224 pkgs** | **54 pkgs** | **62 pkgs** | $\ge 40.0\%$ | **75.9%** | **PASSED** |
-| **Kernel Image (vmlinux)** | **48.2 MB** | **19.6 MB** | **19.6 MB** | — | **59.3%** | **OPTIMIZED** |
-| **Modules Directory Size** | **142.5 MB** | **38.2 MB** | **38.2 MB** | — | **73.2%** | **OPTIMIZED** |
-
-$$\text{Reduction}_{\text{size}} = \frac{148.0 - 38.0}{148.0} \times 100\% = 74.32\%$$
-$$\text{Reduction}_{\text{RAM}} = \frac{215.0 - 74.0}{215.0} \times 100\% = 65.58\%$$
-$$\text{Reduction}_{\text{boot}} = \frac{3.82 - 0.94}{3.82} \times 100\% = 75.39\%$$
+### Explanation of Discrepancies (V1 vs. V2):
+1. **Debian 12 Status:** A live Debian 12 minimal VM image was unprovisioned on the local host. In compliance with Rule T1, it is recorded as *Not Measured* rather than populated with assumed numbers.
+2. **Idle RAM Increase (74.0 MB $\to$ 81.8 MB):** In V2.B1, real in-tree Linux kernel modules for Btrfs (`btrfs.ko`, `raid6_pq.ko`, `xor.ko`, `libcrc32c.ko`) and real `findmnt`/`lsblk` libraries were loaded into memory, slightly increasing the resident kernel memory footprint while delivering genuine filesystem persistence across reboots.
+3. **Boot Time Variance (0.94 s $\to$ 1.57 s):** Multi-run cold boot times include disk I/O synchronization and Btrfs superblock validation upon mount. Runs 2–5 consistently booted in 1.09s to 1.20s.
 
 ---
 
-## 3. Custom Kernel Optimization Benchmark (Milestone M5.1)
-*Source: [`bench/results/kernel_benchmark.csv`](file:///c:/Users/len/OS/bench/results/kernel_benchmark.csv)*
+## 2. Security & Policy Verification Suite (401 Tests)
 
-Lazy OS replaces monolithic distro kernels with 5 surgical Kconfig fragments (`base-minimal.cfg`, `memory.cfg`, `fs.cfg`, `security.cfg`, `laptop.cfg`).
+*Source: [`tests/results/verify.log`](file:///c:/Users/len/OS/tests/results/verify.log)*
 
-| Evaluation Metric | Reference Kernel | Lazy OS Custom Kernel | Absolute Reduction | Relative Reduction | Status |
-|---|---|---|---|---|---|
-| **Uncompressed vmlinux** | 48.2 MB | 19.6 MB | -28.6 MB | **-59.3%** | Verified |
-| **Kernel Modules Directory** | 142.5 MB | 38.2 MB | -104.3 MB | **-73.2%** | Verified |
-| **Built-in Kconfig Symbols** | 2,180 | 642 | -1,538 symbols | **-70.6%** | Verified |
-| **Kernel Boot Time in QEMU** | 3.82 s | 0.94 s | -2.88 s | **-75.4%** | Verified |
-| **Landlock LSM** | Disabled | Built-in (`CONFIG_SECURITY_LANDLOCK=y`) | N/A | Enabled | Hardened |
-| **Seccomp BPF** | Modular | Built-in (`CONFIG_SECCOMP_FILTER=y`) | N/A | Enabled | Hardened |
-| **Root Filesystems** | ext4 only | squashfs + btrfs + overlayfs | N/A | Enabled | Immutable ro |
+- **Total Test Suites:** 22 suites (20 unit, 1 integration, 1 attack suite)
+- **Total Tests Executed:** 401 tests
+- **Passing Rate:** **100.0%** (401 passed, 0 failed, 0 errors in 125.86s)
+- **Prompt Injection Defense:** 70 adversarial attack vectors (`tests/assistant/injection.jsonl`) evaluated against `PolicyEngine`:
+  - **Breach Rate:** **0.00%** (0 / 70 breaches)
+  - **Benign Query False Reject Rate:** **0.00%** (50 / 50 benign commands permitted)
 
 ---
 
-## 4. End-to-End 40-Task Evaluation Suite (Milestone M2.4)
-*Sources: [`bench/results/task_eval_mock.csv`](file:///c:/Users/len/OS/bench/results/task_eval_mock.csv), [`bench/results/task_eval_llm.csv`](file:///c:/Users/len/OS/bench/results/task_eval_llm.csv)*
+## 3. Cryptographic Audit & Rollback Verification
 
-The 40-task benchmark covers filesystem, system administration, hardware control, isolated browser, communications, and undo snapshot recovery.
+*Source: [`docs/audit/v2_b1_evidence.txt`](file:///c:/Users/len/OS/docs/audit/v2_b1_evidence.txt)*
 
-| Execution Mode | Total Tasks Evaluated | Tasks Passed | Success Rate | Mean Latency (ms) | Min Latency (ms) | Max Latency (ms) |
-|---|---|---|---|---|---|---|
-| **Deterministic Mock Mode** | 40 | 40 | **100.0%** | **33.25 ms** | 18.42 ms | 48.91 ms |
-| **Grammar-Constrained LLM Mode** | 40 | 40 | **100.0%** | **65.74 ms** | 42.15 ms | 108.32 ms |
-
-> [!TIP]
-> In both modes, 100% of tasks satisfied contract schema constraints, rate limits, tier classification, and transactional snapshot rollback verification.
-
----
-
-## 5. Safety & Adversarial Attack Suite (Milestone M4.4)
-*Source: [`bench/results/safety_metrics.csv`](file:///c:/Users/len/OS/bench/results/safety_metrics.csv)*
-
-Evaluated across **70 distinct attack vectors** covering indirect prompt injection (web, mail, feed, files), shell escaping, L4 security bypasses, exfiltration, and recipient forging, plus **100 benign queries**.
-
-| Test Configuration | Total Attacks | Attacks Blocked | Breaches | Unsafe-Action Rate | Benign False-Block Rate |
-|---|---|---|---|---|---|
-| **Guarded Lazy OS Pipeline** | **70** | **70** | **0** | **0.00%** | **0.00% (0/100)** |
-| **Unguarded Baseline** | **70** | **30** | **40** | **57.14%** | **0.00% (0/100)** |
-
-```mermaid
-pie title Attack Outcomes under Guarded Pipeline
-    "Blocked by Policy / Grammar (70)" : 70
-    "Breaches (0)" : 0
-```
-
-> [!IMPORTANT]
-> The unguarded baseline allowed 57.14% of attacks to breach security. Lazy OS's multi-layered defense (Rule F1 Policy Gate, Rule F3 Labelled Quoted Data, Rule F4 Peer Credential Vault, and Rule F6 Hardcoded L4 Denylist) achieved a **0.00% breach rate** with zero false blocks on benign user commands.
-
----
-
-## 6. Interactive-Latency Tuning Ablation (Milestone M5.4)
-*Source: [`bench/results/latency_ablation.csv`](file:///c:/Users/len/OS/bench/results/latency_ablation.csv)*
-
-Ablation experiment evaluated 5 configurations across Quiescent (Idle) and Background Chores Load (20 trials per condition):
-1. `1_baseline_untuned`: Preload/mlock OFF, Cgroup priority OFF, CPU affinity OFF
-2. `+preload_mlock`: Preload/mlock ON, Cgroup priority OFF, CPU affinity OFF
-3. `+cgroup_priority`: Preload/mlock OFF, Cgroup priority ON, CPU affinity OFF
-4. `+cpu_affinity`: Preload/mlock OFF, Cgroup priority OFF, CPU affinity ON
-5. `all_tuned`: All optimizations active simultaneously
-
-### Measured TTFT (Time-To-First-Token) and TTFW (Time-To-First-Word):
-| Configuration | Load Condition | TTFT p50 (ms) | TTFT p90 (ms) | TTFT p95 (ms) | TTFW p50 (ms) | TTFW p95 (ms) |
-|---|---|---|---|---|---|---|
-| `1_baseline_untuned` | idle | 32.22 | 42.4 | 51.96 | 10.11 | 16.94 |
-| `1_baseline_untuned` | background_load | 28.05 | 30.59 | 31.45 | 7.73 | 8.08 |
-| `+preload_mlock` | idle | **11.92** | **13.3** | **14.13** | **6.61** | **6.99** |
-| `+preload_mlock` | background_load | 12.08 | 29.82 | 41.62 | 6.96 | 7.32 |
-| `+cgroup_priority` | background_load | 46.73 | 51.56 | 51.99 | 9.74 | 11.26 |
-| `+cpu_affinity` | background_load | 30.21 | 46.74 | 47.33 | 8.32 | 9.69 |
-| **`all_tuned`** | **background_load** | **13.03** | **19.48** | **24.42** | **6.88** | **7.34** |
-
-$$\text{Preload Latency Reduction} = \frac{32.22 - 11.92}{32.22} \times 100\% = 63.0\%$$
-
----
-
-## 7. Top 20 Largest Packages in Lazy OS Full Profile (Milestone M6.1)
-*Source: [`bench/results/top20_packages.csv`](file:///c:/Users/len/OS/bench/results/top20_packages.csv)*
-
-| Rank | Package Name | Installed Size (KB) | Category | Architecture Rationale |
-|---|---|---|---|---|
-| 1 | `lazy-model-smollm` | 235,520 KB | Neural Model | SmolLM2-360M-Instruct Q4_K_M GGUF model weights |
-| 2 | `lazy-voice-model` | 43,008 KB | Acoustic Model | Vosk small en-us acoustic model for wake & STT |
-| 3 | `llama-cpp` | 18,432 KB | Inference Engine | llama.cpp high-performance resident C++ server |
-| 4 | `linux-yocto (custom)` | 19,660 KB | Custom Kernel | Stripped Linux kernel with 5 Lazy OS fragments |
-| 5 | `systemd` | 14,336 KB | Init & Sandboxing | systemd cgroup v2 & sandboxing unit supervisor |
-| 6 | `libc6` | 9,216 KB | C Library | Minimal musl/glibc runtime library |
-| 7 | `vosk-api` | 8,192 KB | Speech Recognition | Kaldi-based offline Vosk speech engine |
-| 8 | `btrfs-progs` | 6,144 KB | Data Volume | Btrfs subvolume snapshot engine for instant undo |
-| 9 | `python3-core` | 5,120 KB | Service Runtime | Python 3 runtime for Lazy OS service daemon |
-| 10 | `espeak-ng` | 4,096 KB | Text-To-Speech | Lightweight offline TTS speech synthesizer |
-| 11 | `lazy-core` | 3,584 KB | Lazy OS Services | 15 systemd services, 37 manifests, static HUD |
-| 12 | `python3-modules` | 3,072 KB | Standard Library | JSON, urllib, sqlite3, dataclasses, math |
-| 13 | `busybox` | 2,048 KB | Core Utilities | Multi-call binary replacing GNU coreutils |
-| 14 | `lazy-browser` | 1,536 KB | Browser Broker | Isolated browser driver and quarantine manager |
-| 15 | `alsa-utils` | 1,228 KB | Audio Hardware | ALSA audio mixer and capture tools |
-| 16 | `python3-pyyaml` | 819 KB | Policy Parsing | Fast YAML parser for capability manifests |
-| 17 | `util-linux` | 716 KB | Disk Mounting | losetup, mount, blkid |
-| 18 | `squashfs-tools` | 512 KB | Read-Only Root | Immutable SquashFS filesystem driver |
-| 19 | `udev` | 409 KB | Hardware Detection | Sysfs device attribute mapper |
-| 20 | `openssh-sshd` | 358 KB | Remote Admin | Lightweight dropbear/openssh daemon for QEMU |
-
----
-
-## 8. Data Provenance & Verification Index
-All numbers cited in this document are strictly traceable to empirical CSV files:
-- `baseline_comparison.csv` -> Section 2 Distro Comparisons
-- `kernel_benchmark.csv` -> Section 3 Kernel Optimization
-- `task_eval_mock.csv` & `task_eval_llm.csv` -> Section 4 40-Task Benchmark
-- `safety_metrics.csv` -> Section 5 Adversarial Evaluation
-- `latency_ablation.csv` -> Section 6 Latency Tuning Ablation
-- `top20_packages.csv` -> Section 7 Package Analysis
+- **Persistent Mount:** Verified `/dev/vda3` mounted at `/data` (`FSTYPE: btrfs`, `rw,relatime,discard=async,space_cache=v2`).
+- **Reboot Persistence:** File `/data/persistent_test.txt` written in Run 1 and successfully read in Run 2 after hypervisor power cycle.
+- **Transactional Rollback:**
+  - Initial Tree Hash: `86637d62171b5c904cf144f19c0591f0682f5263ed3d757ba92321c2483e2f60`
+  - Post-Mutation Tree Hash: `e2dfdcda5f9287d9c813ce49d6f54236e533b72248569b0ea79ac769c91447c6`
+  - Post-Rollback Tree Hash: `86637d62171b5c904cf144f19c0591f0682f5263ed3d757ba92321c2483e2f60`
+  - Verified: Temporary mutation file removed, tree hashes match identically.
+- **Audit Hash Chain:** All events cryptographically chained via SHA-256; zero tamper tolerance verified across modification, insertion, deletion, and truncation attacks.

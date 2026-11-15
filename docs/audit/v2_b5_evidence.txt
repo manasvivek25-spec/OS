@@ -1,0 +1,20 @@
+# In-Guest LLM Feasibility & Host Bridge Assessment (V2.B5)
+
+**Audit Date:** 2026-11-16T01:38:30+05:30  
+**Status:** In-Guest LLM = SIMULATED; Host Bridge = IMPLEMENTED
+
+---
+
+## 1. Resource Constraints & Feasibility Analysis
+- **Guest VM RAM:** Allocated 1,024 MB RAM (bounded by host WSL2 12 GB RAM per Rule T8: $M_{\text{qemu}} \le \frac{1}{2} M_{\text{free}}$).
+- **Model Footprint:**
+  - SmolLM2-360M Q4_K_M GGUF model weights require ~230 MB on disk.
+  - A 1B parameter model requires ~700–850 MB for weights alone.
+  - Runtime KV context cache and memory-mapped buffers require an additional 256–512 MB working RAM.
+- **Feasibility Verdict:**
+  - Running a resident LLM process with static `llama.cpp` inside a 1024 MB guest with Busybox and a Python microservice daemon risks hypervisor OOM panics (`oom_reaper`).
+  - Native compilation of `llama.cpp` static binary inside the guest image adds multi-hundred MB toolchain dependencies.
+  - In accordance with V2.B5 default:
+    1. The in-guest planner is retained in heuristic mock mode.
+    2. Subsystem status is explicitly marked `SIMULATED` across `/api/build-info` and the Command Center UI badge.
+    3. An optional host LLM bridge (`src/lazy/gateway/host_bridge.py`) is implemented, clearly labelled `HOST LLM (not in image)`.

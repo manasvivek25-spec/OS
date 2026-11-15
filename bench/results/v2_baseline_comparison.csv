@@ -1,0 +1,3 @@
+distribution,profile,measured_status,boot_time_mean_s,boot_time_std_s,idle_ram_mean_mb,idle_ram_std_mb,bootable_payload_mb,rootfs_mb,package_count
+Stock Debian 12 Minimal,stock-debootstrap,NOT_MEASURED (Host Unprovisioned),N/A,N/A,N/A,N/A,N/A,N/A,N/A
+Lazy OS V2 Base,lazy-v2-btrfs,VERIFIED (5-run empirical),1.57,0.96,81.8,3.42,39.75,84.0,37

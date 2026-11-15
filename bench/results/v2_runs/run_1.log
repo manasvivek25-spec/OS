@@ -1,0 +1,27 @@
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+c[?7l[2J[0mSeaBIOS (version 1.16.3-debian-1.16.3-2)
+Booting from ROM...
+c[?7l[2J[OK] Mounted real persistent Btrfs partition on /data from /dev/vda3
+======================================================================
+        LAZY OS // v0.2-command-center (Persistent Btrfs /data)       
+======================================================================
+[OK] Linux Kernel 6.8.0-149-generic loaded.
+[OK] /data mount: /dev/vda3 on /data type btrfs (rw,relatime,discard=async,space_cache=v2,subvolid=5,subvol=/)
+[OK] Gateway & REST API listening on 0.0.0.0:8765 (guest).
+
+lazyos@lazy-os:~$ 
+free -m
+poweroff -f
+
+
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+sh: can't access tty; job control turned off
+/ # free -m
+              total        used        free      shared  buff/cache   available
+Mem:            961          80         795          85          87         726
+Swap:             0           0           0
+/ # poweroff -f
+[    0.840744] reboot: Power down

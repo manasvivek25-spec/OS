@@ -1,0 +1,45 @@
+{
+  "hostname": "lazy-os",
+  "kernel_release": "6.8.0-149-generic",
+  "boot_id": "bec3d543-f5e5-4246-8d4a-b2261e23b392",
+  "uptime": 2.38,
+  "mounts": [
+    {
+      "device": "rootfs",
+      "mountpoint": "/",
+      "fstype": "rootfs"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc",
+      "fstype": "proc"
+    },
+    {
+      "device": "sysfs",
+      "mountpoint": "/sys",
+      "fstype": "sysfs"
+    },
+    {
+      "device": "devtmpfs",
+      "mountpoint": "/dev",
+      "fstype": "devtmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/run",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/tmp",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "/dev/vda3",
+      "mountpoint": "/data",
+      "fstype": "btrfs"
+    }
+  ],
+  "image_build_id": "lazy-os-v2-dev",
+  "git_commit": "v2-command-center"
+}

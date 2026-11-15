@@ -1,7 +1,13 @@
 # Lazy OS System Architecture Specification
 
 ## 1. Overview and Core Philosophy
-Lazy OS is an application-specific Linux distribution built using the Yocto Project (Track A). It transforms natural user intent into audited, sandboxed, and reversible operating system actions. Trust is earned through cryptographic receipts (hash-chained audit logs), transactional rollbacks (Btrfs subvolume snapshots), and strict separation of privilege.
+Lazy OS is an application-specific operating system prototype designed for university Operating Systems evaluation. It transforms natural user intent into audited, sandboxed, and reversible operating system actions. Trust is earned through cryptographic receipts (hash-chained audit logs), transactional rollbacks (persistent Btrfs storage with instant undo), and strict separation of privilege.
+
+> [!NOTE]
+> **Implementation Realities (Honest Labelling per V2.B3)**:
+> - **Booted OS Prototype:** Operates on a Linux 6.8 kernel paired with a custom-assembled Busybox rootfs and a GPT partitioned virtual disk with real persistent Btrfs storage on `/dev/vda3`.
+> - **Yocto Metadata:** Complete Yocto Project Scarthgap recipes and layer definitions exist in `yocto/meta-lazy/` and `yocto/kas/`; full native compilation requires a dedicated build host (see `docs/BUILD_ENV_PLAN.md`).
+> - **In-Guest Intelligence:** Currently runs a heuristic rule-based planner in guest; full `SmolLM2-360M` neural inference runs via an optional host LLM bridge.
 
 ---
 

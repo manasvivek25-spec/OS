@@ -1,0 +1,34 @@
+{
+  "kernel": {
+    "status": "real",
+    "source": "Ubuntu 6.8 host kernel with custom initramfs"
+  },
+  "storage": {
+    "status": "real",
+    "source": "Persistent Btrfs block partition on /dev/vda3"
+  },
+  "audit": {
+    "status": "real",
+    "source": "Cryptographic SHA-256 hash-chained ledger"
+  },
+  "snapshots": {
+    "status": "real",
+    "source": "Btrfs & Copy-on-Write task undo backend"
+  },
+  "llm": {
+    "status": "simulated",
+    "source": "Heuristic Mock Planner (Host bridge available)"
+  },
+  "voice": {
+    "status": "simulated",
+    "source": "Browser Speech API / synthetic fallback"
+  },
+  "web_driver": {
+    "status": "real",
+    "source": "Pure Python DOM parser with quarantine isolation"
+  },
+  "comms": {
+    "status": "real",
+    "source": "Maildir & local chat brokers"
+  }
+}
