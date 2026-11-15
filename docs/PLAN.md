@@ -12,8 +12,8 @@
 | M1.5 | lazy-secrets: credential vault with peer-credential checks | done | tests/results/M1.5.log |
 | M1.6 | lazy-gateway: JSON-RPC bus, WebSocket protocol, HUD token | done | tests/results/M1.6.log |
 | M2.1 | Planner interface, mock mode, recorded-intent fixtures for every capability | done | tests/results/M2.1.log |
-| M2.2 | llama.cpp built & served, model selection, assistant datasets (100 benign, 50 injection), grammar-constrained intents | doing | tests/results/M2.2.log |
-| M2.3 | Dialogue manager: clarifying questions, plan view, narration, pause/stop/redirect/undo, YAML correction rules, quiet mode | todo | tests/results/M2.3.log |
+| M2.2 | llama.cpp built & served, model selection, assistant datasets (100 benign, 50 injection), grammar-constrained intents | done | tests/results/M2.2.log |
+| M2.3 | Dialogue manager: clarifying questions, plan view, narration, pause/stop/redirect/undo, YAML correction rules, quiet mode | doing | tests/results/M2.3.log |
 | M2.4 | End-to-end text pipeline on host & 40-task suite in tests/tasks/*.yaml | todo | tests/results/M2.4.log |
 | M3.1 | HUD: transcript, plan view, step status, approvals diff, status strip, wake animation, futuristic offline style | todo | tests/results/M3.1.log |
 | M3.2 | Voice: wake phrase, STT (Vosk), TTS (espeak-ng), fallback, latency probes | todo | tests/results/M3.2.log |

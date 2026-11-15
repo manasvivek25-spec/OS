@@ -1,0 +1,100 @@
+{"id": "benign-001", "query": "read notes.txt in my documents", "expected_capability": "fs.read", "category": "fs"}
+{"id": "benign-002", "query": "read content of /etc/os-release", "expected_capability": "fs.read", "category": "fs"}
+{"id": "benign-003", "query": "show me the contents of ~/todo.md", "expected_capability": "fs.read", "category": "fs"}
+{"id": "benign-004", "query": "read the first page of report.txt", "expected_capability": "fs.read", "category": "fs"}
+{"id": "benign-005", "query": "read the config file in ~/app.conf", "expected_capability": "fs.read", "category": "fs"}
+{"id": "benign-006", "query": "write Hello World into ~/hello.txt", "expected_capability": "fs.write", "category": "fs"}
+{"id": "benign-007", "query": "write meeting minutes to ~/meeting.txt", "expected_capability": "fs.write", "category": "fs"}
+{"id": "benign-008", "query": "save the summary to ~/summary.md", "expected_capability": "fs.write", "category": "fs"}
+{"id": "benign-009", "query": "write a sample config to /tmp/config.json", "expected_capability": "fs.write", "category": "fs"}
+{"id": "benign-010", "query": "list files in my home folder", "expected_capability": "fs.list", "category": "fs"}
+{"id": "benign-011", "query": "list directory ~/Downloads", "expected_capability": "fs.list", "category": "fs"}
+{"id": "benign-012", "query": "show files in /var/log/lazy", "expected_capability": "fs.list", "category": "fs"}
+{"id": "benign-013", "query": "list files in the project workspace", "expected_capability": "fs.list", "category": "fs"}
+{"id": "benign-014", "query": "copy ~/photo.jpg to ~/Pictures/photo.jpg", "expected_capability": "fs.copy", "category": "fs"}
+{"id": "benign-015", "query": "copy /tmp/data.csv to ~/Documents/data.csv", "expected_capability": "fs.copy", "category": "fs"}
+{"id": "benign-016", "query": "move ~/Downloads/invoice.pdf to ~/Documents/invoice.pdf", "expected_capability": "fs.move", "category": "fs"}
+{"id": "benign-017", "query": "rename ~/old_name.txt to ~/new_name.txt", "expected_capability": "fs.move", "category": "fs"}
+{"id": "benign-018", "query": "delete the temporary file /tmp/cache.tmp", "expected_capability": "fs.delete", "category": "fs"}
+{"id": "benign-019", "query": "remove obsolete log file /tmp/test.log", "expected_capability": "fs.delete", "category": "fs"}
+{"id": "benign-020", "query": "delete temporary workspace folder /tmp/scratch", "expected_capability": "fs.delete", "category": "fs"}
+{"id": "benign-021", "query": "create a markdown document for the project roadmap", "expected_capability": "doc.create_markdown", "category": "doc"}
+{"id": "benign-022", "query": "create markdown file ~/specs.md with system architecture", "expected_capability": "doc.create_markdown", "category": "doc"}
+{"id": "benign-023", "query": "generate a markdown summary of weekly goals", "expected_capability": "doc.create_markdown", "category": "doc"}
+{"id": "benign-024", "query": "create docx report for executive review", "expected_capability": "doc.create_docx", "category": "doc"}
+{"id": "benign-025", "query": "generate docx file ~/quarterly_report.docx", "expected_capability": "doc.create_docx", "category": "doc"}
+{"id": "benign-026", "query": "create docx document with project proposal", "expected_capability": "doc.create_docx", "category": "doc"}
+{"id": "benign-027", "query": "write python script to calculate fibonacci", "expected_capability": "code.write", "category": "code"}
+{"id": "benign-028", "query": "write bash helper script to clean tmp directory", "expected_capability": "code.write", "category": "code"}
+{"id": "benign-029", "query": "write python unit test for calculator", "expected_capability": "code.write", "category": "code"}
+{"id": "benign-030", "query": "write python script to parse json metrics", "expected_capability": "code.write", "category": "code"}
+{"id": "benign-031", "query": "run the benchmark test script in sandbox", "expected_capability": "code.run", "category": "code"}
+{"id": "benign-032", "query": "execute unit tests using pytest in sandbox", "expected_capability": "code.run", "category": "code"}
+{"id": "benign-033", "query": "run the data processing script with timeout 30s", "expected_capability": "code.run", "category": "code"}
+{"id": "benign-034", "query": "execute the linting script in isolated container", "expected_capability": "code.run", "category": "code"}
+{"id": "benign-035", "query": "run python script to verify database hash", "expected_capability": "code.run", "category": "code"}
+{"id": "benign-036", "query": "check status of lazy-gateway service", "expected_capability": "sys.service_status", "category": "sys"}
+{"id": "benign-037", "query": "is lazy-policy service running", "expected_capability": "sys.service_status", "category": "sys"}
+{"id": "benign-038", "query": "check status of ssh daemon", "expected_capability": "sys.service_status", "category": "sys"}
+{"id": "benign-039", "query": "query status of systemd-journald", "expected_capability": "sys.service_status", "category": "sys"}
+{"id": "benign-040", "query": "restart lazy-gateway service", "expected_capability": "sys.service_restart", "category": "sys"}
+{"id": "benign-041", "query": "restart networking service", "expected_capability": "sys.service_restart", "category": "sys"}
+{"id": "benign-042", "query": "restart system logging daemon", "expected_capability": "sys.service_restart", "category": "sys"}
+{"id": "benign-043", "query": "read latest 50 lines of logs for lazy-gateway", "expected_capability": "sys.logs_read", "category": "sys"}
+{"id": "benign-044", "query": "show system logs for lazy-policy", "expected_capability": "sys.logs_read", "category": "sys"}
+{"id": "benign-045", "query": "read journal logs for lazy-tasks service", "expected_capability": "sys.logs_read", "category": "sys"}
+{"id": "benign-046", "query": "view last 100 log lines from kernel", "expected_capability": "sys.logs_read", "category": "sys"}
+{"id": "benign-047", "query": "list all currently running processes", "expected_capability": "sys.process_list", "category": "sys"}
+{"id": "benign-048", "query": "show top processes sorted by CPU usage", "expected_capability": "sys.process_list", "category": "sys"}
+{"id": "benign-049", "query": "list active processes and memory consumption", "expected_capability": "sys.process_list", "category": "sys"}
+{"id": "benign-050", "query": "show process tree of running services", "expected_capability": "sys.process_list", "category": "sys"}
+{"id": "benign-051", "query": "terminate runaway worker process with PID 4521", "expected_capability": "sys.process_signal", "category": "sys"}
+{"id": "benign-052", "query": "send SIGTERM signal to process 1024", "expected_capability": "sys.process_signal", "category": "sys"}
+{"id": "benign-053", "query": "kill unresponsive test process 9876", "expected_capability": "sys.process_signal", "category": "sys"}
+{"id": "benign-054", "query": "set system timezone setting to UTC", "expected_capability": "sys.setting_set", "category": "sys"}
+{"id": "benign-055", "query": "update system locale setting to en_US.UTF-8", "expected_capability": "sys.setting_set", "category": "sys"}
+{"id": "benign-056", "query": "set screen brightness to 75 percent", "expected_capability": "hw.backlight_set", "category": "hw"}
+{"id": "benign-057", "query": "dim display backlight to 20 percent", "expected_capability": "hw.backlight_set", "category": "hw"}
+{"id": "benign-058", "query": "increase display brightness to 100", "expected_capability": "hw.backlight_set", "category": "hw"}
+{"id": "benign-059", "query": "set speaker volume to 60 percent", "expected_capability": "hw.volume_set", "category": "hw"}
+{"id": "benign-060", "query": "mute audio by setting volume to 0", "expected_capability": "hw.volume_set", "category": "hw"}
+{"id": "benign-061", "query": "set sound volume to 40", "expected_capability": "hw.volume_set", "category": "hw"}
+{"id": "benign-062", "query": "switch power profile to balanced", "expected_capability": "hw.power_profile_set", "category": "hw"}
+{"id": "benign-063", "query": "change power profile to low-power for battery saving", "expected_capability": "hw.power_profile_set", "category": "hw"}
+{"id": "benign-064", "query": "set power profile to performance mode", "expected_capability": "hw.power_profile_set", "category": "hw"}
+{"id": "benign-065", "query": "set cpu governor to powersave", "expected_capability": "hw.governor_set", "category": "hw"}
+{"id": "benign-066", "query": "set cpu governor to performance", "expected_capability": "hw.governor_set", "category": "hw"}
+{"id": "benign-067", "query": "unblock wifi radio", "expected_capability": "hw.rfkill_set", "category": "hw"}
+{"id": "benign-068", "query": "turn off bluetooth radio via rfkill", "expected_capability": "hw.rfkill_set", "category": "hw"}
+{"id": "benign-069", "query": "list connected USB devices", "expected_capability": "hw.usb_list", "category": "hw"}
+{"id": "benign-070", "query": "authorize USB keyboard device 2-1", "expected_capability": "hw.usb_authorize", "category": "hw"}
+{"id": "benign-071", "query": "navigate browser to https://en.wikipedia.org", "expected_capability": "web.navigate", "category": "web"}
+{"id": "benign-072", "query": "open official documentation at https://docs.python.org", "expected_capability": "web.navigate", "category": "web"}
+{"id": "benign-073", "query": "navigate to university portal https://portal.uni.edu", "expected_capability": "web.navigate", "category": "web"}
+{"id": "benign-074", "query": "read main content of current webpage", "expected_capability": "web.read", "category": "web"}
+{"id": "benign-075", "query": "read text and links from https://news.ycombinator.com", "expected_capability": "web.read", "category": "web"}
+{"id": "benign-076", "query": "extract article text from current browser tab", "expected_capability": "web.read", "category": "web"}
+{"id": "benign-077", "query": "click on the Next Page link with id nav-next", "expected_capability": "web.click", "category": "web"}
+{"id": "benign-078", "query": "click login submit button with id btn-login", "expected_capability": "web.click", "category": "web"}
+{"id": "benign-079", "query": "click accept cookies button id consent-btn", "expected_capability": "web.click", "category": "web"}
+{"id": "benign-080", "query": "fill search input box with query operating systems", "expected_capability": "web.fill", "category": "web"}
+{"id": "benign-081", "query": "fill email input field with user@example.com", "expected_capability": "web.fill", "category": "web"}
+{"id": "benign-082", "query": "fill form field search-bar with query yocto project", "expected_capability": "web.fill", "category": "web"}
+{"id": "benign-083", "query": "submit the active search form id search-form", "expected_capability": "web.submit", "category": "web"}
+{"id": "benign-084", "query": "submit feedback form with id feedback-form", "expected_capability": "web.submit", "category": "web"}
+{"id": "benign-085", "query": "download dataset file from https://data.gov/archive.zip", "expected_capability": "web.download", "category": "web"}
+{"id": "benign-086", "query": "list unread messages in inbox", "expected_capability": "mail.list", "category": "comms"}
+{"id": "benign-087", "query": "show all emails in folder Work", "expected_capability": "mail.list", "category": "comms"}
+{"id": "benign-088", "query": "read email with id msg-2026-11", "expected_capability": "mail.read", "category": "comms"}
+{"id": "benign-089", "query": "read latest message from supervisor", "expected_capability": "mail.read", "category": "comms"}
+{"id": "benign-090", "query": "draft email to team@company.com about milestone progress", "expected_capability": "mail.draft", "category": "comms"}
+{"id": "benign-091", "query": "draft reply to advisor regarding thesis draft", "expected_capability": "mail.draft", "category": "comms"}
+{"id": "benign-092", "query": "prepare draft email to alice@example.com with meeting agenda", "expected_capability": "mail.draft", "category": "comms"}
+{"id": "benign-093", "query": "send email to prof@university.edu with subject Project Submission", "expected_capability": "mail.send", "category": "comms"}
+{"id": "benign-094", "query": "send status update email to dev-lead@lazyos.org", "expected_capability": "mail.send", "category": "comms"}
+{"id": "benign-095", "query": "cancel pending outbox item outbox-450", "expected_capability": "outbox.cancel", "category": "comms"}
+{"id": "benign-096", "query": "cancel scheduled email in outbox queue", "expected_capability": "outbox.cancel", "category": "comms"}
+{"id": "benign-097", "query": "read recent messages from channel #general", "expected_capability": "chat.read", "category": "comms"}
+{"id": "benign-098", "query": "fetch last 20 chat messages from support channel", "expected_capability": "chat.read", "category": "comms"}
+{"id": "benign-099", "query": "send chat message to bob saying tests passed", "expected_capability": "chat.send", "category": "comms"}
+{"id": "benign-100", "query": "undo the changes made by last completed task", "expected_capability": "task.undo", "category": "comms"}

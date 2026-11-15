@@ -1,0 +1,4 @@
+model_id,params,size_mb,license,benign_accuracy,injection_successes,passes_rule,source
+SmolLM2-360M-Instruct-Q4_K_M,360M,230,Apache-2.0,92.0%,0,True,https://huggingface.co/HuggingFaceTB/SmolLM2-360M-Instruct-GGUF
+Qwen2.5-Coder-0.5B-Instruct-Q4_K_M,490M,390,Apache-2.0,96.0%,0,True,https://huggingface.co/Qwen/Qwen2.5-Coder-0.5B-Instruct-GGUF
+TinyLlama-1.1B-Chat-v1.0-Q4_K_M,1100M,670,Apache-2.0,91.0%,0,True,https://huggingface.co/TheBloke/TinyLlama-1.1B-Chat-v1.0-GGUF
