@@ -1,0 +1,41 @@
+[Unit]
+Description=Lazy OS Cryptographic Audit Ledger (lazy-audit)
+After=local-fs.target
+Before=lazy-policy.service lazy-gateway.service
+
+[Service]
+Type=simple
+User=lazy-audit
+Group=lazy-audit
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+StateDirectory=lazy/audit
+StateDirectoryMode=0700
+WorkingDirectory=/var/lib/lazy/audit
+ExecStart=/usr/bin/python3 -m lazy.audit.service --socket /run/lazy/audit.sock
+Restart=on-failure
+RestartSec=1s
+
+# Sandboxing Directives (Rule F6, F7: tamper-proof append-only ledger)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=128M
+CPUWeight=150
+TasksMax=16
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,33 @@
+[Unit]
+Description=Lazy OS Transient Code Sandbox (%i)
+Documentation=file:///docs/SPEC.md
+PartOf=lazy-broker-fs.service
+
+[Service]
+Type=oneshot
+User=lazy-sandbox
+Group=lazy-sandbox
+Slice=lazy-code-sandbox.slice
+StandardOutput=journal
+StandardError=journal
+
+# Strict Transient Sandboxing Directives (Rule F2)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=no
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Tight resource limits for untrusted code
+MemoryMax=256M
+CPUWeight=50
+TimeoutSec=30

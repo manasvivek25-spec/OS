@@ -1,0 +1,38 @@
+[Unit]
+Description=Lazy OS Communications Broker (lazy-broker-comms)
+After=network.target
+
+[Service]
+Type=simple
+User=lazy-brk-comms
+Group=lazy-brk-comms
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+WorkingDirectory=/var/lib/lazy
+ExecStart=/usr/bin/python3 -m lazy.brokers.comms_service --socket /run/lazy/broker-comms.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F8: external sends)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=256M
+CPUWeight=100
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,40 @@
+[Unit]
+Description=Lazy OS Planner & Dialogue Manager
+After=lazy-llm.service
+Requires=lazy-llm.service
+
+[Service]
+Type=simple
+User=lazy-plan
+Group=lazy-plan
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+WorkingDirectory=/var/lib/lazy
+ExecStart=/usr/bin/python3 -m lazy.planner.service --socket /run/lazy/planner.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F2, Frozen Architecture)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+# Strict: Unprivileged, sandboxed, no network access!
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=512M
+CPUWeight=150
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

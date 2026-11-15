@@ -1,0 +1,37 @@
+[Unit]
+Description=Lazy OS System Administration Broker (lazy-broker-sys)
+After=local-fs.target
+
+[Service]
+Type=simple
+User=lazy-brk-sys
+Group=lazy-brk-sys
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+WorkingDirectory=/var/lib/lazy
+ExecStart=/usr/bin/python3 -m lazy.brokers.sys_service --socket /run/lazy/broker-sys.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives
+NoNewPrivileges=yes
+ProtectSystem=strict
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=128M
+CPUWeight=100
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

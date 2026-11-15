@@ -1,0 +1,8 @@
+[Unit]
+Description=Lazy OS Transient Code Execution Sandbox Slice
+Before=slices.target
+
+[Slice]
+MemoryMax=512M
+CPUWeight=50
+TasksMax=64

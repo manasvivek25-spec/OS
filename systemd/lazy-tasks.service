@@ -1,0 +1,40 @@
+[Unit]
+Description=Lazy OS Task Manager & Snapshot Undo Service
+After=lazy-policy.service
+
+[Service]
+Type=simple
+User=lazy-task
+Group=lazy-task
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+StateDirectory=lazy/snapshots
+WorkingDirectory=/var/lib/lazy
+ReadWritePaths=/var/lib/lazy/snapshots
+ExecStart=/usr/bin/python3 -m lazy.tasks.service --socket /run/lazy/tasks.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F5, F7)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=256M
+CPUWeight=100
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

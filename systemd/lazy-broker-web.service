@@ -1,0 +1,39 @@
+[Unit]
+Description=Lazy OS Web Browser Broker (lazy-broker-web)
+After=network.target
+
+[Service]
+Type=simple
+User=lazy-brk-web
+Group=lazy-brk-web
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+StateDirectory=lazy/browser
+WorkingDirectory=/var/lib/lazy/browser
+ExecStart=/usr/bin/python3 -m lazy.brokers.web_service --socket /run/lazy/broker-web.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F9: isolated profile and namespace)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=no
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=1024M
+CPUWeight=100
+TasksMax=128
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,39 @@
+[Unit]
+Description=Lazy OS Gateway Service (I/O, WebSocket, HUD)
+After=network.target lazy-policy.service lazy-planner.service
+Requires=lazy-policy.service
+
+[Service]
+Type=simple
+User=lazy-gw
+Group=lazy-gw
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+WorkingDirectory=/var/lib/lazy
+ExecStart=/usr/bin/python3 -m lazy.gateway.server --host 127.0.0.1 --port 8765
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F2, Frozen Architecture)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=read-only
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=256M
+CPUWeight=100
+TasksMax=64
+
+[Install]
+WantedBy=multi-user.target

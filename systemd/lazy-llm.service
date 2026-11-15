@@ -1,0 +1,39 @@
+[Unit]
+Description=Lazy OS LLM Inference Engine (llama.cpp)
+After=local-fs.target
+
+[Service]
+Type=simple
+User=lazy-llm
+Group=lazy-llm
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+WorkingDirectory=/var/lib/lazy
+ExecStart=/usr/bin/python3 -m lazy.llm.service --socket /run/lazy/llm.sock
+Restart=on-failure
+RestartSec=3s
+
+# Sandboxing Directives
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=no
+# Local IPC only
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation (Warm resident model)
+MemoryMax=1024M
+CPUWeight=200
+TasksMax=64
+
+[Install]
+WantedBy=multi-user.target

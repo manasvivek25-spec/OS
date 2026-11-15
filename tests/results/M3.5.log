@@ -1,0 +1,20 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 9 items
+
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_all_15_services_and_sandbox_units_exist PASSED [ 11%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_dedicated_unprivileged_users PASSED [ 22%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_filesystem_and_privilege_sandboxing PASSED [ 33%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_network_isolation_rules PASSED [ 44%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_resource_limits_configured PASSED [ 55%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_security_audit_full_score PASSED [ 66%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_systemd_run_command_generation PASSED [ 77%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_sandboxed_runner_execution_fallback PASSED [ 88%]
+tests/unit/test_systemd_units.py::TestSystemdSandboxingUnits::test_systemd_analyze_verify_host_syntax PASSED [100%]
+
+============================== 9 passed in 1.05s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

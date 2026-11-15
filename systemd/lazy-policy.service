@@ -1,0 +1,39 @@
+[Unit]
+Description=Lazy OS Policy Engine & Capability Validator
+After=local-fs.target
+
+[Service]
+Type=simple
+User=lazy-pol
+Group=lazy-pol
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+WorkingDirectory=/var/lib/lazy
+ReadOnlyPaths=/etc/lazy/capabilities /etc/lazy/policy.yaml
+ExecStart=/usr/bin/python3 -m lazy.policy.service --socket /run/lazy/policy.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F1, F6)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=128M
+CPUWeight=150
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target

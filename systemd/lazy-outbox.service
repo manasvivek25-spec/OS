@@ -1,0 +1,39 @@
+[Unit]
+Description=Lazy OS Outbox Queue (Approval & Delay State Machine)
+After=lazy-policy.service
+
+[Service]
+Type=simple
+User=lazy-outbox
+Group=lazy-outbox
+RuntimeDirectory=lazy
+RuntimeDirectoryMode=0755
+StateDirectory=lazy/outbox
+WorkingDirectory=/var/lib/lazy/outbox
+ExecStart=/usr/bin/python3 -m lazy.outbox.service --socket /run/lazy/outbox.sock
+Restart=on-failure
+RestartSec=2s
+
+# Sandboxing Directives (Rule F8)
+NoNewPrivileges=yes
+ProtectSystem=strict
+ProtectHome=yes
+PrivateTmp=yes
+ProtectKernelTunables=yes
+ProtectControlGroups=yes
+ProtectKernelModules=yes
+RestrictRealtime=yes
+RestrictSUIDSGID=yes
+LockPersonality=yes
+MemoryDenyWriteExecute=yes
+RestrictAddressFamilies=AF_UNIX
+SystemCallFilter=@system-service ~@privileged ~@resources
+SystemCallArchitectures=native
+
+# Resource Isolation
+MemoryMax=128M
+CPUWeight=100
+TasksMax=32
+
+[Install]
+WantedBy=multi-user.target
