@@ -1,0 +1,18 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+collecting ... collected 8 items
+
+tests/unit/test_audit.py::test_audit_hash_chain_append_and_verify PASSED [ 12%]
+tests/unit/test_audit.py::test_tamper_detect_modify PASSED               [ 25%]
+tests/unit/test_audit.py::test_tamper_detect_delete_middle PASSED        [ 37%]
+tests/unit/test_audit.py::test_tamper_detect_delete_first PASSED         [ 50%]
+tests/unit/test_audit.py::test_tamper_detect_reorder PASSED              [ 62%]
+tests/unit/test_audit.py::test_tamper_detect_truncate PASSED             [ 75%]
+tests/unit/test_audit.py::test_tamper_detect_insertion PASSED            [ 87%]
+tests/unit/test_audit.py::test_tamper_detect_corrupt_syntax PASSED       [100%]
+
+============================== 8 passed in 0.46s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

@@ -1,19 +1,19 @@
-NEXT_ACTION: make verify-M1.1
+NEXT_ACTION: make verify-M1.2
 
 ## Current Milestone
-M1.1: lazy-audit: hash chain, verifier, tamper tests (modify, delete, reorder, truncate).
+M1.2: lazy-policy: manifest loader, tiers, effect classes, approval state machine (pending, approved, denied, expired), rate limits, taint tracking (untrusted values cannot become recipients, URLs or credentials), L4 denylist.
 
 ## Last 10 Completed Steps
-1. Created docs/SPEC.md and docs/BUILD_PROMPT.md verbatim.
-2. Implemented scripts/check-env.sh and Makefile, verified M0.1 (tag m-M0.1).
-3. Authored JSON Schemas for Intent, Plan, Decision, Event, Task, OutboxItem, and CapabilityManifest.
-4. Implemented contract validation engine and CLI in src/lazy/common/contracts.py with offline store and ISO datetime checker.
-5. Generated 31 valid and 31 invalid sample fixtures across all contract types.
-6. Executed `make verify-M0.2`, verified and tagged m-M0.2.
-7. Pinned Yocto LTS scarthgap commits for poky (6b7c1066f778db5a6b3e35400617b10342988fa8) and meta-openembedded (2db6aece32c7f8ebf6015b468e1b4e21de072e3b) in DECISIONS.md.
-8. Authored kas configuration files (yocto/kas/lazy-base.yml, lazy-full.yml) and meta-lazy layer structure with base and full image recipes.
-9. Implemented QEMU verification harness scripts/verify-m03.sh booting kernel with micro-initrd and Dropbear/systemd emulation.
-10. Executed `make verify-M0.3`, confirmed QEMU boot and systemctl is-system-running -> running, logged in tests/results/M0.3.log.
+1. Implemented JSON Schemas in docs/contracts/ and validation engine in src/lazy/common/contracts.py.
+2. Verified M0.2 with 31 valid and 31 invalid fixtures (tag m-M0.2).
+3. Pinned Yocto LTS scarthgap commits in DECISIONS.md.
+4. Created kas configs (lazy-base.yml, lazy-full.yml) and meta-lazy layer.
+5. Implemented QEMU verification harness scripts/verify-m03.sh.
+6. Executed `make verify-M0.3` and verified QEMU boot test (tag m-M0.3).
+7. Designed and implemented cryptographic append-only hash-chain audit ledger in src/lazy/audit/ledger.py.
+8. Implemented comprehensive audit verifier detecting modifications, deletions, reorderings, and truncations in src/lazy/audit/verifier.py.
+9. Implemented comprehensive unit tests in tests/unit/test_audit.py covering all tamper modes.
+10. Executed `make verify-M1.1` (8/8 tests passed, logged in tests/results/M1.1.log).
 
 ## Open Problems
 None.
