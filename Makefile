@@ -59,9 +59,9 @@ run-verify-M0.3:
 run-verify-M1.1:
 	@$(PYTHON) -m pytest tests/unit/test_audit.py -v
 run-verify-M1.2:
-	@$(PYTHON) -m pytest tests/unit/test_policy.py -v
+	@$(PYTHON) -m pytest tests/unit/test_policy.py -v --cov=lazy.policy --cov-report=term-missing
 run-verify-M1.3:
-	@$(PYTHON) -m pytest tests/unit/test_tasks.py -v
+	@$(PYTHON) -m pytest tests/unit/test_tasks.py -v --cov=lazy.tasks --cov-report=term-missing
 run-verify-M1.4:
 	@$(PYTHON) -m pytest tests/unit/test_brokers.py -v
 run-verify-M1.5:

@@ -1,0 +1,19 @@
+name: hw.backlight_set
+description: Set laptop screen brightness
+params_schema:
+  type: object
+  required:
+  - brightness
+  properties:
+    brightness:
+      type: integer
+      minimum: 0
+      maximum: 100
+tier: L1
+effect_class: compensable
+approval_mode: automatic
+sandbox_profile: hw_control
+undo_method: restore_backlight
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false

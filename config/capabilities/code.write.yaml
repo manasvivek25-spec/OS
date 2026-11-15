@@ -1,0 +1,21 @@
+name: code.write
+description: Write source code file
+params_schema:
+  type: object
+  required:
+  - path
+  - content
+  properties:
+    path:
+      type: string
+    content:
+      type: string
+tier: L1
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: writable_data
+undo_method: snapshot_revert
+taint_rules:
+  disallow_untrusted_keys:
+  - path
+  require_user_confirmation: false

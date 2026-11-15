@@ -1,0 +1,15 @@
+name: mail.list
+description: List messages in maildir
+params_schema:
+  type: object
+  properties:
+    folder:
+      type: string
+tier: L0
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: comms_query
+undo_method: none
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false

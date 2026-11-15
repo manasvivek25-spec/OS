@@ -1,0 +1,22 @@
+name: chat.send
+description: Queue chat message send via outbox
+params_schema:
+  type: object
+  required:
+  - to
+  - body
+  properties:
+    to:
+      type: string
+    body:
+      type: string
+tier: L3
+effect_class: irreversible
+approval_mode: outbox_delay
+sandbox_profile: comms_outbox
+undo_method: outbox_cancel
+taint_rules:
+  disallow_untrusted_keys:
+  - to
+  - body
+  require_user_confirmation: true

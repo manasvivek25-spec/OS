@@ -1,0 +1,18 @@
+name: web.navigate
+description: Navigate isolated browser to URL (L1 for allowlist, L2 for new domain)
+params_schema:
+  type: object
+  required:
+  - url
+  properties:
+    url:
+      type: string
+tier: L1
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: web_isolated
+undo_method: browser_back
+taint_rules:
+  disallow_untrusted_keys:
+  - url
+  require_user_confirmation: true

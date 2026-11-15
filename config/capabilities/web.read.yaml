@@ -1,0 +1,17 @@
+name: web.read
+description: Fetch and extract text content from webpage or RSS feed
+params_schema:
+  type: object
+  required:
+  - url
+  properties:
+    url:
+      type: string
+tier: L0
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: web_sandbox
+undo_method: none
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false

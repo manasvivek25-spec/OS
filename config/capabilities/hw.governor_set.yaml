@@ -1,0 +1,21 @@
+name: hw.governor_set
+description: Set CPU frequency scaling governor
+params_schema:
+  type: object
+  required:
+  - governor
+  properties:
+    governor:
+      type: string
+      enum:
+      - powersave
+      - performance
+      - schedutil
+tier: L2
+effect_class: compensable
+approval_mode: user_confirm
+sandbox_profile: hw_control
+undo_method: restore_governor
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: true

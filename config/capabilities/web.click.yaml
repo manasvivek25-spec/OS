@@ -1,0 +1,18 @@
+name: web.click
+description: Click element on active webpage
+params_schema:
+  type: object
+  required:
+  - element_id
+  properties:
+    element_id:
+      type: string
+tier: L2
+effect_class: reversible
+approval_mode: user_confirm
+sandbox_profile: web_isolated
+undo_method: browser_back
+taint_rules:
+  disallow_untrusted_keys:
+  - element_id
+  require_user_confirmation: true

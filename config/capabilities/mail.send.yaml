@@ -1,0 +1,31 @@
+name: mail.send
+description: Queue email send via outbox with delay and preview
+params_schema:
+  type: object
+  required:
+  - to
+  - subject
+  - body
+  properties:
+    to:
+      type: string
+    subject:
+      type: string
+    body:
+      type: string
+    attachments:
+      type: array
+      items:
+        type: string
+tier: L3
+effect_class: irreversible
+approval_mode: outbox_delay
+sandbox_profile: comms_outbox
+undo_method: outbox_cancel
+taint_rules:
+  disallow_untrusted_keys:
+  - to
+  - subject
+  - body
+  - attachments
+  require_user_confirmation: true

@@ -1,0 +1,22 @@
+name: web.download
+description: Download external file into quarantine
+params_schema:
+  type: object
+  required:
+  - url
+  - dest_filename
+  properties:
+    url:
+      type: string
+    dest_filename:
+      type: string
+tier: L3
+effect_class: irreversible
+approval_mode: user_confirm
+sandbox_profile: quarantine_sandbox
+undo_method: delete_quarantined_file
+taint_rules:
+  disallow_untrusted_keys:
+  - url
+  - dest_filename
+  require_user_confirmation: true

@@ -1,0 +1,22 @@
+name: web.fill
+description: Fill form field on active webpage
+params_schema:
+  type: object
+  required:
+  - element_id
+  - value
+  properties:
+    element_id:
+      type: string
+    value:
+      type: string
+tier: L2
+effect_class: reversible
+approval_mode: user_confirm
+sandbox_profile: web_isolated
+undo_method: browser_clear_field
+taint_rules:
+  disallow_untrusted_keys:
+  - element_id
+  - value
+  require_user_confirmation: true

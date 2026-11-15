@@ -1,0 +1,13 @@
+name: hw.usb_list
+description: List connected USB devices
+params_schema:
+  type: object
+  properties: {}
+tier: L0
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: hw_query
+undo_method: none
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false

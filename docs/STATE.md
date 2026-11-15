@@ -1,19 +1,19 @@
-NEXT_ACTION: make verify-M1.2
+NEXT_ACTION: make verify-M1.3
 
 ## Current Milestone
-M1.2: lazy-policy: manifest loader, tiers, effect classes, approval state machine (pending, approved, denied, expired), rate limits, taint tracking (untrusted values cannot become recipients, URLs or credentials), L4 denylist.
+M1.3: lazy-tasks: snapshot backends (btrfs, overlay, copy) and undo. [discard returns the tree to its pre-task hash; commit persists; cancel mid-task works]
 
 ## Last 10 Completed Steps
-1. Implemented JSON Schemas in docs/contracts/ and validation engine in src/lazy/common/contracts.py.
-2. Verified M0.2 with 31 valid and 31 invalid fixtures (tag m-M0.2).
-3. Pinned Yocto LTS scarthgap commits in DECISIONS.md.
-4. Created kas configs (lazy-base.yml, lazy-full.yml) and meta-lazy layer.
-5. Implemented QEMU verification harness scripts/verify-m03.sh.
-6. Executed `make verify-M0.3` and verified QEMU boot test (tag m-M0.3).
-7. Designed and implemented cryptographic append-only hash-chain audit ledger in src/lazy/audit/ledger.py.
-8. Implemented comprehensive audit verifier detecting modifications, deletions, reorderings, and truncations in src/lazy/audit/verifier.py.
-9. Implemented comprehensive unit tests in tests/unit/test_audit.py covering all tamper modes.
-10. Executed `make verify-M1.1` (8/8 tests passed, logged in tests/results/M1.1.log).
+1. Pinned Yocto LTS scarthgap commits in DECISIONS.md.
+2. Verified M0.3 QEMU boot test and login status in tests/results/M0.3.log (tag m-M0.3).
+3. Implemented lazy-audit hash-chain and verifier, verified M1.1 (tag m-M1.1).
+4. Authored all 37 capability YAML manifests in config/capabilities/ conforming to capability_manifest.schema.json.
+5. Implemented manifest loader and validator in src/lazy/policy/manifest.py.
+6. Implemented taint tracking and Rule F4/F8 protection in src/lazy/policy/taint.py.
+7. Implemented sliding-window rate limiter in src/lazy/policy/rate_limiter.py.
+8. Implemented approval state machine with voice rejection for L3 in src/lazy/policy/state_machine.py.
+9. Implemented core PolicyEngine with hardcoded L4 denylist in src/lazy/policy/engine.py.
+10. Executed `make verify-M1.2` (162/162 tests passed, 93% line coverage, logged in tests/results/M1.2.log).
 
 ## Open Problems
 None.

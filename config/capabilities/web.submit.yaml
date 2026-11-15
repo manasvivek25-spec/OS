@@ -1,0 +1,18 @@
+name: web.submit
+description: Submit web form to external server
+params_schema:
+  type: object
+  required:
+  - form_id
+  properties:
+    form_id:
+      type: string
+tier: L3
+effect_class: irreversible
+approval_mode: outbox_delay
+sandbox_profile: web_isolated
+undo_method: outbox_cancel
+taint_rules:
+  disallow_untrusted_keys:
+  - form_id
+  require_user_confirmation: true

@@ -1,0 +1,22 @@
+name: sys.setting_set
+description: Adjust system configuration key
+params_schema:
+  type: object
+  required:
+  - key
+  - value
+  properties:
+    key:
+      type: string
+    value:
+      type: string
+tier: L2
+effect_class: compensable
+approval_mode: user_confirm
+sandbox_profile: system_admin
+undo_method: restore_setting
+taint_rules:
+  disallow_untrusted_keys:
+  - key
+  - value
+  require_user_confirmation: true

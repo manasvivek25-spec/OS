@@ -1,0 +1,21 @@
+name: fs.copy
+description: Copy file within writable directory
+params_schema:
+  type: object
+  required:
+  - src
+  - dest
+  properties:
+    src:
+      type: string
+    dest:
+      type: string
+tier: L1
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: writable_data
+undo_method: snapshot_revert
+taint_rules:
+  disallow_untrusted_keys:
+  - dest
+  require_user_confirmation: false

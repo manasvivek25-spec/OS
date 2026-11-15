@@ -1,0 +1,26 @@
+name: sys.process_signal
+description: Send signal (SIGTERM, SIGKILL) to a process
+params_schema:
+  type: object
+  required:
+  - pid
+  - signal
+  properties:
+    pid:
+      type: integer
+      minimum: 1
+    signal:
+      type: string
+      enum:
+      - SIGTERM
+      - SIGKILL
+      - SIGHUP
+tier: L3
+effect_class: irreversible
+approval_mode: user_confirm
+sandbox_profile: system_admin
+undo_method: none
+taint_rules:
+  disallow_untrusted_keys:
+  - pid
+  require_user_confirmation: true

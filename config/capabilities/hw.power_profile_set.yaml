@@ -1,0 +1,21 @@
+name: hw.power_profile_set
+description: Set ACPI platform power profile
+params_schema:
+  type: object
+  required:
+  - profile
+  properties:
+    profile:
+      type: string
+      enum:
+      - low-power
+      - balanced
+      - performance
+tier: L2
+effect_class: compensable
+approval_mode: user_confirm
+sandbox_profile: hw_control
+undo_method: restore_power_profile
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: true

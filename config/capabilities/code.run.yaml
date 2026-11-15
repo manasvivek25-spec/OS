@@ -1,0 +1,22 @@
+name: code.run
+description: Execute script inside transient systemd-run sandbox
+params_schema:
+  type: object
+  required:
+  - command
+  properties:
+    command:
+      type: string
+    timeout:
+      type: integer
+      minimum: 1
+      maximum: 300
+tier: L2
+effect_class: reversible
+approval_mode: user_confirm
+sandbox_profile: systemd_run_transient
+undo_method: snapshot_revert
+taint_rules:
+  disallow_untrusted_keys:
+  - command
+  require_user_confirmation: true

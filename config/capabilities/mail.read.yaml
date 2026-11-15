@@ -1,0 +1,17 @@
+name: mail.read
+description: Read specific email by message id
+params_schema:
+  type: object
+  required:
+  - message_id
+  properties:
+    message_id:
+      type: string
+tier: L0
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: comms_query
+undo_method: none
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false

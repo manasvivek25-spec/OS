@@ -1,0 +1,19 @@
+name: sys.logs_read
+description: Read service journal logs
+params_schema:
+  type: object
+  properties:
+    service:
+      type: string
+    lines:
+      type: integer
+      minimum: 1
+      maximum: 500
+tier: L0
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: system_query
+undo_method: none
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false

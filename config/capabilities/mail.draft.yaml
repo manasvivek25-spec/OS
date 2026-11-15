@@ -1,0 +1,23 @@
+name: mail.draft
+description: Create email draft without sending
+params_schema:
+  type: object
+  required:
+  - to
+  - subject
+  - body
+  properties:
+    to:
+      type: string
+    subject:
+      type: string
+    body:
+      type: string
+tier: L1
+effect_class: reversible
+approval_mode: automatic
+sandbox_profile: comms_draft
+undo_method: delete_draft
+taint_rules:
+  disallow_untrusted_keys: []
+  require_user_confirmation: false
