@@ -110,11 +110,28 @@ class CopyBackend(SnapshotBackend):
         if not snap_path.exists():
             raise FileNotFoundError(f"Snapshot '{checkpoint_id}' not found at {snap_path}")
 
-        # Wipe target dir and restore from snapshot
+        # Wipe target dir contents (preserving mountpoint and snapshot root) and restore from snapshot
         if self.target_dir.exists():
-            shutil.rmtree(self.target_dir)
+            for item in self.target_dir.iterdir():
+                if item.name in ("@snapshots", ".snapshots"):
+                    continue
+                try:
+                    if item.is_dir() and not item.is_symlink():
+                        shutil.rmtree(item)
+                    else:
+                        item.unlink()
+                except Exception:
+                    pass
 
-        shutil.copytree(snap_path, self.target_dir, symlinks=True)
+        if snap_path.exists():
+            for item in snap_path.iterdir():
+                if item.name in ("@snapshots", ".snapshots"):
+                    continue
+                dst = self.target_dir / item.name
+                if item.is_dir() and not item.is_symlink():
+                    shutil.copytree(item, dst, symlinks=True)
+                else:
+                    shutil.copy2(item, dst, follow_symlinks=False)
 
     def commit_snapshot(self, checkpoint_id: str) -> None:
         # Changes are already in target_dir; cleanup checkpoint copy

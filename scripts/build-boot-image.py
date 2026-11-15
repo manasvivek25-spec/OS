@@ -440,6 +440,11 @@ export SHELL=/bin/sh
 
 /bin/busybox hostname lazy-os
 
+# Network setup for host-guest forwarding
+/bin/busybox ifconfig lo 127.0.0.1 up 2>/dev/null || true
+/bin/busybox ifconfig eth0 10.0.2.15 netmask 255.255.255.0 up 2>/dev/null || true
+/bin/busybox route add default gw 10.0.2.2 2>/dev/null || true
+
 # Start guest daemon in background
 /usr/bin/python3 /usr/bin/lazy-guest-daemon.py > /var/log/lazy-gateway.log 2>&1 &
 
@@ -464,8 +469,12 @@ export SHELL=/bin/sh
 /bin/busybox sh /etc/lazy/explore.sh
 
 if /bin/busybox grep -q "lazy_interactive" /proc/cmdline; then
-    /bin/busybox echo "Dropping to interactive shell..."
-    exec /bin/busybox sh
+    /bin/busybox echo ""
+    /bin/busybox echo "======================================================================"
+    /bin/busybox echo "  LAZY OS LIVE CONSOLE READY -- TYPE DIRECTIVES OR SYSTEM COMMANDS     "
+    /bin/busybox echo "======================================================================"
+    /bin/busybox echo "lazyos@lazy-os:~$ "
+    exec /bin/busybox cttyhack /bin/busybox sh
 else
     /bin/busybox echo "System exploration finished. Shutting down VM."
     /bin/busybox poweroff -f
