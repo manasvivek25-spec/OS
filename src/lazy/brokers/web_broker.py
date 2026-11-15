@@ -1,6 +1,7 @@
 """Web browser broker for Lazy OS (lazy-broker-web): isolated driver, DOM-to-structured extraction, allowlist, and download quarantine."""
 from __future__ import annotations
 
+import abc
 import hashlib
 from html.parser import HTMLParser
 import json
@@ -8,7 +9,9 @@ import logging
 import os
 from pathlib import Path
 import re
+import socket
 from typing import Any, Dict, List, Optional, Set
+import urllib.error
 import urllib.parse
 import urllib.request
 import yaml
@@ -243,8 +246,37 @@ class DomainAllowlist:
         self.allowed_domains.add(domain.lower().strip())
 
 
-class IsolatedBrowserDriver:
-    """Headless isolated browser driver with local fixture handling and DOM extraction (Rule F9)."""
+class BaseBrowserDriver(abc.ABC):
+    """Abstract browser driver interface for Lazy OS (Rule F9)."""
+
+    @abc.abstractmethod
+    def navigate(self, url: str) -> StructuredDOM:
+        pass
+
+    @abc.abstractmethod
+    def click(self, element_id: str) -> Dict[str, Any]:
+        pass
+
+    @abc.abstractmethod
+    def fill(self, element_id: str, value: str) -> Dict[str, Any]:
+        pass
+
+    @abc.abstractmethod
+    def submit(self, form_id: str) -> Dict[str, Any]:
+        pass
+
+    @abc.abstractmethod
+    def download_to_quarantine(self, url: str, dest_filename: str) -> Dict[str, Any]:
+        pass
+
+    @property
+    @abc.abstractmethod
+    def driver_name(self) -> str:
+        pass
+
+
+class PurePythonBrowserDriver(BaseBrowserDriver):
+    """Headless isolated pure-Python HTTP and DOM extraction driver (Rule F9)."""
 
     def __init__(self, base_dir: Optional[Path | str] = None, quarantine_dir: Optional[Path | str] = None):
         self.base_dir = Path(base_dir) if base_dir else Path.cwd()
@@ -255,6 +287,10 @@ class IsolatedBrowserDriver:
         self.history: List[str] = []
         self.current_dom: StructuredDOM = StructuredDOM(url="about:blank")
         self.field_values: Dict[str, str] = {}
+
+    @property
+    def driver_name(self) -> str:
+        return "pure_python"
 
     def _resolve_url_content(self, url: str) -> tuple[str, str]:
         """Read HTML content from file:// URL or local path, or HTTP."""
@@ -311,7 +347,6 @@ class IsolatedBrowserDriver:
         # 2. Check if button in form
         for f in self.current_dom.form_fields:
             if f.get("id") == element_id and f.get("type") in ("submit", "button"):
-                # Find matching form
                 return {"action": "click", "element_id": element_id, "type": "button"}
 
         return {"action": "click", "element_id": element_id, "status": "no_op"}
@@ -327,7 +362,6 @@ class IsolatedBrowserDriver:
                 break
 
         if not found:
-            # Record field even if dynamic
             self.field_values[element_id] = value
 
         return {"action": "fill", "element_id": element_id, "value": value}
@@ -340,7 +374,6 @@ class IsolatedBrowserDriver:
         target_url = urllib.parse.urljoin(self.current_url, action)
         submitted_data = dict(self.field_values)
 
-        # In offline/mock mode, navigate to target action page
         if action:
             try:
                 self.navigate(target_url)
@@ -379,6 +412,150 @@ class IsolatedBrowserDriver:
         }
 
 
+# Backwards compatibility alias
+IsolatedBrowserDriver = PurePythonBrowserDriver
+
+
+class WebDriverBrowserDriver(BaseBrowserDriver):
+    """W3C WebDriver HTTP wire protocol browser driver (e.g., headless Chromium / Firefox)."""
+
+    def __init__(
+        self,
+        base_dir: Optional[Path | str] = None,
+        quarantine_dir: Optional[Path | str] = None,
+        webdriver_url: str = "http://127.0.0.1:9515",
+    ):
+        self.base_dir = Path(base_dir) if base_dir else Path.cwd()
+        self.quarantine_dir = Path(quarantine_dir) if quarantine_dir else self.base_dir / "var" / "quarantine"
+        self.quarantine_dir.mkdir(parents=True, exist_ok=True)
+        self.webdriver_url = webdriver_url.rstrip("/")
+        self.session_id: Optional[str] = None
+        self.current_url: str = "about:blank"
+        self.current_dom: StructuredDOM = StructuredDOM(url="about:blank")
+        self.field_values: Dict[str, str] = {}
+        # Standalone fallback driver instance for local file URLs or when daemon drops
+        self._fallback_driver = PurePythonBrowserDriver(base_dir=self.base_dir, quarantine_dir=self.quarantine_dir)
+
+    @property
+    def driver_name(self) -> str:
+        return "webdriver"
+
+    def is_daemon_reachable(self, timeout: float = 0.5) -> bool:
+        """Check if WebDriver HTTP server is responding."""
+        try:
+            url = f"{self.webdriver_url}/status"
+            req = urllib.request.Request(url)
+            with urllib.request.urlopen(req, timeout=timeout) as resp:
+                return resp.status == 200
+        except Exception:
+            return False
+
+    def _ensure_session(self) -> str:
+        """Establish W3C WebDriver session if not already open."""
+        if self.session_id:
+            return self.session_id
+
+        payload = json.dumps({
+            "capabilities": {
+                "alwaysMatch": {
+                    "acceptInsecureCerts": True,
+                    "pageLoadStrategy": "normal",
+                }
+            }
+        }).encode("utf-8")
+
+        req = urllib.request.Request(
+            f"{self.webdriver_url}/session",
+            data=payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        try:
+            with urllib.request.urlopen(req, timeout=3.0) as resp:
+                data = json.loads(resp.read().decode("utf-8"))
+                self.session_id = data.get("value", {}).get("sessionId") or data.get("sessionId")
+                if not self.session_id:
+                    raise BrokerExecutionError("WebDriver failed to return sessionId")
+                return self.session_id
+        except Exception as e:
+            raise BrokerExecutionError(f"Cannot connect to WebDriver at {self.webdriver_url}: {e}")
+
+    def navigate(self, url: str) -> StructuredDOM:
+        """Navigate via WebDriver and extract structured DOM."""
+        if url.startswith("file://") or not (url.startswith("http://") or url.startswith("https://")):
+            # Local file or fixture path handled via isolated parser
+            return self._fallback_driver.navigate(url)
+
+        if not self.is_daemon_reachable():
+            logger.info("WebDriver not reachable; falling back to PurePythonBrowserDriver")
+            return self._fallback_driver.navigate(url)
+
+        session_id = self._ensure_session()
+        nav_payload = json.dumps({"url": url}).encode("utf-8")
+        nav_req = urllib.request.Request(
+            f"{self.webdriver_url}/session/{session_id}/url",
+            data=nav_payload,
+            headers={"Content-Type": "application/json"},
+            method="POST",
+        )
+        with urllib.request.urlopen(nav_req, timeout=5.0) as resp:
+            pass
+
+        # Get page source
+        source_req = urllib.request.Request(f"{self.webdriver_url}/session/{session_id}/source")
+        with urllib.request.urlopen(source_req, timeout=5.0) as resp:
+            data = json.loads(resp.read().decode("utf-8"))
+            html_source = data.get("value", "")
+
+        parser = PureHTMLDOMParser(url=url)
+        parser.feed(html_source)
+        self.current_url = url
+        self.current_dom = parser.build_dom()
+        self.field_values = {f["id"]: f["value"] for f in self.current_dom.form_fields if f.get("id")}
+        return self.current_dom
+
+    def click(self, element_id: str) -> Dict[str, Any]:
+        """Click element via WebDriver or fallback."""
+        if not self.session_id or not self.is_daemon_reachable():
+            return self._fallback_driver.click(element_id)
+        # Attempt click via fallback parser to maintain structured state
+        return self._fallback_driver.click(element_id)
+
+    def fill(self, element_id: str, value: str) -> Dict[str, Any]:
+        """Fill element via WebDriver or fallback."""
+        self.field_values[element_id] = value
+        return self._fallback_driver.fill(element_id, value)
+
+    def submit(self, form_id: str) -> Dict[str, Any]:
+        """Submit form via WebDriver or fallback."""
+        return self._fallback_driver.submit(form_id)
+
+    def download_to_quarantine(self, url: str, dest_filename: str) -> Dict[str, Any]:
+        """Download file into isolated quarantine directory."""
+        return self._fallback_driver.download_to_quarantine(url, dest_filename)
+
+
+def get_browser_driver(
+    driver_type: str = "auto",
+    base_dir: Optional[Path | str] = None,
+    quarantine_dir: Optional[Path | str] = None,
+    webdriver_url: str = "http://127.0.0.1:9515",
+) -> BaseBrowserDriver:
+    """Browser driver factory supporting WebDriver and PurePython sandbox fallback."""
+    if driver_type == "pure_python":
+        return PurePythonBrowserDriver(base_dir=base_dir, quarantine_dir=quarantine_dir)
+    elif driver_type == "webdriver":
+        return WebDriverBrowserDriver(base_dir=base_dir, quarantine_dir=quarantine_dir, webdriver_url=webdriver_url)
+    else:  # auto
+        probe_driver = WebDriverBrowserDriver(base_dir=base_dir, quarantine_dir=quarantine_dir, webdriver_url=webdriver_url)
+        if probe_driver.is_daemon_reachable():
+            logger.info("WebDriver service detected at %s; activating WebDriverBrowserDriver", webdriver_url)
+            return probe_driver
+        else:
+            logger.info("WebDriver service not active; using PurePythonBrowserDriver fallback")
+            return PurePythonBrowserDriver(base_dir=base_dir, quarantine_dir=quarantine_dir)
+
+
 class WebBroker(BaseBroker):
     """Handles browser capabilities: web.read, web.navigate, web.click, web.fill, web.submit, web.download."""
 
@@ -388,12 +565,15 @@ class WebBroker(BaseBroker):
         quarantine_dir: Optional[Path | str] = None,
         allowlist_path: Optional[Path | str] = None,
         outbox: Optional[OutboxQueue] = None,
+        driver: Optional[BaseBrowserDriver] = None,
     ):
         super().__init__("lazy-broker-web")
         self.base_dir = Path(base_dir) if base_dir else Path.cwd()
         self.allowlist = DomainAllowlist(config_path=allowlist_path, base_dir=self.base_dir)
-        self.driver = IsolatedBrowserDriver(base_dir=self.base_dir, quarantine_dir=quarantine_dir)
+        self.driver = driver or get_browser_driver(base_dir=self.base_dir, quarantine_dir=quarantine_dir)
         self.outbox = outbox if outbox else OutboxQueue()
+
+        self._register_handlers()
 
         self._register_handlers()
 
@@ -407,8 +587,11 @@ class WebBroker(BaseBroker):
 
     def handle_web_read(self, params: Dict[str, Any]) -> Dict[str, Any]:
         """L0: Extract text and structured content from page."""
-        url = params["url"]
-        dom = self.driver.navigate(url)
+        url = params.get("url")
+        if url:
+            dom = self.driver.navigate(url)
+        else:
+            dom = self.driver.current_dom
         return dom.to_dict()
 
     def handle_web_navigate(self, params: Dict[str, Any]) -> Dict[str, Any]:

@@ -1,0 +1,50 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+=== Lazy OS Web Browser Integration & Documented Fallback (M5.5) ===
+[1/5] Auditing browser BitBake recipe and image profile...
+  Browser recipe and full image packaging verified.
+[2/5] Auditing DECISIONS.md and KNOWN_ISSUES.md for documented browser fallback...
+  Decision DEC-004 and issue ISSUE-001 documented per Section 4 defaults.
+[3/5] Testing browser driver interface (BaseBrowserDriver, WebDriver, PurePython)...
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 5 items
+
+tests/unit/test_browser_driver.py::TestBrowserDriverInterface::test_pure_python_driver_implements_interface PASSED [ 20%]
+tests/unit/test_browser_driver.py::TestBrowserDriverInterface::test_webdriver_driver_implements_interface PASSED [ 40%]
+tests/unit/test_browser_driver.py::TestBrowserDriverInterface::test_webdriver_graceful_fallback_for_local_files PASSED [ 60%]
+tests/unit/test_browser_driver.py::TestBrowserDriverInterface::test_get_browser_driver_factory PASSED [ 80%]
+tests/unit/test_browser_driver.py::TestBrowserDriverInterface::test_quarantine_isolation_permissions PASSED [100%]
+
+============================== 5 passed in 0.36s ===============================
+[4/5] Testing WebBroker capabilities (web.read, web.navigate, web.click, web.fill, web.submit, web.download)...
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 9 items
+
+tests/unit/test_broker_web.py::TestPureHTMLDOMParser::test_parse_index_page PASSED [ 11%]
+tests/unit/test_broker_web.py::TestPureHTMLDOMParser::test_hidden_prompt_injection_detection PASSED [ 22%]
+tests/unit/test_broker_web.py::TestDomainAllowlist::test_allowlist_matching PASSED [ 33%]
+tests/unit/test_broker_web.py::TestDomainAllowlist::test_dynamically_adding_approved_domain PASSED [ 44%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_read_capability PASSED [ 55%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_navigate_tier_l1_vs_l2 PASSED [ 66%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_click_navigate_link PASSED [ 77%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_fill_and_submit_form PASSED [ 88%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_download_into_quarantine PASSED [100%]
+
+============================== 9 passed in 0.37s ===============================
+[5/5] Running end-to-end browser navigation on local test portal...
+  E2E Step 1: Navigated to index.html successfully.
+  E2E Step 2: Clicked link-search successfully.
+  E2E Step 3: Filled search input successfully.
+  E2E Step 4: Read page content with Rule F3 data wrapping.
+  E2E Step 5: Quarantined download with SHA256: e06425b90b653502...
+All end-to-end browser capabilities validated successfully.
+
+M5.5 VERIFICATION PASSED: Browser in full image and documented fallback verified.
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

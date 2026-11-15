@@ -1,0 +1,2 @@
+This is an external test document downloaded from the web.
+SHA256 integrity verification test file for Lazy OS download quarantine.

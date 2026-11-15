@@ -56,6 +56,7 @@ Lazy OS defines two official BitBake image targets in `yocto/meta-lazy/images/`:
 | `vosk-api` | 0.3.45 | meta-lazy | Apache-2.0 | Lightweight offline speech-to-text recognition toolkit. |
 | `lazy-voice-model` | 0.15 (en-us small) | meta-lazy | Apache-2.0 | Vosk acoustic model tuned for constrained grammar wake phrase and command recognition. |
 | `espeak-ng` | 1.51 | meta-openembedded | GPL-3.0+ | Fast, zero-network, multi-lingual text-to-speech synthesizer. |
+| `lazy-browser` | 1.0 | meta-lazy | MIT | Isolated headless browser runtime and WebDriver integration for WebBroker (Rule F9). |
 | `alsa-utils` | 1.2.x | poky | GPL-2.0+ | Linux audio hardware control (amixer, aplay, arecord). |
 
 ---

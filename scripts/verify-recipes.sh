@@ -12,6 +12,7 @@ REQUIRED_RECIPES=(
     "$META_LAZY/recipes-lazy/vosk/vosk-api_0.3.45.bb"
     "$META_LAZY/recipes-lazy/models/lazy-model-smollm_1.0.bb"
     "$META_LAZY/recipes-lazy/models/lazy-voice-model_1.0.bb"
+    "$META_LAZY/recipes-browser/lazy-browser/lazy-browser_1.0.bb"
     "$META_LAZY/images/lazy-image-base.bb"
     "$META_LAZY/images/lazy-image-full.bb"
 )

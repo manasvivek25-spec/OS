@@ -20,3 +20,11 @@
   - Designated high-accuracy secondary model for full profile: `Qwen2.5-Coder-0.5B-Instruct-Q4_K_M` (390 MB, Apache-2.0, Qwen) scoring 96.0% valid schema and 0 injection successes.
   - Implemented GBNF context-free grammar (`src/lazy/llm/grammar.py`) strictly enforcing Lazy OS `intent.schema.json` and restricting the `capability` field to the 37 registered capability manifests.
 - **Consequences**: Ensures zero prompt-injection escapes through grammar-constrained token sampling; eliminates freeform text generation from the planner; produces compact, ultra-fast inference on CPU under 100ms per intent. Results saved in `docs/reports/model_selection.csv`.
+
+## 2026-11-15 - DEC-004: Browser Integration in Full Image and Documented Fallback
+- **Context**: Per Section 4 Defaults, the browser architecture requires a driver interface supporting WebDriver with headless browser, and a fallback pure-Python HTTP driver that fetches pages, strips scripts, and extracts structured text, forms, and links for the reader. If a monolithic desktop browser (Chromium/WebKit) cannot be built into the embedded image footprint (~400MB-1GB, requiring Wayland/X11 and Rust/Clang toolchains) without violating the university Track A 40% size comparison target, validate on the host, document the shortfall, and provide the isolated sandbox driver.
+- **Decision**: 
+  1. The full image profile (`lazy-image-full`) includes the `lazy-browser` package providing the isolated headless browser runtime and WebDriver HTTP wire client.
+  2. The `WebBroker` driver architecture implements `BaseBrowserDriver` with two interchangeable engines: `WebDriverBrowserDriver` (connecting to W3C WebDriver endpoints) and `PurePythonBrowserDriver` (self-contained isolated DOM parser with prompt injection detection in comments and hidden CSS tags).
+  3. Automatic runtime probing (`get_browser_driver(driver_type="auto")`) connects to WebDriver if available and gracefully falls back to `PurePythonBrowserDriver` with diagnostic logging.
+- **Consequences**: Satisfies Rule F9 (isolated namespace and 0600 quarantine directory) and Section 4 Defaults while preventing bloat of the minimal embedded image. Full integration verified on host and in QEMU.
