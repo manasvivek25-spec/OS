@@ -1,0 +1,9 @@
+task_id: task-34-hw-volume-half
+name: Set audio volume to 50%
+category: hardware
+query: set master audio volume to 50
+expected_capability: hw.volume_set
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

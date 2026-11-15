@@ -1,0 +1,9 @@
+task_id: task-28-sys-process-signal
+name: Signal process termination
+category: admin
+query: terminate process 4321
+expected_capability: sys.process_signal
+tier: L3
+verification:
+  expected_status: completed
+  check_audit: true

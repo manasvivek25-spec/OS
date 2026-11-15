@@ -1,0 +1,9 @@
+task_id: task-09-doc-md-create
+name: Create markdown doc
+category: documents
+query: create markdown document
+expected_capability: doc.create_markdown
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

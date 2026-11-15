@@ -1,0 +1,9 @@
+task_id: task-07-fs-multiwrite
+name: Create output file
+category: files
+query: write data to file
+expected_capability: fs.write
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

@@ -1,0 +1,9 @@
+task_id: task-24-sys-restart-policy
+name: Restart lazy-policy service
+category: admin
+query: restart lazy-policy service
+expected_capability: sys.service_restart
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

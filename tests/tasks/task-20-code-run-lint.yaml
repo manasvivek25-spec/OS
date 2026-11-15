@@ -1,0 +1,9 @@
+task_id: task-20-code-run-lint
+name: Run sandbox execution
+category: code
+query: run script in sandbox
+expected_capability: code.run
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

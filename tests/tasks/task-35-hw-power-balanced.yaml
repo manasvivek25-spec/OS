@@ -1,0 +1,9 @@
+task_id: task-35-hw-power-balanced
+name: Set balanced power profile
+category: hardware
+query: set power profile to balanced
+expected_capability: hw.power_profile_set
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

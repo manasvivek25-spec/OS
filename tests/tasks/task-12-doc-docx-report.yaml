@@ -1,0 +1,9 @@
+task_id: task-12-doc-docx-report
+name: Create report docx
+category: documents
+query: create docx document
+expected_capability: doc.create_docx
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

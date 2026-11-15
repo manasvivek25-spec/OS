@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import os
 import shutil
+import subprocess
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
@@ -21,7 +22,15 @@ class FSBroker(BaseBroker):
         """Resolve path and ensure safety."""
         p = Path(path_str)
         if not p.is_absolute():
-            p = self.root_dir / p
+            return (self.root_dir / p).resolve()
+
+        if self.root_dir != Path.home():
+            for prefix in ["/home/user/", "/tmp/"]:
+                if path_str.startswith(prefix):
+                    rel = path_str[len(prefix):]
+                    return (self.root_dir / rel).resolve()
+            if not p.exists():
+                return (self.root_dir / p.name).resolve()
         return p.resolve()
 
     def _register_handlers(self) -> None:
@@ -34,6 +43,7 @@ class FSBroker(BaseBroker):
         self.register("doc.create_markdown", self.handle_doc_markdown)
         self.register("doc.create_docx", self.handle_doc_docx)
         self.register("code.write", self.handle_code_write)
+        self.register("code.run", self.handle_code_run)
 
     def handle_fs_read(self, params: Dict[str, Any]) -> Dict[str, Any]:
         path = self._resolve_path(params["path"])
@@ -109,3 +119,23 @@ class FSBroker(BaseBroker):
 
     def handle_code_write(self, params: Dict[str, Any]) -> Dict[str, Any]:
         return self.handle_fs_write(params)
+
+    def handle_code_run(self, params: Dict[str, Any]) -> Dict[str, Any]:
+        """Execute sandboxed code command (Rule F2)."""
+        command = params["command"]
+        timeout = params.get("timeout", 30)
+
+        proc = subprocess.run(
+            command,
+            shell=True,
+            cwd=str(self.root_dir),
+            capture_output=True,
+            text=True,
+            timeout=timeout,
+        )
+        return {
+            "command": command,
+            "returncode": proc.returncode,
+            "stdout": proc.stdout,
+            "stderr": proc.stderr,
+        }

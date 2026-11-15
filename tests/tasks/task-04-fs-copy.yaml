@@ -1,0 +1,9 @@
+task_id: task-04-fs-copy
+name: Copy data file
+category: files
+query: copy file from source to dest
+expected_capability: fs.copy
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

@@ -1,0 +1,9 @@
+task_id: task-03-fs-list
+name: List workspace files
+category: files
+query: list files in home directory
+expected_capability: fs.list
+tier: L0
+verification:
+  expected_status: completed
+  check_audit: true

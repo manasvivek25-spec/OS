@@ -1,0 +1,9 @@
+task_id: task-05-fs-move
+name: Move data file
+category: files
+query: move file from old to new location
+expected_capability: fs.move
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

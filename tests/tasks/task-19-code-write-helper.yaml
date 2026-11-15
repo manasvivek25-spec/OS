@@ -1,0 +1,9 @@
+task_id: task-19-code-write-helper
+name: Write helper script
+category: code
+query: write python script
+expected_capability: code.write
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

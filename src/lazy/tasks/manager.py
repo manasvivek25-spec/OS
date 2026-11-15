@@ -57,6 +57,16 @@ class TaskManager:
         task = Task(task_id=tid, backend=self.backend, target_dir=self.target_dir)
         # Capture baseline initial tree hash
         task.initial_pre_hash = TreeHasher.hash_directory(self.target_dir)
+        # Create baseline pre-task snapshot for rollback and undo (Rule F5, F7)
+        base_ckpt_id = f"snap-{tid}-base"
+        self.backend.create_snapshot(base_ckpt_id)
+        task.checkpoints.append({
+            "id": base_ckpt_id,
+            "ts": datetime.now(timezone.utc).isoformat(),
+            "backend": self.backend_type,
+            "reference": str(self.backend.snapshots_root / base_ckpt_id),
+            "pre_hash": task.initial_pre_hash,
+        })
         self._tasks[tid] = task
         return task
 
@@ -113,8 +123,8 @@ class TaskManager:
         if task is None:
             raise KeyError(f"Task '{task_id}' not found.")
 
-        # Discard checkpoints to save space; target_dir holds changes
-        for cp in task.checkpoints:
+        # Discard intermediate step checkpoints to save space; retain base snapshot for undo (Rule F7)
+        for cp in task.checkpoints[1:]:
             self.backend.commit_snapshot(cp["id"])
 
         task.status = "completed"
@@ -137,13 +147,8 @@ class TaskManager:
             raise KeyError(f"Task '{task_id}' not found.")
 
         if task.checkpoints:
-            first_checkpoint = task.checkpoints[0]["id"]
-            self.backend.restore_snapshot(first_checkpoint)
-        else:
-            # Wipe files created
-            if self.target_dir.exists():
-                shutil.rmtree(self.target_dir)
-                self.target_dir.mkdir(parents=True, exist_ok=True)
+            base_checkpoint = task.checkpoints[0]["id"]
+            self.backend.restore_snapshot(base_checkpoint)
 
         for step in task.steps:
             if step["status"] == "running":

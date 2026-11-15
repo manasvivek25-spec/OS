@@ -1,0 +1,9 @@
+task_id: task-38-hw-governor-perf
+name: Set CPU governor to performance
+category: hardware
+query: set cpu governor to performance
+expected_capability: hw.governor_set
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

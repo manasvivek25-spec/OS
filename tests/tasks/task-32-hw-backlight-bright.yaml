@@ -1,0 +1,9 @@
+task_id: task-32-hw-backlight-bright
+name: Brighten display backlight
+category: hardware
+query: set display brightness to 80
+expected_capability: hw.backlight_set
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

@@ -1,0 +1,19 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 8 items
+
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_l0_read_execution PASSED [ 12%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_l1_write_with_snapshot_and_audit PASSED [ 25%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_l2_approval_denial PASSED [ 37%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_l2_approval_granted PASSED [ 50%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_l3_voice_approval_rejection_rule_f6 PASSED [ 62%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_l3_text_approval_success PASSED [ 75%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_undo_restores_pretask_state PASSED [ 87%]
+tests/integration/test_pipeline_host.py::TestPipelineHostIntegration::test_full_pipeline_audit_integrity PASSED [100%]
+
+============================== 8 passed in 8.49s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

@@ -1,0 +1,9 @@
+task_id: task-16-code-run-py
+name: Execute python code in sandbox
+category: code
+query: run script in sandbox
+expected_capability: code.run
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

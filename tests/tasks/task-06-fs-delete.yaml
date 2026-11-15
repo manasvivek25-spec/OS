@@ -1,0 +1,9 @@
+task_id: task-06-fs-delete
+name: Delete temporary file
+category: files
+query: delete temporary file
+expected_capability: fs.delete
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

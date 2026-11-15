@@ -1,0 +1,9 @@
+task_id: task-02-fs-read
+name: Read notes file
+category: files
+query: read file notes.txt
+expected_capability: fs.read
+tier: L0
+verification:
+  expected_status: completed
+  check_audit: true

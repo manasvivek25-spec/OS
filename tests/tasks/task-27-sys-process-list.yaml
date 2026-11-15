@@ -1,0 +1,9 @@
+task_id: task-27-sys-process-list
+name: List running processes
+category: admin
+query: list running system processes
+expected_capability: sys.process_list
+tier: L0
+verification:
+  expected_status: completed
+  check_audit: true

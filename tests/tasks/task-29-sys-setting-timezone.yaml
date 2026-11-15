@@ -1,0 +1,9 @@
+task_id: task-29-sys-setting-timezone
+name: Set timezone setting
+category: admin
+query: set system setting timezone to UTC
+expected_capability: sys.setting_set
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

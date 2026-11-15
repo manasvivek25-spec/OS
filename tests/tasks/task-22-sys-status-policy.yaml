@@ -1,0 +1,9 @@
+task_id: task-22-sys-status-policy
+name: Check lazy-policy status
+category: admin
+query: check status of lazy-gateway
+expected_capability: sys.service_status
+tier: L0
+verification:
+  expected_status: completed
+  check_audit: true

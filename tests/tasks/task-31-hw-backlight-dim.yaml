@@ -1,0 +1,9 @@
+task_id: task-31-hw-backlight-dim
+name: Dim display backlight
+category: hardware
+query: set display brightness to 80
+expected_capability: hw.backlight_set
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

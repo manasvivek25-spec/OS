@@ -1,0 +1,9 @@
+task_id: task-39-hw-rfkill-unblock
+name: Unblock WiFi radio
+category: hardware
+query: unblock wifi radio
+expected_capability: hw.rfkill_set
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

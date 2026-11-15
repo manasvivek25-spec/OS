@@ -1,0 +1,9 @@
+task_id: task-10-doc-docx-create
+name: Create docx document
+category: documents
+query: create docx document
+expected_capability: doc.create_docx
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

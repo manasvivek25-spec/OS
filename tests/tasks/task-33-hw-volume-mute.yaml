@@ -1,0 +1,9 @@
+task_id: task-33-hw-volume-mute
+name: Set volume level
+category: hardware
+query: set master audio volume to 50
+expected_capability: hw.volume_set
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true

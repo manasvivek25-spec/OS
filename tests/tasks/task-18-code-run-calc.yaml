@@ -1,0 +1,9 @@
+task_id: task-18-code-run-calc
+name: Run calculation in sandbox
+category: code
+query: run script in sandbox
+expected_capability: code.run
+tier: L2
+verification:
+  expected_status: completed
+  check_audit: true

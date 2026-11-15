@@ -1,0 +1,9 @@
+task_id: task-25-sys-logs-read
+name: Read journal logs
+category: admin
+query: read logs for lazy-gateway
+expected_capability: sys.logs_read
+tier: L0
+verification:
+  expected_status: completed
+  check_audit: true

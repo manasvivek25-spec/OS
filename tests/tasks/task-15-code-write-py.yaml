@@ -1,0 +1,9 @@
+task_id: task-15-code-write-py
+name: Write python script
+category: code
+query: write python script
+expected_capability: code.write
+tier: L1
+verification:
+  expected_status: completed
+  check_audit: true
