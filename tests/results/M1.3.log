@@ -1,0 +1,37 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 16 items
+
+tests/unit/test_tasks.py::test_tree_hasher_deterministic PASSED          [  6%]
+tests/unit/test_tasks.py::test_copy_backend_snapshot_and_restore PASSED  [ 12%]
+tests/unit/test_tasks.py::test_overlay_backend_lifecycle PASSED          [ 18%]
+tests/unit/test_tasks.py::test_btrfs_backend_lifecycle PASSED            [ 25%]
+tests/unit/test_tasks.py::test_task_commit_persists PASSED               [ 31%]
+tests/unit/test_tasks.py::test_cancel_mid_task_returns_tree_to_pre_task_hash PASSED [ 37%]
+tests/unit/test_tasks.py::test_task_undo_reverts_completed_work PASSED   [ 43%]
+tests/unit/test_tasks.py::test_task_contract_schema_validation PASSED    [ 50%]
+tests/unit/test_tasks.py::test_rollback_to_specific_checkpoint PASSED    [ 56%]
+tests/unit/test_tasks.py::test_task_manager_error_handling PASSED        [ 62%]
+tests/unit/test_tasks.py::test_cancel_task_with_no_checkpoints PASSED    [ 68%]
+tests/unit/test_tasks.py::test_tree_hasher_non_existent_directory PASSED [ 75%]
+tests/unit/test_tasks.py::test_backend_default_roots PASSED              [ 81%]
+tests/unit/test_tasks.py::test_tree_hasher_empty_directory PASSED        [ 87%]
+tests/unit/test_tasks.py::test_copy_backend_target_dir_not_exists PASSED [ 93%]
+tests/unit/test_tasks.py::test_btrfs_restore_missing_snapshot PASSED     [100%]
+
+---------- coverage: platform linux, python 3.12.3-final-0 -----------
+Name                         Stmts   Miss  Cover   Missing
+----------------------------------------------------------
+src/lazy/tasks/__init__.py       3      0   100%
+src/lazy/tasks/backend.py      144     22    85%   40-41, 55, 60, 65, 70, 88, 99-101, 183-188, 195, 203-206, 216-217
+src/lazy/tasks/manager.py       95      1    99%   50
+----------------------------------------------------------
+TOTAL                          242     23    90%
+
+
+============================== 16 passed in 0.95s ==============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
