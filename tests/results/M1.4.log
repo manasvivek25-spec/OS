@@ -1,0 +1,19 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 8 items
+
+tests/unit/test_brokers.py::test_every_broker_capability_has_manifest_and_handler PASSED [ 12%]
+tests/unit/test_brokers.py::test_fs_broker_crud_operations PASSED        [ 25%]
+tests/unit/test_brokers.py::test_fs_broker_document_and_code_generation PASSED [ 37%]
+tests/unit/test_brokers.py::test_fs_broker_error_handling PASSED         [ 50%]
+tests/unit/test_brokers.py::test_sys_broker_service_lifecycle PASSED     [ 62%]
+tests/unit/test_brokers.py::test_sys_broker_settings_and_process_management PASSED [ 75%]
+tests/unit/test_brokers.py::test_hw_broker_injectable_sysfs_root PASSED  [ 87%]
+tests/unit/test_brokers.py::test_base_broker_unhandled_capability PASSED [100%]
+
+============================== 8 passed in 1.19s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

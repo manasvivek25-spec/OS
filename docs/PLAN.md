@@ -8,8 +8,8 @@
 | M1.1 | lazy-audit: hash chain, verifier, tamper tests (modify, delete, reorder, truncate) | done | tests/results/M1.1.log |
 | M1.2 | lazy-policy: manifest loader, tiers, effect classes, approval state machine, rate limits, taint tracking, L4 denylist | done | tests/results/M1.2.log |
 | M1.3 | lazy-tasks: snapshot backends (btrfs, overlay, copy) and undo | done | tests/results/M1.3.log |
-| M1.4 | Brokers: fs, sys (systemd D-Bus + fake), hw (sysfs injectable root + fake) | doing | tests/results/M1.4.log |
-| M1.5 | lazy-secrets: credential vault with peer-credential checks | todo | tests/results/M1.5.log |
+| M1.4 | Brokers: fs, sys (systemd D-Bus + fake), hw (sysfs injectable root + fake) | done | tests/results/M1.4.log |
+| M1.5 | lazy-secrets: credential vault with peer-credential checks | doing | tests/results/M1.5.log |
 | M1.6 | lazy-gateway: JSON-RPC bus, WebSocket protocol, HUD token | todo | tests/results/M1.6.log |
 | M2.1 | Planner interface, mock mode, recorded-intent fixtures for every capability | todo | tests/results/M2.1.log |
 | M2.2 | llama.cpp built & served, model selection, assistant datasets (100 benign, 50 injection), grammar-constrained intents | todo | tests/results/M2.2.log |
