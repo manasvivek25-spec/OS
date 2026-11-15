@@ -1,0 +1,25 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 14 items
+
+tests/unit/test_outbox.py::TestOutboxContract::test_schema_valid_outbox_item PASSED [  7%]
+tests/unit/test_outbox.py::TestOutboxContract::test_schema_invalid_status_rejected PASSED [ 14%]
+tests/unit/test_outbox.py::TestDelayAndUndoWindow::test_cancel_inside_window_prevents_dispatch PASSED [ 21%]
+tests/unit/test_outbox.py::TestDelayAndUndoWindow::test_send_after_window_elapses PASSED [ 28%]
+tests/unit/test_outbox.py::TestApprovalStateMachine::test_unapproved_pending_items_not_sent PASSED [ 35%]
+tests/unit/test_outbox.py::TestApprovalStateMachine::test_cannot_approve_cancelled_item PASSED [ 42%]
+tests/unit/test_outbox.py::TestRateLimiting::test_hourly_send_rate_limit PASSED [ 50%]
+tests/unit/test_outbox.py::TestNewRecipientPolicy::test_unconfirmed_recipient_requires_confirmation PASSED [ 57%]
+tests/unit/test_outbox.py::TestAttachmentRules::test_valid_attachment_allowed PASSED [ 64%]
+tests/unit/test_outbox.py::TestAttachmentRules::test_forbidden_sensitive_paths_blocked PASSED [ 71%]
+tests/unit/test_outbox.py::TestAttachmentRules::test_missing_attachment_raises PASSED [ 78%]
+tests/unit/test_outbox.py::TestTaintTrackingIntegration::test_tainted_parameters_rejected PASSED [ 85%]
+tests/unit/test_outbox.py::TestPersistenceAndService::test_queue_persistence PASSED [ 92%]
+tests/unit/test_outbox.py::TestPersistenceAndService::test_service_rpc_interface PASSED [100%]
+
+============================== 14 passed in 0.74s ==============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'
