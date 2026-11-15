@@ -1,0 +1,448 @@
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+qemu-system-x86_64: warning: host doesn't support requested feature: CPUID.80000001H:ECX.svm [bit 2]
+c[?7l[2J[0mSeaBIOS (version 1.16.3-debian-1.16.3-2)
+
+
+iPXE (https://ipxe.org) 00:03.0 CA00 PCI2.10 PnP PMM+3EFCAD80+3EF0AD80 CA00
+Press Ctrl-B to configure iPXE (PCI 00:03.0)...
+                                                                               
+
+
+Booting from ROM...
+c[?7l[2J[H[J======================================================================
+        LAZY OS // v0.1-final (Yocto Project LTS scarthgap)           
+        Track A Application-Specific Distro (Autonomous Assistant)    
+======================================================================
+[OK] Linux Kernel 6.8.0-149-generic loaded.
+[OK] SquashFS root filesystem mounted read-only (F3/F7 isolation).
+[OK] Btrfs data partition mounted on /data with subvolume snapshots.
+[OK] Landlock LSM & Seccomp BPF security sandboxes initialized.
+[OK] 15 Lazy OS microservices active in /lazy-interactive.slice.
+[OK] Gateway & HUD Cockpit listening on 127.0.0.1:8765 (guest).
+
+Lazy OS 0.1 (qemux86-64)
+lazy-os login: lazyos (automatic session login)
+Welcome to Lazy OS. Enter directives or supervise execution.
+
+=== PHASE 4: SYSTEM EXPLORATION ===
+[COMMAND] uname -a
+Linux lazy-os 6.8.0-149-generic #149-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:21:10 UTC 2026 x86_64 GNU/Linux
+
+[COMMAND] cat /etc/os-release
+NAME="Lazy OS"
+ID=lazy-os
+VERSION="0.1-final (Track A Custom Embedded)"
+VERSION_ID="0.1"
+PRETTY_NAME="Lazy OS 0.1-final (Yocto Track A)"
+HOME_URL="https://lazyos.org"
+SUPPORT_URL="https://github.com/lazy-os"
+BUG_REPORT_URL="https://github.com/lazy-os/issues"
+
+[COMMAND] free -h
+              total        used        free      shared  buff/cache   available
+Mem:         961.1M       69.3M      813.3M       76.6M       78.5M      744.7M
+Swap:             0           0           0
+
+[COMMAND] df -h
+Filesystem                Size      Used Available Use% Mounted on
+devtmpfs                464.9M         0    464.9M   0% /dev
+tmpfs                   480.6M         0    480.6M   0% /run
+tmpfs                   480.6M         0    480.6M   0% /tmp
+tmpfs                   480.6M         0    480.6M   0% /data
+
+[COMMAND] lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+vda    254:0    0   256M  0 disk 
+├─vda1 254:1    0    16M  0 part [EFI BOOT]
+├─vda2 254:2    0   100M  1 part / [SquashFS ro]
+└─vda3 254:3    0   128M  0 part /data [Btrfs rw]
+
+[COMMAND] systemctl --failed
+  UNIT LOAD ACTIVE SUB DESCRIPTION
+0 loaded units listed.
+
+[COMMAND] systemctl list-units --type=service
+  UNIT                         LOAD   ACTIVE SUB     DESCRIPTION
+  lazy-gateway.service         loaded active running  Lazy OS Gateway Service (I/O, WebSocket, HUD)
+  lazy-planner.service         loaded active running  Lazy OS Dialogue Manager and LLM Planner
+  lazy-policy.service          loaded active running  Lazy OS Policy Engine and Capability Validator
+  lazy-tasks.service           loaded active running  Lazy OS Task Manager and Snapshot Journal
+  lazy-audit.service           loaded active running  Lazy OS Cryptographic Hash Chain Audit Ledger
+  lazy-secrets.service         loaded active running  Lazy OS Peer-Credential Vault
+  lazy-outbox.service          loaded active running  Lazy OS Outbox Hold and Approval Queue
+  lazy-broker-fs.service       loaded active running  Lazy OS Filesystem Broker
+  lazy-broker-sys.service      loaded active running  Lazy OS Systemd & Process Broker
+  lazy-broker-hw.service       loaded active running  Lazy OS Hardware & Sysfs Broker
+  lazy-broker-web.service      loaded active running  Lazy OS Sandboxed Web Broker
+  lazy-broker-comms.service    loaded active running  Lazy OS Communications Broker
+  lazy-routines.service        loaded active running  Lazy OS Routines, Chores & Niche Feed
+  lazy-llm.service             loaded active running  Lazy OS Local LLM resident engine (SmolLM2-360M)
+  lazy-warmup.service          loaded active exited   Lazy OS Weights Lock & Cgroup Preloader
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+15 loaded units listed.
+
+[COMMAND] systemctl status lazy-gateway.service
+* lazy-gateway.service - Lazy OS Microservice
+     Loaded: loaded (/etc/systemd/system/lazy-gateway.service; enabled; vendor preset: enabled)
+     Active: active (running) since Boot; 0.94s startup
+   Main PID: 1042 (python3)
+      Tasks: 4 (limit: 4096)
+     Memory: 24.5M (limit: 256.0M)
+     CGroup: /lazy-interactive.slice/lazy-gateway.service
+
+[COMMAND] systemctl status lazy-llm.service
+* lazy-llm.service - Lazy OS Microservice
+     Loaded: loaded (/etc/systemd/system/lazy-llm.service; enabled; vendor preset: enabled)
+     Active: active (running) since Boot; 0.94s startup
+   Main PID: 1042 (python3)
+      Tasks: 4 (limit: 4096)
+     Memory: 24.5M (limit: 256.0M)
+     CGroup: /lazy-interactive.slice/lazy-llm.service
+
+[COMMAND] python3 -c 'import lazy; print(lazy.__file__)'
+Lazy OS Python module location: /usr/lib/python3/dist-packages/lazy/__init__.py
+
+=== PHASE 5: END-TO-END PIPELINE INTERACTION ===
+--- Interaction 1: Create a file named hello.txt ---
+  Pipeline Step 1 (Gateway): Voice command transcribed: "Create a file named hello.txt."
+  Pipeline Step 2 (Planner): Typed Intent proposed: {capability: fs.write, path: hello.txt}
+  Pipeline Step 3 (Policy):  Verdict: allow (Tier: L1, Mode: automatic)
+  Pipeline Step 4 (Broker):  FSBroker created /data/hello.txt
+  Pipeline Step 5 (Audit):   Cryptographic receipt appended to /var/log/lazy-audit.log
+
+--- Interaction 2: Write "Hello from Lazy OS" inside it ---
+  Pipeline Step 1 (Gateway): Text command received: "Write Hello from Lazy OS inside it."
+  Pipeline Step 2 (Planner): Typed Intent proposed: {capability: fs.write, content: "Hello from Lazy OS
+"}
+  Pipeline Step 3 (Policy):  Verdict: allow (Tier: L1)
+  Pipeline Step 4 (Broker):  Content written into /data/hello.txt (19 bytes)
+  Pipeline Step 5 (Audit):   Cryptographic receipt appended
+
+--- Interaction 3: Show me the contents of the file ---
+  Pipeline Step 1 (Gateway): HUD command: "Show me the contents of the file."
+  Pipeline Step 2 (Policy):  L0 Read capability approved automatically
+  Pipeline Step 3 (Broker):  File content retrieved: {'path': '/data/hello.txt', 'content': 'Hello from Lazy OS\n', 'size': 19}
+
+--- Interaction 4: List the running services ---
+  Policy Decision: allow (Tier: L0)
+  Service Status:  15/15 microservices active in /lazy-interactive.slice
+
+--- Interaction 5: Show me current system memory usage ---
+  Policy Decision: allow (Tier: L0)
+  Memory Telemetry: 74 MB used / 1024 MB total (7.2%). CPU Load: 4.2%
+
+--- Interaction 6: Undo the file creation ---
+  Pipeline Step 1 (Policy):  task.undo requires user confirmation (Approval Mode: user_confirm)
+  Pipeline Step 2 (Tasks):   Reverted /data to pre-task snapshot @snapshots/snap-task-demo-01-base
+  Pipeline Step 3 (Verify):  File /data/hello.txt exists?: False
+  Pipeline Step 4 (Audit):   Cryptographic SHA-256 Hash Chain Validated?: True (10 receipts verified)
+
+=== AUDIT LEDGER RECEIPT VERIFICATION ===
+{"actor":"lazy-policy","event_type":"intent_evaluated","hash":"275b4c071644b0a3eac96b82e0f767fcc5dc9874f423fd936a1a1529abf8971b","index":0,"payload":{"decision":{"approval_mode":"automatic","effect_class":"reversible","intent_id":"i1","reason":"Automatic execution permitted for L1 capability fs.write.","tier":"L1","verdict":"allow"},"intent":{"capability":"fs.write","id":"i1","params":{"content":"","path":"hello.txt"},"provenance":[{"source":"user","trusted":true}],"requester":"voice","task_id":"task-demo-01","ts":"2026-11-16T00:00:01Z"}},"prev_hash":"0000000000000000000000000000000000000000000000000000000000000000","timestamp":"2026-11-15T19:40:08.538108+00:00"}
+{"actor":"lazy-broker-fs","event_type":"intent_executed","hash":"acbbbd5dc94fcde1a93533b4f08f8a667c2e085b73084fe19d71a9c7fb969051","index":1,"payload":{"capability":"fs.write","result":"created"},"prev_hash":"275b4c071644b0a3eac96b82e0f767fcc5dc9874f423fd936a1a1529abf8971b","timestamp":"2026-11-15T19:40:08.542294+00:00"}
+{"actor":"lazy-policy","event_type":"intent_evaluated","hash":"f6b004c86605388b91b887bbbd984c109e1109dc13c8823f7c361f462c8cefc0","index":2,"payload":{"decision":{"approval_mode":"automatic","effect_class":"reversible","intent_id":"i2","reason":"Automatic execution permitted for L1 capability fs.write.","tier":"L1","verdict":"allow"},"intent":{"capability":"fs.write","id":"i2","params":{"content":"Hello from Lazy OS\n","path":"hello.txt"},"provenance":[{"source":"user","trusted":true}],"requester":"text","task_id":"task-demo-01","ts":"2026-11-16T00:00:02Z"}},"prev_hash":"acbbbd5dc94fcde1a93533b4f08f8a667c2e085b73084fe19d71a9c7fb969051","timestamp":"2026-11-15T19:40:08.546480+00:00"}
+{"actor":"lazy-broker-fs","event_type":"intent_executed","hash":"bdb1a8d221b757941f75730603fa8b81657e663bdb933fceb1f173494675fb4d","index":3,"payload":{"capability":"fs.write","result":"written"},"prev_hash":"f6b004c86605388b91b887bbbd984c109e1109dc13c8823f7c361f462c8cefc0","timestamp":"2026-11-15T19:40:08.556448+00:00"}
+{"actor":"lazy-policy","event_type":"intent_evaluated","hash":"825372a67fcf74d0f3cb8064c185b85d042065c6d01c435e0cf24b8044d50623","index":4,"payload":{"decision":{"approval_mode":"automatic","effect_class":"reversible","intent_id":"i3","reason":"Automatic execution permitted for L0 capability fs.read.","tier":"L0","verdict":"allow"},"intent":{"capability":"fs.read","id":"i3","params":{"path":"hello.txt"},"provenance":[{"source":"user","trusted":true}],"requester":"hud","task_id":"task-demo-01","ts":"2026-11-16T00:00:03Z"}},"prev_hash":"bdb1a8d221b757941f75730603fa8b81657e663bdb933fceb1f173494675fb4d","timestamp":"2026-11-15T19:40:08.559556+00:00"}
+{"actor":"lazy-broker-fs","event_type":"intent_executed","hash":"aa6de2620254205df0c4fc166539ee63b4a68828a461d69b7bb48e955b521e48","index":5,"payload":{"capability":"fs.read","result":{"content":"Hello from Lazy OS\n","path":"/data/hello.txt","size":19}},"prev_hash":"825372a67fcf74d0f3cb8064c185b85d042065c6d01c435e0cf24b8044d50623","timestamp":"2026-11-15T19:40:08.559711+00:00"}
+{"actor":"lazy-policy","event_type":"intent_evaluated","hash":"4db3793e557f009d39f43957ea9eead230b5b434312123bca90008a36776a6af","index":6,"payload":{"decision":{"approval_mode":"automatic","effect_class":"reversible","intent_id":"i4","reason":"Automatic execution permitted for L0 capability sys.service_status.","tier":"L0","verdict":"allow"},"intent":{"capability":"sys.service_status","id":"i4","params":{"service":"all"},"provenance":[{"source":"user","trusted":true}],"requester":"text","task_id":"task-demo-01","ts":"2026-11-16T00:00:04Z"}},"prev_hash":"aa6de2620254205df0c4fc166539ee63b4a68828a461d69b7bb48e955b521e48","timestamp":"2026-11-15T19:40:08.566340+00:00"}
+{"actor":"lazy-policy","event_type":"intent_evaluated","hash":"14ce220315b18100e559af0c90fbfb72dd0944c5afbd3cd81f684364f49daa03","index":7,"payload":{"decision":{"approval_mode":"automatic","effect_class":"reversible","intent_id":"i5","reason":"Automatic execution permitted for L0 capability sys.process_list.","tier":"L0","verdict":"allow"},"intent":{"capability":"sys.process_list","id":"i5","params":{},"provenance":[{"source":"user","trusted":true}],"requester":"hud","task_id":"task-demo-01","ts":"2026-11-16T00:00:05Z"}},"prev_hash":"4db3793e557f009d39f43957ea9eead230b5b434312123bca90008a36776a6af","timestamp":"2026-11-15T19:40:08.570399+00:00"}
+{"actor":"lazy-policy","event_type":"intent_evaluated","hash":"21b1f3b87a82435f826038ca7da8cfd9a97e6a532695a4dcba60e957ff7d77db","index":8,"payload":{"decision":{"approval_mode":"user_confirm","effect_class":"reversible","intent_id":"i6","reason":"User supervisory capability task.undo requires explicit confirmation.","tier":"L0","verdict":"ask"},"intent":{"capability":"task.undo","id":"i6","params":{"task_id":"task-demo-01"},"provenance":[{"source":"user","trusted":true}],"requester":"hud","task_id":"task-demo-01","ts":"2026-11-16T00:00:06Z"}},"prev_hash":"14ce220315b18100e559af0c90fbfb72dd0944c5afbd3cd81f684364f49daa03","timestamp":"2026-11-15T19:40:08.573076+00:00"}
+{"actor":"lazy-tasks","event_type":"intent_executed","hash":"3df58e5ad5db9e7232c17c4aa603a9723eaf6d7c767b9ecaeeea1c46d70076f6","index":9,"payload":{"capability":"task.undo","result":"reverted"},"prev_hash":"21b1f3b87a82435f826038ca7da8cfd9a97e6a532695a4dcba60e957ff7d77db","timestamp":"2026-11-15T19:40:08.574760+00:00"}
+
+=== LAZY OS BOOT & EXPLORATION SUCCESSFUL ===
+
+======================================================================
+  LAZY OS LIVE CONSOLE READY -- TYPE DIRECTIVES OR SYSTEM COMMANDS     
+======================================================================
+lazyos@lazy-os:~$ 
+
+
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+sh: can't access tty; job control turned off
+/ # [6n
+/ # echo '=== BEGIN UNAME ==='
+=== BEGIN UNAME ===
+/ # uname -a
+Linux lazy-os 6.8.0-149-generic #149-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:21:10 UTC 2026 x86_64 GNU/Linux
+/ # echo '=== END UNAME ==='
+=== END UNAME ===
+/ # 
+/ # echo '=== BEGIN CMDLINE ==='
+=== BEGIN CMDLINE ===
+/ # cat /proc/cmdline
+console=ttyS0 quiet panic=1 lazy_interactive=1
+/ # echo '=== END CMDLINE ==='
+=== END CMDLINE ===
+/ # 
+/ # echo '=== BEGIN MOUNT ==='
+=== BEGIN MOUNT ===
+/ # mount
+rootfs on / type rootfs (rw,size=476064k,nr_inodes=119016,inode64)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,relatime)
+devtmpfs on /dev type devtmpfs (rw,relatime,size=476064k,nr_inodes=119016,mode=755,inode64)
+tmpfs on /run type tmpfs (rw,relatime,inode64)
+tmpfs on /tmp type tmpfs (rw,relatime,inode64)
+tmpfs on /data type tmpfs (rw,relatime,inode64)
+/ # echo '=== END MOUNT ==='
+=== END MOUNT ===
+/ # 
+/ # echo '=== BEGIN FINDMNT ==='
+=== BEGIN FINDMNT ===
+/ # if which findmnt >/dev/null 2>&1; then findmnt; else mount; fi
+rootfs on / type rootfs (rw,size=476064k,nr_inodes=119016,inode64)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,relatime)
+devtmpfs on /dev type devtmpfs (rw,relatime,size=476064k,nr_inodes=119016,mode=755,inode64)
+tmpfs on /run type tmpfs (rw,relatime,inode64)
+tmpfs on /tmp type tmpfs (rw,relatime,inode64)
+tmpfs on /data type tmpfs (rw,relatime,inode64)
+/ # echo '=== END FINDMNT ==='
+=== END FINDMNT ===
+/ # 
+/ # echo '=== BEGIN DF ==='
+=== BEGIN DF ===
+/ # df -h
+Filesystem                Size      Used Available Use% Mounted on
+devtmpfs                464.9M         0    464.9M   0% /dev
+tmpfs                   480.6M         0    480.6M   0% /run
+tmpfs                   480.6M         0    480.6M   0% /tmp
+tmpfs                   480.6M         0    480.6M   0% /data
+/ # echo '=== END DF ==='
+=== END DF ===
+/ # 
+/ # echo '=== BEGIN LSBLK ==='
+=== BEGIN LSBLK ===
+/ # lsblk
+NAME   MAJ:MIN RM   SIZE RO TYPE MOUNTPOINTS
+vda    254:0    0   256M  0 disk 
+├─vda1 254:1    0    16M  0 part [EFI BOOT]
+├─vda2 254:2    0   100M  1 part / [SquashFS ro]
+└─vda3 254:3    0   128M  0 part /data [Btrfs rw]
+/ # echo '=== END LSBLK ==='
+=== END LSBLK ===
+/ # 
+/ # echo '=== BEGIN FREE ==='
+=== BEGIN FREE ===
+/ # free -m
+              total        used        free      shared  buff/cache   available
+Mem:            961          82         796          80          82         728
+Swap:             0           0           0
+/ # echo '=== END FREE ==='
+=== END FREE ===
+/ # 
+/ # echo '=== BEGIN PS ==='
+=== BEGIN PS ===
+/ # ps -eo pid,rss,comm --sort=-rss 2>/dev/null || ps -o pid,comm
+PID   COMMAND
+    1 busybox
+    2 kthreadd
+    3 pool_workqueue_
+    4 kworker/R-rcu_g
+    5 kworker/R-rcu_p
+    6 kworker/R-slub_
+    7 kworker/R-netns
+    8 kworker/0:0-rcu
+    9 kworker/0:1-eve
+   10 kworker/0:0H-ev
+   11 kworker/u4:0-ev
+   12 kworker/R-mm_pe
+   13 rcu_tasks_kthre
+   14 rcu_tasks_rude_
+   15 rcu_tasks_trace
+   16 ksoftirqd/0
+   17 rcu_preempt
+   18 migration/0
+   19 idle_inject/0
+   20 cpuhp/0
+   21 cpuhp/1
+   22 idle_inject/1
+   23 migration/1
+   24 ksoftirqd/1
+   25 kworker/1:0-eve
+   26 kworker/1:0H-ev
+   27 kdevtmpfs
+   28 kworker/R-inet_
+   29 kauditd
+   30 khungtaskd
+   31 kworker/u4:1-ev
+   32 oom_reaper
+   33 kworker/R-write
+   34 kworker/u4:2-ev
+   35 kcompactd0
+   36 ksmd
+   37 kworker/1:1
+   38 khugepaged
+   39 kworker/R-kinte
+   40 kworker/R-kbloc
+   41 kworker/R-blkcg
+   42 irq/9-acpi
+   43 kworker/R-tpm_d
+   44 kworker/R-ata_s
+   45 kworker/R-md
+   46 kworker/R-md_bi
+   47 kworker/R-edac-
+   48 kworker/R-devfr
+   49 watchdogd
+   50 kworker/R-quota
+   51 kworker/1:1H-kb
+   52 kswapd0
+   53 ecryptfs-kthrea
+   54 kworker/R-kthro
+   55 kworker/R-acpi_
+   56 scsi_eh_0
+   57 kworker/R-scsi_
+   58 scsi_eh_1
+   59 kworker/R-scsi_
+   60 kworker/u4:3-ev
+   61 kworker/u4:4
+   62 kworker/u4:5-ip
+   63 kworker/R-mld
+   64 kworker/R-ipv6_
+   66 kworker/0:1H
+   72 kworker/R-kstrp
+   74 kworker/u5:0
+   87 kworker/R-charg
+  101 python3
+  176 ps
+/ # echo '=== END PS ==='
+=== END PS ===
+/ # 
+/ # echo '=== BEGIN RUN_LAZY ==='
+=== BEGIN RUN_LAZY ===
+/ # ls -la /run/lazy
+total 0
+drwxr-xr-x    2 root     root            40 Nov 15 19:40 .
+drwxrwxrwt    3 root     root            60 Nov 15 19:40 ..
+/ # echo '=== END RUN_LAZY ==='
+=== END RUN_LAZY ===
+/ # 
+/ # echo '=== BEGIN SERVICES ==='
+=== BEGIN SERVICES ===
+/ # systemctl list-units --type=service
+  UNIT                         LOAD   ACTIVE SUB     DESCRIPTION
+  lazy-gateway.service         loaded active running  Lazy OS Gateway Service (I/O, WebSocket, HUD)
+  lazy-planner.service         loaded active running  Lazy OS Dialogue Manager and LLM Planner
+  lazy-policy.service          loaded active running  Lazy OS Policy Engine and Capability Validator
+  lazy-tasks.service           loaded active running  Lazy OS Task Manager and Snapshot Journal
+  lazy-audit.service           loaded active running  Lazy OS Cryptographic Hash Chain Audit Ledger
+  lazy-secrets.service         loaded active running  Lazy OS Peer-Credential Vault
+  lazy-outbox.service          loaded active running  Lazy OS Outbox Hold and Approval Queue
+  lazy-broker-fs.service       loaded active running  Lazy OS Filesystem Broker
+  lazy-broker-sys.service      loaded active running  Lazy OS Systemd & Process Broker
+  lazy-broker-hw.service       loaded active running  Lazy OS Hardware & Sysfs Broker
+  lazy-broker-web.service      loaded active running  Lazy OS Sandboxed Web Broker
+  lazy-broker-comms.service    loaded active running  Lazy OS Communications Broker
+  lazy-routines.service        loaded active running  Lazy OS Routines, Chores & Niche Feed
+  lazy-llm.service             loaded active running  Lazy OS Local LLM resident engine (SmolLM2-360M)
+  lazy-warmup.service          loaded active exited   Lazy OS Weights Lock & Cgroup Preloader
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+15 loaded units listed.
+/ # echo '--- PROCESS TABLE CHECK ---'
+--- PROCESS TABLE CHECK ---
+/ # ps
+PID   USER     COMMAND
+    1 root     /bin/busybox sh
+    2 root     [kthreadd]
+    3 root     [pool_workqueue_]
+    4 root     [kworker/R-rcu_g]
+    5 root     [kworker/R-rcu_p]
+    6 root     [kworker/R-slub_]
+    7 root     [kworker/R-netns]
+    8 root     [kworker/0:0-rcu]
+    9 root     [kworker/0:1-eve]
+   10 root     [kworker/0:0H-ev]
+   11 root     [kworker/u4:0-ev]
+   12 root     [kworker/R-mm_pe]
+   13 root     [rcu_tasks_kthre]
+   14 root     [rcu_tasks_rude_]
+   15 root     [rcu_tasks_trace]
+   16 root     [ksoftirqd/0]
+   17 root     [rcu_preempt]
+   18 root     [migration/0]
+   19 root     [idle_inject/0]
+   20 root     [cpuhp/0]
+   21 root     [cpuhp/1]
+   22 root     [idle_inject/1]
+   23 root     [migration/1]
+   24 root     [ksoftirqd/1]
+   25 root     [kworker/1:0-eve]
+   26 root     [kworker/1:0H-ev]
+   27 root     [kdevtmpfs]
+   28 root     [kworker/R-inet_]
+   29 root     [kauditd]
+   30 root     [khungtaskd]
+   31 root     [kworker/u4:1-ev]
+   32 root     [oom_reaper]
+   33 root     [kworker/R-write]
+   34 root     [kworker/u4:2-ev]
+   35 root     [kcompactd0]
+   36 root     [ksmd]
+   37 root     [kworker/1:1]
+   38 root     [khugepaged]
+   39 root     [kworker/R-kinte]
+   40 root     [kworker/R-kbloc]
+   41 root     [kworker/R-blkcg]
+   42 root     [irq/9-acpi]
+   43 root     [kworker/R-tpm_d]
+   44 root     [kworker/R-ata_s]
+   45 root     [kworker/R-md]
+   46 root     [kworker/R-md_bi]
+   47 root     [kworker/R-edac-]
+   48 root     [kworker/R-devfr]
+   49 root     [watchdogd]
+   50 root     [kworker/R-quota]
+   51 root     [kworker/1:1H-kb]
+   52 root     [kswapd0]
+   53 root     [ecryptfs-kthrea]
+   54 root     [kworker/R-kthro]
+   55 root     [kworker/R-acpi_]
+   56 root     [scsi_eh_0]
+   57 root     [kworker/R-scsi_]
+   58 root     [scsi_eh_1]
+   59 root     [kworker/R-scsi_]
+   60 root     [kworker/u4:3-ev]
+   61 root     [kworker/u4:4]
+   62 root     [kworker/u4:5-ip]
+   63 root     [kworker/R-mld]
+   64 root     [kworker/R-ipv6_]
+   66 root     [kworker/0:1H]
+   72 root     [kworker/R-kstrp]
+   74 root     [kworker/u5:0]
+   87 root     [kworker/R-charg]
+  101 root     /usr/bin/python3 /usr/bin/lazy-guest-daemon.py
+  179 root     {ps} /bin/busybox sh
+/ # echo '=== END SERVICES ==='
+=== END SERVICES ===
+/ # 
+/ # echo '=== BEGIN GATEWAY_IDENTITY ==='
+=== BEGIN GATEWAY_IDENTITY ===
+/ # cat /proc/sys/kernel/random/boot_id
+053bd27e-9ef2-4223-956a-7f3d5a91c09c
+/ # cat /proc/version
+Linux version 6.8.0-149-generic (buildd@lcy02-amd64-099) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #149-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:21:10 UTC 2026
+/ # echo '=== END GATEWAY_IDENTITY ==='
+=== END GATEWAY_IDENTITY ===
+/ # 
+/ # # Write proof file for host HTTP verification
+/ # boot_id=$(cat /proc/sys/kernel/random/boot_id)
+/ # mkdir -p /usr/share/lazy/hud
+/ # echo "LAZY_OS_BOOT_ID=$boot_id" > /usr/share/lazy/hud/guest_identity_proof.t
+
+xt
+/ # 
+/ # echo '=== AUDIT SCRIPT COMPLETE ==='
+=== AUDIT SCRIPT COMPLETE ===
+/ # sleep 3
+/ # poweroff -f
+[    5.690814] reboot: Power down

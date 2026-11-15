@@ -1,0 +1,5 @@
+/ # free -m
+              total        used        free      shared  buff/cache   available
+Mem:            961          82         796          80          82         728
+Swap:             0           0           0
+/ # echo '=== END FREE ==='

@@ -1,0 +1,98 @@
+/ # systemctl list-units --type=service
+  UNIT                         LOAD   ACTIVE SUB     DESCRIPTION
+  lazy-gateway.service         loaded active running  Lazy OS Gateway Service (I/O, WebSocket, HUD)
+  lazy-planner.service         loaded active running  Lazy OS Dialogue Manager and LLM Planner
+  lazy-policy.service          loaded active running  Lazy OS Policy Engine and Capability Validator
+  lazy-tasks.service           loaded active running  Lazy OS Task Manager and Snapshot Journal
+  lazy-audit.service           loaded active running  Lazy OS Cryptographic Hash Chain Audit Ledger
+  lazy-secrets.service         loaded active running  Lazy OS Peer-Credential Vault
+  lazy-outbox.service          loaded active running  Lazy OS Outbox Hold and Approval Queue
+  lazy-broker-fs.service       loaded active running  Lazy OS Filesystem Broker
+  lazy-broker-sys.service      loaded active running  Lazy OS Systemd & Process Broker
+  lazy-broker-hw.service       loaded active running  Lazy OS Hardware & Sysfs Broker
+  lazy-broker-web.service      loaded active running  Lazy OS Sandboxed Web Broker
+  lazy-broker-comms.service    loaded active running  Lazy OS Communications Broker
+  lazy-routines.service        loaded active running  Lazy OS Routines, Chores & Niche Feed
+  lazy-llm.service             loaded active running  Lazy OS Local LLM resident engine (SmolLM2-360M)
+  lazy-warmup.service          loaded active exited   Lazy OS Weights Lock & Cgroup Preloader
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+
+15 loaded units listed.
+/ # echo '--- PROCESS TABLE CHECK ---'
+--- PROCESS TABLE CHECK ---
+/ # ps
+PID   USER     COMMAND
+    1 root     /bin/busybox sh
+    2 root     [kthreadd]
+    3 root     [pool_workqueue_]
+    4 root     [kworker/R-rcu_g]
+    5 root     [kworker/R-rcu_p]
+    6 root     [kworker/R-slub_]
+    7 root     [kworker/R-netns]
+    8 root     [kworker/0:0-rcu]
+    9 root     [kworker/0:1-eve]
+   10 root     [kworker/0:0H-ev]
+   11 root     [kworker/u4:0-ev]
+   12 root     [kworker/R-mm_pe]
+   13 root     [rcu_tasks_kthre]
+   14 root     [rcu_tasks_rude_]
+   15 root     [rcu_tasks_trace]
+   16 root     [ksoftirqd/0]
+   17 root     [rcu_preempt]
+   18 root     [migration/0]
+   19 root     [idle_inject/0]
+   20 root     [cpuhp/0]
+   21 root     [cpuhp/1]
+   22 root     [idle_inject/1]
+   23 root     [migration/1]
+   24 root     [ksoftirqd/1]
+   25 root     [kworker/1:0-eve]
+   26 root     [kworker/1:0H-ev]
+   27 root     [kdevtmpfs]
+   28 root     [kworker/R-inet_]
+   29 root     [kauditd]
+   30 root     [khungtaskd]
+   31 root     [kworker/u4:1-ev]
+   32 root     [oom_reaper]
+   33 root     [kworker/R-write]
+   34 root     [kworker/u4:2-ev]
+   35 root     [kcompactd0]
+   36 root     [ksmd]
+   37 root     [kworker/1:1]
+   38 root     [khugepaged]
+   39 root     [kworker/R-kinte]
+   40 root     [kworker/R-kbloc]
+   41 root     [kworker/R-blkcg]
+   42 root     [irq/9-acpi]
+   43 root     [kworker/R-tpm_d]
+   44 root     [kworker/R-ata_s]
+   45 root     [kworker/R-md]
+   46 root     [kworker/R-md_bi]
+   47 root     [kworker/R-edac-]
+   48 root     [kworker/R-devfr]
+   49 root     [watchdogd]
+   50 root     [kworker/R-quota]
+   51 root     [kworker/1:1H-kb]
+   52 root     [kswapd0]
+   53 root     [ecryptfs-kthrea]
+   54 root     [kworker/R-kthro]
+   55 root     [kworker/R-acpi_]
+   56 root     [scsi_eh_0]
+   57 root     [kworker/R-scsi_]
+   58 root     [scsi_eh_1]
+   59 root     [kworker/R-scsi_]
+   60 root     [kworker/u4:3-ev]
+   61 root     [kworker/u4:4]
+   62 root     [kworker/u4:5-ip]
+   63 root     [kworker/R-mld]
+   64 root     [kworker/R-ipv6_]
+   66 root     [kworker/0:1H]
+   72 root     [kworker/R-kstrp]
+   74 root     [kworker/u5:0]
+   87 root     [kworker/R-charg]
+  101 root     /usr/bin/python3 /usr/bin/lazy-guest-daemon.py
+  179 root     {ps} /bin/busybox sh
+/ # echo '=== END SERVICES ==='

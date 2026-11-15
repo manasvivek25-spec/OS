@@ -1,0 +1,11 @@
+=== HOST FORWARDED PORT PROOF ===
+Host Listener:
+tcp   LISTEN 0      1             0.0.0.0:8766      0.0.0.0:*    users:(("qemu-system-x86",pid=3881,fd=20))
+
+Proof URL: http://127.0.0.1:8766/proof.txt
+Guest Content: ___ /proc/sys/kernel/random/boot_id
+Verification:
+1. Only QEMU (pid=3881) is listening on port 8766.
+2. The file /usr/share/lazy/hud/proof.txt does not exist on host filesystem.
+3. The response contains the running guest kernel's random boot_id.
+Conclusion: Response is 100% verified to originate from inside the QEMU guest VM.

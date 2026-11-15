@@ -1,0 +1,7 @@
+/ # df -h
+Filesystem                Size      Used Available Use% Mounted on
+devtmpfs                464.9M         0    464.9M   0% /dev
+tmpfs                   480.6M         0    480.6M   0% /run
+tmpfs                   480.6M         0    480.6M   0% /tmp
+tmpfs                   480.6M         0    480.6M   0% /data
+/ # echo '=== END DF ==='

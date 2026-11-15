@@ -1,0 +1,9 @@
+/ # mount
+rootfs on / type rootfs (rw,size=476064k,nr_inodes=119016,inode64)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,relatime)
+devtmpfs on /dev type devtmpfs (rw,relatime,size=476064k,nr_inodes=119016,mode=755,inode64)
+tmpfs on /run type tmpfs (rw,relatime,inode64)
+tmpfs on /tmp type tmpfs (rw,relatime,inode64)
+tmpfs on /data type tmpfs (rw,relatime,inode64)
+/ # echo '=== END MOUNT ==='

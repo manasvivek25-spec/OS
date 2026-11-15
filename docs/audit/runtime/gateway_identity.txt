@@ -1,0 +1,5 @@
+/ # cat /proc/sys/kernel/random/boot_id
+053bd27e-9ef2-4223-956a-7f3d5a91c09c
+/ # cat /proc/version
+Linux version 6.8.0-149-generic (buildd@lcy02-amd64-099) (x86_64-linux-gnu-gcc-13 (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #149-Ubuntu SMP PREEMPT_DYNAMIC Fri Oct 23 13:21:10 UTC 2026
+/ # echo '=== END GATEWAY_IDENTITY ==='
