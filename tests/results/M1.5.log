@@ -1,0 +1,16 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 5 items
+
+tests/unit/test_secrets.py::test_authorized_user_can_set_and_get_secrets PASSED [ 20%]
+tests/unit/test_secrets.py::test_planner_user_cannot_read_secrets_rule_f4 PASSED [ 40%]
+tests/unit/test_secrets.py::test_unauthorized_uid_denied_access PASSED   [ 60%]
+tests/unit/test_secrets.py::test_secrets_service_over_unix_domain_socket PASSED [ 80%]
+tests/unit/test_secrets.py::test_secrets_service_denies_blocked_uid PASSED [100%]
+
+============================== 5 passed in 0.51s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

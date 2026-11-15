@@ -1,19 +1,19 @@
-NEXT_ACTION: make verify-M1.5
+NEXT_ACTION: make verify-M1.6
 
 ## Current Milestone
-M1.5: lazy-secrets with peer-credential checks. [the planner user cannot read secrets]
+M1.6: lazy-gateway: JSON-RPC bus, WebSocket protocol, HUD token. [protocol tests pass]
 
 ## Last 10 Completed Steps
-1. Pinned Yocto LTS scarthgap commits in DECISIONS.md.
-2. Verified M0.3 QEMU boot test and login status in tests/results/M0.3.log (tag m-M0.3).
-3. Implemented lazy-audit hash-chain and verifier, verified M1.1 (tag m-M1.1).
-4. Implemented lazy-policy engine, 37 manifests, taint tracking, and 162 passing tests with 93% line coverage (tag m-M1.2).
-5. Implemented snapshot backends (Copy, Overlay, Btrfs) and TaskManager checkpointing in src/lazy/tasks/.
-6. Verified task cancellation rollback to exact pre-task hash and task undo, verified M1.3 (tag m-M1.3).
-7. Implemented BaseBroker abstract dispatch engine in src/lazy/brokers/base.py.
-8. Implemented FSBroker covering fs.*, doc.*, code.* operations with path validation in src/lazy/brokers/fs_broker.py.
-9. Implemented SysBroker with FakeSystemdClient abstraction in src/lazy/brokers/sys_broker.py.
-10. Implemented HWBroker with injectable sysfs fixture support in src/lazy/brokers/hw_broker.py and verified M1.4 (8/8 tests passed, logged in tests/results/M1.4.log).
+1. Verified lazy-policy engine, 37 manifests, rate limiting, and taint tracking with 162 passing tests (tag m-M1.2).
+2. Implemented snapshot backends (Copy, Overlay, Btrfs) and TaskManager in src/lazy/tasks/.
+3. Verified task cancellation rollback to exact pre-task hash and undo, verified M1.3 (tag m-M1.3).
+4. Implemented FSBroker covering fs.*, doc.*, code.* operations in src/lazy/brokers/fs_broker.py.
+5. Implemented SysBroker with FakeSystemdClient abstraction in src/lazy/brokers/sys_broker.py.
+6. Implemented HWBroker with injectable sysfs fixture support in src/lazy/brokers/hw_broker.py.
+7. Verified all 22 broker capabilities with automated tests in tests/unit/test_brokers.py (tag m-M1.4).
+8. Designed and implemented SecretVault with peer-credential enforcement and 0700 permissions in src/lazy/secrets/vault.py.
+9. Implemented SecretsService Unix domain socket server with Linux SO_PEERCRED inspection in src/lazy/secrets/service.py.
+10. Proved negative security assertion: planner user is strictly rejected from reading secrets (Rule F4) in tests/unit/test_secrets.py, verified M1.5 (tag m-M1.5).
 
 ## Open Problems
 None.
