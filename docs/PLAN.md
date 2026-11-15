@@ -29,8 +29,8 @@
 | M5.3 | Filesystem layout with wic: ro root, btrfs data, overlay /etc & /var, first-boot setup; QEMU verify | done | tests/results/M5.3.log |
 | M5.4 | Interactive-latency tuning: preload, mlock, cgroup priority, CPU affinity; ablation script | done | tests/results/M5.4.log |
 | M5.5 | Browser in full image or documented fallback | done | tests/results/M5.5.log |
-| M5.6 | Reproducibility: rebuild from clean checkout, compare manifests and hashes | doing | tests/results/M5.6.log |
-| M6.1 | Baselines: stock Debian minimal in QEMU vs base & full (size, RAM, boot time, packages); 40% comparison | todo | tests/results/M6.1.log |
+| M5.6 | Reproducibility: rebuild from clean checkout, compare manifests and hashes | done | tests/results/M5.6.log |
+| M6.1 | Baselines: stock Debian minimal in QEMU vs base & full (size, RAM, boot time, packages); 40% comparison | doing | tests/results/M6.1.log |
 | M6.2 | Comprehensive evaluations: reports/results.md with measured data and plots | todo | tests/results/M6.2.log |
 | M6.3 | Documentation: README, ARCHITECTURE.md, HARDWARE-CONTROL.md, deck-inputs/ 1-8, demo/RUNSHEET.md | todo | tests/results/M6.3.log |
 | M6.4 | Final verification, tag v0-final, make handoff, FINAL SUMMARY | todo | tests/results/M6.4.log |
