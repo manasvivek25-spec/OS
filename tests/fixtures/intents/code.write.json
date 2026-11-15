@@ -1,0 +1,28 @@
+{
+  "capability": "code.write",
+  "query": "write python script",
+  "plan": {
+    "id": "plan-code-write-fix",
+    "steps": [
+      {
+        "id": "intent-code-write-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "code.write",
+        "params": {
+          "path": "/home/user/test.py",
+          "content": "print('hello')\n"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for code.write"
+          }
+        ]
+      }
+    ],
+    "rationale": "Write script code to file"
+  }
+}

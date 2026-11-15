@@ -1,0 +1,25 @@
+{
+  "capability": "sys.process_list",
+  "query": "list running system processes",
+  "plan": {
+    "id": "plan-sys-process_list-fix",
+    "steps": [
+      {
+        "id": "intent-sys-process_list-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "sys.process_list",
+        "params": {},
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for sys.process_list"
+          }
+        ]
+      }
+    ],
+    "rationale": "Retrieve snapshot of active processes"
+  }
+}

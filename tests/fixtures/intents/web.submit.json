@@ -1,0 +1,27 @@
+{
+  "capability": "web.submit",
+  "query": "submit search form",
+  "plan": {
+    "id": "plan-web-submit-fix",
+    "steps": [
+      {
+        "id": "intent-web-submit-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "web.submit",
+        "params": {
+          "form_id": "search-form"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for web.submit"
+          }
+        ]
+      }
+    ],
+    "rationale": "Submit form in isolated browser session"
+  }
+}

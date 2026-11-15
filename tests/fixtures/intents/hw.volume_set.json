@@ -1,0 +1,27 @@
+{
+  "capability": "hw.volume_set",
+  "query": "set master audio volume to 50",
+  "plan": {
+    "id": "plan-hw-volume_set-fix",
+    "steps": [
+      {
+        "id": "intent-hw-volume_set-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "hw.volume_set",
+        "params": {
+          "volume": 50
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for hw.volume_set"
+          }
+        ]
+      }
+    ],
+    "rationale": "Adjust audio output volume percentage"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "capability": "doc.create_markdown",
+  "query": "create markdown document",
+  "plan": {
+    "id": "plan-doc-create_markdown-fix",
+    "steps": [
+      {
+        "id": "intent-doc-create_markdown-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "doc.create_markdown",
+        "params": {
+          "path": "/home/user/notes.md",
+          "content": "# Notes\nMeeting summary"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for doc.create_markdown"
+          }
+        ]
+      }
+    ],
+    "rationale": "Create markdown document file"
+  }
+}

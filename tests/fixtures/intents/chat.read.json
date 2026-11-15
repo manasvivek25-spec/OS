@@ -1,0 +1,27 @@
+{
+  "capability": "chat.read",
+  "query": "read recent chats",
+  "plan": {
+    "id": "plan-chat-read-fix",
+    "steps": [
+      {
+        "id": "intent-chat-read-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "chat.read",
+        "params": {
+          "limit": 10
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for chat.read"
+          }
+        ]
+      }
+    ],
+    "rationale": "Read recent messages from chat service"
+  }
+}

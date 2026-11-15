@@ -1,0 +1,28 @@
+{
+  "capability": "sys.logs_read",
+  "query": "read logs for lazy-gateway",
+  "plan": {
+    "id": "plan-sys-logs_read-fix",
+    "steps": [
+      {
+        "id": "intent-sys-logs_read-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "sys.logs_read",
+        "params": {
+          "service": "lazy-gateway",
+          "lines": 50
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for sys.logs_read"
+          }
+        ]
+      }
+    ],
+    "rationale": "Fetch recent service journal logs"
+  }
+}

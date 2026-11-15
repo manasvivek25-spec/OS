@@ -1,0 +1,28 @@
+{
+  "capability": "hw.rfkill_set",
+  "query": "unblock wifi radio",
+  "plan": {
+    "id": "plan-hw-rfkill_set-fix",
+    "steps": [
+      {
+        "id": "intent-hw-rfkill_set-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "hw.rfkill_set",
+        "params": {
+          "subsystem": "wlan",
+          "state": "unblock"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for hw.rfkill_set"
+          }
+        ]
+      }
+    ],
+    "rationale": "Configure RF radio kill switch state"
+  }
+}

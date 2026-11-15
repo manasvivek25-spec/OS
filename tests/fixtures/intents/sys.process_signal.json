@@ -1,0 +1,28 @@
+{
+  "capability": "sys.process_signal",
+  "query": "terminate process 4321",
+  "plan": {
+    "id": "plan-sys-process_signal-fix",
+    "steps": [
+      {
+        "id": "intent-sys-process_signal-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "sys.process_signal",
+        "params": {
+          "pid": 4321,
+          "signal": "SIGTERM"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for sys.process_signal"
+          }
+        ]
+      }
+    ],
+    "rationale": "Send signal to process"
+  }
+}

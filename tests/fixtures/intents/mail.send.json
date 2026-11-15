@@ -1,0 +1,30 @@
+{
+  "capability": "mail.send",
+  "query": "send email to partner",
+  "plan": {
+    "id": "plan-mail-send-fix",
+    "steps": [
+      {
+        "id": "intent-mail-send-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "mail.send",
+        "params": {
+          "to": "partner@example.com",
+          "subject": "Project",
+          "body": "Milestone completed",
+          "attachments": []
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for mail.send"
+          }
+        ]
+      }
+    ],
+    "rationale": "Queue email in outbox for delivery"
+  }
+}

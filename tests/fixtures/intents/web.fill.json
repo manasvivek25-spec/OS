@@ -1,0 +1,28 @@
+{
+  "capability": "web.fill",
+  "query": "fill input field username",
+  "plan": {
+    "id": "plan-web-fill-fix",
+    "steps": [
+      {
+        "id": "intent-web-fill-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "web.fill",
+        "params": {
+          "element_id": "username-input",
+          "value": "testuser"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for web.fill"
+          }
+        ]
+      }
+    ],
+    "rationale": "Enter text into form field in isolated browser"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "capability": "fs.write",
+  "query": "write data to file",
+  "plan": {
+    "id": "plan-fs-write-fix",
+    "steps": [
+      {
+        "id": "intent-fs-write-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "fs.write",
+        "params": {
+          "path": "/home/user/output.txt",
+          "content": "Processed output\n"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for fs.write"
+          }
+        ]
+      }
+    ],
+    "rationale": "Write string contents to target file"
+  }
+}

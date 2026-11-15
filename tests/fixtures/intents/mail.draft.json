@@ -1,0 +1,29 @@
+{
+  "capability": "mail.draft",
+  "query": "draft email to colleague",
+  "plan": {
+    "id": "plan-mail-draft-fix",
+    "steps": [
+      {
+        "id": "intent-mail-draft-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "mail.draft",
+        "params": {
+          "to": "colleague@example.com",
+          "subject": "Draft",
+          "body": "Notes for review"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for mail.draft"
+          }
+        ]
+      }
+    ],
+    "rationale": "Create email draft in Maildir"
+  }
+}

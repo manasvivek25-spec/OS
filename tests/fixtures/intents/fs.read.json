@@ -1,0 +1,27 @@
+{
+  "capability": "fs.read",
+  "query": "read file notes.txt",
+  "plan": {
+    "id": "plan-fs-read-fix",
+    "steps": [
+      {
+        "id": "intent-fs-read-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "fs.read",
+        "params": {
+          "path": "/home/user/notes.txt"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for fs.read"
+          }
+        ]
+      }
+    ],
+    "rationale": "Read file contents"
+  }
+}

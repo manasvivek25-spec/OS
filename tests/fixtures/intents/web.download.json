@@ -1,0 +1,28 @@
+{
+  "capability": "web.download",
+  "query": "download file from web",
+  "plan": {
+    "id": "plan-web-download-fix",
+    "steps": [
+      {
+        "id": "intent-web-download-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "web.download",
+        "params": {
+          "url": "https://example.org/archive.tar.gz",
+          "dest_filename": "archive.tar.gz"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for web.download"
+          }
+        ]
+      }
+    ],
+    "rationale": "Download remote file into isolated quarantine"
+  }
+}

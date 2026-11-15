@@ -1,0 +1,27 @@
+{
+  "capability": "task.undo",
+  "query": "undo last task execution",
+  "plan": {
+    "id": "plan-task-undo-fix",
+    "steps": [
+      {
+        "id": "intent-task-undo-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "task.undo",
+        "params": {
+          "task_id": "task-test-001"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for task.undo"
+          }
+        ]
+      }
+    ],
+    "rationale": "Roll back previous task using snapshot"
+  }
+}

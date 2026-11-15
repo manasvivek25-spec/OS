@@ -1,0 +1,27 @@
+{
+  "capability": "hw.power_profile_set",
+  "query": "set power profile to balanced",
+  "plan": {
+    "id": "plan-hw-power_profile_set-fix",
+    "steps": [
+      {
+        "id": "intent-hw-power_profile_set-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "hw.power_profile_set",
+        "params": {
+          "profile": "balanced"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for hw.power_profile_set"
+          }
+        ]
+      }
+    ],
+    "rationale": "Switch system power profile"
+  }
+}

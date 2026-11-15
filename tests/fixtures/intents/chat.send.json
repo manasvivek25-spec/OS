@@ -1,0 +1,28 @@
+{
+  "capability": "chat.send",
+  "query": "send chat to alice saying hello",
+  "plan": {
+    "id": "plan-chat-send-fix",
+    "steps": [
+      {
+        "id": "intent-chat-send-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "chat.send",
+        "params": {
+          "to": "alice",
+          "body": "hello"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for chat.send"
+          }
+        ]
+      }
+    ],
+    "rationale": "Send instant message to alice"
+  }
+}

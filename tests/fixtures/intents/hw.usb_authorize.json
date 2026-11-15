@@ -1,0 +1,27 @@
+{
+  "capability": "hw.usb_authorize",
+  "query": "authorize usb device 1-1",
+  "plan": {
+    "id": "plan-hw-usb_authorize-fix",
+    "steps": [
+      {
+        "id": "intent-hw-usb_authorize-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "hw.usb_authorize",
+        "params": {
+          "device_id": "1-1"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for hw.usb_authorize"
+          }
+        ]
+      }
+    ],
+    "rationale": "Authorize USB device access"
+  }
+}

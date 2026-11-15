@@ -1,0 +1,27 @@
+{
+  "capability": "fs.list",
+  "query": "list files in home directory",
+  "plan": {
+    "id": "plan-fs-list-fix",
+    "steps": [
+      {
+        "id": "intent-fs-list-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "fs.list",
+        "params": {
+          "path": "/home/user"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for fs.list"
+          }
+        ]
+      }
+    ],
+    "rationale": "List directory contents"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "capability": "code.run",
+  "query": "run script in sandbox",
+  "plan": {
+    "id": "plan-code-run-fix",
+    "steps": [
+      {
+        "id": "intent-code-run-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "code.run",
+        "params": {
+          "command": "python3 -c 'print(42)'",
+          "timeout": 30
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for code.run"
+          }
+        ]
+      }
+    ],
+    "rationale": "Execute transient code in sandbox"
+  }
+}

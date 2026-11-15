@@ -1,0 +1,27 @@
+{
+  "capability": "web.click",
+  "query": "click submit button on page",
+  "plan": {
+    "id": "plan-web-click-fix",
+    "steps": [
+      {
+        "id": "intent-web-click-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "web.click",
+        "params": {
+          "element_id": "btn-submit"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for web.click"
+          }
+        ]
+      }
+    ],
+    "rationale": "Click DOM element in isolated browser"
+  }
+}

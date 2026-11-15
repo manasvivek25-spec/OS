@@ -1,0 +1,27 @@
+{
+  "capability": "web.read",
+  "query": "read webpage text",
+  "plan": {
+    "id": "plan-web-read-fix",
+    "steps": [
+      {
+        "id": "intent-web-read-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "web.read",
+        "params": {
+          "url": "https://example.org"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for web.read"
+          }
+        ]
+      }
+    ],
+    "rationale": "Extract structured readable text from webpage"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "capability": "fs.copy",
+  "query": "copy file from source to dest",
+  "plan": {
+    "id": "plan-fs-copy-fix",
+    "steps": [
+      {
+        "id": "intent-fs-copy-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "fs.copy",
+        "params": {
+          "src": "/home/user/source.txt",
+          "dest": "/home/user/dest.txt"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for fs.copy"
+          }
+        ]
+      }
+    ],
+    "rationale": "Copy file to new location"
+  }
+}

@@ -1,0 +1,27 @@
+{
+  "capability": "sys.service_restart",
+  "query": "restart lazy-policy service",
+  "plan": {
+    "id": "plan-sys-service_restart-fix",
+    "steps": [
+      {
+        "id": "intent-sys-service_restart-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "sys.service_restart",
+        "params": {
+          "service": "lazy-policy"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for sys.service_restart"
+          }
+        ]
+      }
+    ],
+    "rationale": "Restart systemd unit"
+  }
+}

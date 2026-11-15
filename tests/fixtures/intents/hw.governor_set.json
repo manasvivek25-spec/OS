@@ -1,0 +1,27 @@
+{
+  "capability": "hw.governor_set",
+  "query": "set cpu governor to performance",
+  "plan": {
+    "id": "plan-hw-governor_set-fix",
+    "steps": [
+      {
+        "id": "intent-hw-governor_set-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "hw.governor_set",
+        "params": {
+          "governor": "performance"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for hw.governor_set"
+          }
+        ]
+      }
+    ],
+    "rationale": "Set CPU frequency scaling governor"
+  }
+}

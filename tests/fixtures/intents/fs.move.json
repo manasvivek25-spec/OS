@@ -1,0 +1,28 @@
+{
+  "capability": "fs.move",
+  "query": "move file from old to new location",
+  "plan": {
+    "id": "plan-fs-move-fix",
+    "steps": [
+      {
+        "id": "intent-fs-move-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "fs.move",
+        "params": {
+          "src": "/tmp/old.txt",
+          "dest": "/tmp/new.txt"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for fs.move"
+          }
+        ]
+      }
+    ],
+    "rationale": "Move or rename file"
+  }
+}

@@ -1,0 +1,28 @@
+{
+  "capability": "doc.create_docx",
+  "query": "create docx document",
+  "plan": {
+    "id": "plan-doc-create_docx-fix",
+    "steps": [
+      {
+        "id": "intent-doc-create_docx-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "doc.create_docx",
+        "params": {
+          "path": "/home/user/doc.docx",
+          "content": "# Heading\nParagraph"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for doc.create_docx"
+          }
+        ]
+      }
+    ],
+    "rationale": "Generate docx file from content"
+  }
+}

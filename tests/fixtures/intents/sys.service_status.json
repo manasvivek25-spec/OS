@@ -1,0 +1,27 @@
+{
+  "capability": "sys.service_status",
+  "query": "check status of lazy-gateway",
+  "plan": {
+    "id": "plan-sys-service_status-fix",
+    "steps": [
+      {
+        "id": "intent-sys-service_status-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "sys.service_status",
+        "params": {
+          "service": "lazy-gateway"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for sys.service_status"
+          }
+        ]
+      }
+    ],
+    "rationale": "Query systemd unit active status"
+  }
+}

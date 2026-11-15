@@ -1,0 +1,27 @@
+{
+  "capability": "mail.read",
+  "query": "read email message 101",
+  "plan": {
+    "id": "plan-mail-read-fix",
+    "steps": [
+      {
+        "id": "intent-mail-read-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "mail.read",
+        "params": {
+          "message_id": "msg-101"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for mail.read"
+          }
+        ]
+      }
+    ],
+    "rationale": "Read email message by ID"
+  }
+}

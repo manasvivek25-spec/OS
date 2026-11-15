@@ -1,0 +1,27 @@
+{
+  "capability": "hw.backlight_set",
+  "query": "set display brightness to 80",
+  "plan": {
+    "id": "plan-hw-backlight_set-fix",
+    "steps": [
+      {
+        "id": "intent-hw-backlight_set-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "hw.backlight_set",
+        "params": {
+          "brightness": 80
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for hw.backlight_set"
+          }
+        ]
+      }
+    ],
+    "rationale": "Adjust display backlight brightness percentage"
+  }
+}

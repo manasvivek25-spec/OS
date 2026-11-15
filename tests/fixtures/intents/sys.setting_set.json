@@ -1,0 +1,28 @@
+{
+  "capability": "sys.setting_set",
+  "query": "set system setting timezone to UTC",
+  "plan": {
+    "id": "plan-sys-setting_set-fix",
+    "steps": [
+      {
+        "id": "intent-sys-setting_set-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "sys.setting_set",
+        "params": {
+          "key": "system.timezone",
+          "value": "UTC"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for sys.setting_set"
+          }
+        ]
+      }
+    ],
+    "rationale": "Update persistent system configuration setting"
+  }
+}

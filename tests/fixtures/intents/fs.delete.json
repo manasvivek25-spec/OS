@@ -1,0 +1,27 @@
+{
+  "capability": "fs.delete",
+  "query": "delete temporary file",
+  "plan": {
+    "id": "plan-fs-delete-fix",
+    "steps": [
+      {
+        "id": "intent-fs-delete-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "fs.delete",
+        "params": {
+          "path": "/tmp/temp.txt"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for fs.delete"
+          }
+        ]
+      }
+    ],
+    "rationale": "Remove file from filesystem"
+  }
+}

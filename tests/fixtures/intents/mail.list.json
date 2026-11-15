@@ -1,0 +1,27 @@
+{
+  "capability": "mail.list",
+  "query": "list emails in inbox",
+  "plan": {
+    "id": "plan-mail-list-fix",
+    "steps": [
+      {
+        "id": "intent-mail-list-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "mail.list",
+        "params": {
+          "folder": "INBOX"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for mail.list"
+          }
+        ]
+      }
+    ],
+    "rationale": "List messages in mail folder"
+  }
+}

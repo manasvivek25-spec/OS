@@ -1,0 +1,27 @@
+{
+  "capability": "outbox.cancel",
+  "query": "cancel pending outbox item",
+  "plan": {
+    "id": "plan-outbox-cancel-fix",
+    "steps": [
+      {
+        "id": "intent-outbox-cancel-fix",
+        "ts": "2026-11-15T12:00:00Z",
+        "task_id": "task-fixture-001",
+        "requester": "text",
+        "capability": "outbox.cancel",
+        "params": {
+          "item_id": "outbox-001"
+        },
+        "provenance": [
+          {
+            "source": "user",
+            "trusted": true,
+            "detail": "Recorded fixture for outbox.cancel"
+          }
+        ]
+      }
+    ],
+    "rationale": "Cancel pending outbox delivery before expiry"
+  }
+}
