@@ -1,4 +1,4 @@
-"""Lazy OS Brokers (lazy-broker-fs, lazy-broker-sys, lazy-broker-hw, lazy-broker-comms)."""
+"""Lazy OS Brokers (lazy-broker-fs, lazy-broker-sys, lazy-broker-hw, lazy-broker-comms, lazy-broker-web)."""
 from lazy.brokers.base import BaseBroker, BrokerExecutionError
 from lazy.brokers.fs_broker import FSBroker
 from lazy.brokers.hw_broker import HWBroker
@@ -9,6 +9,13 @@ from lazy.brokers.comms_broker import (
     SMTPSinkDriver,
     LocalChatDriver,
     DisabledDriverError,
+)
+from lazy.brokers.web_broker import (
+    WebBroker,
+    StructuredDOM,
+    DomainAllowlist,
+    IsolatedBrowserDriver,
+    DomainNotAllowedError,
 )
 
 __all__ = [
@@ -23,4 +30,9 @@ __all__ = [
     "SMTPSinkDriver",
     "LocalChatDriver",
     "DisabledDriverError",
+    "WebBroker",
+    "StructuredDOM",
+    "DomainAllowlist",
+    "IsolatedBrowserDriver",
+    "DomainNotAllowedError",
 ]

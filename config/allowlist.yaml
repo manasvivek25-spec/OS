@@ -1,0 +1,14 @@
+# Lazy OS Web Domain Allowlist (Tier L1 automatic navigation)
+allowlist:
+  - "localhost"
+  - "127.0.0.1"
+  - "kernel.org"
+  - "yoctoproject.org"
+  - "docs.python.org"
+  - "wikipedia.org"
+  - "arxiv.org"
+
+settings:
+  enforce_allowlist: true
+  quarantine_dir: "var/quarantine"
+  max_download_size_mb: 50

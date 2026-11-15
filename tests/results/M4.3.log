@@ -1,0 +1,20 @@
+make[1]: Entering directory '/mnt/c/Users/len/OS'
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 9 items
+
+tests/unit/test_broker_web.py::TestPureHTMLDOMParser::test_parse_index_page PASSED [ 11%]
+tests/unit/test_broker_web.py::TestPureHTMLDOMParser::test_hidden_prompt_injection_detection PASSED [ 22%]
+tests/unit/test_broker_web.py::TestDomainAllowlist::test_allowlist_matching PASSED [ 33%]
+tests/unit/test_broker_web.py::TestDomainAllowlist::test_dynamically_adding_approved_domain PASSED [ 44%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_read_capability PASSED [ 55%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_navigate_tier_l1_vs_l2 PASSED [ 66%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_click_navigate_link PASSED [ 77%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_fill_and_submit_form PASSED [ 88%]
+tests/unit/test_broker_web.py::TestWebBrokerCapabilities::test_web_download_into_quarantine PASSED [100%]
+
+============================== 9 passed in 0.58s ===============================
+make[1]: Leaving directory '/mnt/c/Users/len/OS'

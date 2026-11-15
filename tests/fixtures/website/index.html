@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Lazy OS Test Portal</title>
+</head>
+<body>
+    <h1>Welcome to Lazy OS Local Test Portal</h1>
+    <p id="portal-desc">This is a local fixture site for isolated web broker validation.</p>
+    
+    <nav>
+        <a id="link-login" href="login.html">Login Portal</a>
+        <a id="link-search" href="search.html">Search Knowledge Base</a>
+        <a id="link-injected" href="injected.html">System Documentation</a>
+    </nav>
+
+    <form id="search-form" action="search.html" method="GET">
+        <label for="search-input">Query:</label>
+        <input type="text" id="search-input" name="q" placeholder="Enter keywords..." value="yocto">
+        <button id="search-submit" type="submit">Search</button>
+    </form>
+</body>
+</html>
