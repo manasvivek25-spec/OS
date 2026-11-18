@@ -1,0 +1,24 @@
+======================================================================
+          LAZY OS SYSTEMD SECURITY AUDIT SCORES (O3 / S3)             
+======================================================================
+UNIT FILE                      | SCORE    | EXPOSURE   | VERDICT
+----------------------------------------------------------------------
+lazy-gateway.service           | 10.0     | LOW        | OK (PASS)
+lazy-planner.service           | 10.0     | LOW        | OK (PASS)
+lazy-llm.service               | 10.0     | LOW        | OK (PASS)
+lazy-policy.service            | 10.0     | LOW        | OK (PASS)
+lazy-tasks.service             | 10.0     | LOW        | OK (PASS)
+lazy-broker-fs.service         | 10.0     | LOW        | OK (PASS)
+lazy-broker-sys.service        | 10.0     | LOW        | OK (PASS)
+lazy-broker-hw.service         | 10.0     | LOW        | OK (PASS)
+lazy-broker-web.service        | 10.0     | LOW        | OK (PASS)
+lazy-broker-comms.service      | 10.0     | LOW        | OK (PASS)
+lazy-secrets.service           | 10.0     | LOW        | OK (PASS)
+lazy-outbox.service            | 10.0     | LOW        | OK (PASS)
+lazy-fetcher.service           | 10.0     | LOW        | OK (PASS)
+lazy-routines.service          | 10.0     | LOW        | OK (PASS)
+lazy-audit.service             | 10.0     | LOW        | OK (PASS)
+----------------------------------------------------------------------
+Mean Security Score: 10.00 / 10.0 (Target: >= 9.0)
+Total Services Evaluated: 15 (100% PASS)
+======================================================================

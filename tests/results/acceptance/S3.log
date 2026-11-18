@@ -1,0 +1,10 @@
+============================= test session starts ==============================
+platform linux -- Python 3.12.3, pytest-7.4.4, pluggy-1.4.0 -- /usr/bin/python3
+cachedir: .pytest_cache
+rootdir: /mnt/c/Users/len/OS
+plugins: cov-4.1.0
+collecting ... collected 1 item
+
+tests/acceptance/test_s3_permissions.py::test_s3_privilege_separation_and_secrets_isolation PASSED [100%]
+
+============================== 1 passed in 0.12s ===============================
