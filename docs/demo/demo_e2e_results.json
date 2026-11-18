@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-15T20:47:13.100919+00:00",
+  "timestamp": "2026-11-18T19:40:59.164075+00:00",
   "target_url": "http://127.0.0.1:8766",
   "overall_status": "PASS",
   "steps": [
@@ -11,8 +11,8 @@
         "identity": {
           "hostname": "lazy-os",
           "kernel_release": "6.8.0-149-generic",
-          "boot_id": "44f6290f-0362-4904-ae4e-28fc6833b09f",
-          "uptime": 43.81,
+          "boot_id": "b377c6fe-be72-4a42-b58d-9fab0484a9a2",
+          "uptime": 21.05,
           "mounts": [
             {
               "device": "rootfs",
@@ -142,9 +142,9 @@
       "metrics": {
         "cpu_percent": 4.2,
         "memory": {
-          "used_mb": 234.7,
+          "used_mb": 246.9,
           "total_mb": 961.1,
-          "percent": 24.4
+          "percent": 25.7
         },
         "disk": {
           "used_mb": 5.8,
