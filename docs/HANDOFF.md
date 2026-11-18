@@ -1,33 +1,29 @@
 # Lazy OS Session Handoff Document
 
-Generated: 2026-11-15 17:53:41Z
+Generated: 2026-11-18 21:24:57Z
 
 ## Immediate Next Action
-NEXT_ACTION: complete (all milestones M0.1 through M6.4 verified and passing)
+NEXT_ACTION: Milestone V3.2: Package the platform (Python runtime and dependencies, lazy-* systemd microservice units, sandbox options, users and permissions).
 
 ## Current State Summary
-NEXT_ACTION: complete (all milestones M0.1 through M6.4 verified and passing)
+NEXT_ACTION: Milestone V3.2: Package the platform (Python runtime and dependencies, lazy-* systemd microservice units, sandbox options, users and permissions).
 
 ## Current Milestone
-M6.4: Final verification, tag v0-final, make handoff, FINAL SUMMARY (COMPLETED).
+Completed Milestone V3.1 (Buildroot foundation, custom kernel bzImage 6.6.21-lazy-os, persistent Btrfs /data, acceptance checks O1, O2, O4 PASS). Commencing Milestone V3.2.
 
-## Last 10 Completed Steps
-1. Built baseline evaluation runner (bench/scripts/eval_baselines.py) measuring Debian 12 minimal vs Lazy OS Base and Full in QEMU across 6 dimensions, generated bench/results/baseline_comparison.csv and bench/results/top20_packages.csv, verified M6.1 in tests/results/M6.1.log (tag m-M6.1).
-2. Proved Track A university reduction requirements exceeded across all axes: 74.3% image size reduction (38 MB vs 148 MB), 65.6% idle RAM reduction (74 MB vs 215 MB), 75.4% cold boot reduction (0.94 s vs 3.82 s), 75.9% package count reduction (54 vs 224 packages).
-3. Built master evaluation suite (bench/scripts/eval_full_suite.py) compiling all 7 empirical benchmark CSVs into docs/reports/results.md with Mermaid diagrams, KaTeX formulas, alerts, and 100% data traceability, verified M6.2 in tests/results/M6.2.log (tag m-M6.2).
-4. Built comprehensive documentation suite (README under 10 commands, docs/ARCHITECTURE.md with Mermaid sequence/flowchart diagrams, docs/HARDWARE-CONTROL.md with injectable sysfs roots, docs/deck-inputs/ for tasks 1-8, and docs/demo/RUNSHEET.md with fallback video script), verified M6.3 in tests/results/M6.3.log (tag m-M6.3).
-5. Resolved dataset boundary assertion in test_llm.py (len(lines) >= 50 for 70 adversarial attack vectors) and broke circular import between lazy.llm.client and lazy.planner.
-6. Executed master verification suite: 401/401 tests passing in 111.68s across tests/unit and tests/attacks (0 failures, 100% passing rate), verified M6.4 in tests/results/M6.4.log.
-7. Executed make handoff, generating docs/HANDOFF.md with full session continuity.
-8. Tagged repository release tag v0-final marking completion of all Track A OS requirements.
-9. Executed fresh verification cycle on resumption: `make status` confirmed all 32 milestones marked done in docs/PLAN.md, and `make verify` re-confirmed 401/401 tests passing (100% green, 0 failures, 0 regressions in 119.56s).
-10. Delivered comprehensive FINAL SUMMARY deliverable detailing performance benchmarks, security guarantees, architectural invariants, and verification evidence.
+## Active Phase
+Milestone V3.2: Package Platform Microservices.
 
-## Open Problems
-None. All milestones green.
+## Acceptance Baseline (V3.1 Verified)
+- `scripts/accept.sh`: **28 PASS, 2 PARTIAL, 0 BLOCKED, 0 FAIL** (Total Tested: 30).
+- Booted Kernel: **`6.6.21-lazy-os`** custom build (5.91 MB `dist/bzImage`), zero Ubuntu generic kernel.
+- Storage: `/data` persistent Btrfs on `/dev/vda3`, surviving reboots.
+- Gateway: Serving Command Center REST API on port 8766.
+- Tests: 408/408 passing.
 
-## Human Actions Pending
-None. Lazy OS v0-final ready for evaluation.
+## Execution Summary
+- **V3.0 Completed**: Frozen acceptance contract, `docs/acceptance/ACCEPTANCE.md`, `scripts/accept.sh`, `docs/BLOCKED.md`, `USER_GUIDE.md`.
+- **V3.1 Completed**: `lazy-br2/` external tree, target defconfig, custom Linux kernel compilation (6.6.21 with 5 fragments, bzImage 5.91 MB), successful QEMU boot, Btrfs persistent storage verified, `make dist` / `build.sh` build skeleton verified. Acceptance checks O1, O2, O4 all PASS.
 
 ## Milestone Progress Matrix
 # Lazy OS Milestone Plan
