@@ -435,4 +435,4 @@ tests/attacks/test_attack_suite.py: 148 warnings
     resolver = jsonschema.RefResolver(base_uri=schema_path_uri, referrer=schema, store=store)
 
 -- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
-================ 408 passed, 5865 warnings in 143.57s (0:02:23) ================
+================ 408 passed, 5865 warnings in 184.86s (0:03:04) ================
