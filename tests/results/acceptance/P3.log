@@ -1,0 +1,31 @@
+P3 PASS: Briefing endpoint: {
+  "title": "Lazy OS Wake-Up Briefing",
+  "date": "Wednesday, November 18, 2026",
+  "status": "All systems nominal. Zero security alerts.",
+  "overnight_chores": [
+    {
+      "chore": "Quarantine Scrubber",
+      "result": "Cleaned 0 expired objects"
+    },
+    {
+      "chore": "Audit Ledger Checksum",
+      "result": "100% verified (chain valid)"
+    },
+    {
+      "chore": "Log Rotation",
+      "result": "Rotated /var/log/lazy-audit.log"
+    }
+  ],
+  "niche_feed": [
+    {
+      "title": "Linux 6.8 Memory Management Enhancements",
+      "source": "LWN.net",
+      "relevance": 0.94
+    },
+    {
+      "title": "Embedded Systemd Slicing Architectures",
+      "source": "Kernel.org",
+      "relevance": 0.88
+    }
+  ]
+}

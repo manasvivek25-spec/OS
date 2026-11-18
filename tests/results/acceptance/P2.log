@@ -1,0 +1,7 @@
+P2 PASS: Settings retrieved: {
+  "accent_color": "cyan",
+  "reduced_motion": false,
+  "planner_mode": "mock",
+  "model_name": "SmolLM2-360M-Instruct (Simulated)",
+  "approval_overrides": {}
+}

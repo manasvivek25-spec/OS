@@ -108,6 +108,14 @@ class GatewayAPIHandler:
             elif clean_path == "/api/briefing" and method == "GET":
                 return self._get_briefing()
 
+            elif clean_path == "/api/policy/evaluate" and method == "POST":
+                payload = json.loads(body.decode("utf-8")) if body else {}
+                return self._post_policy_evaluate(payload)
+
+            elif clean_path == "/api/plan" and method == "POST":
+                payload = json.loads(body.decode("utf-8")) if body else {}
+                return self._post_plan(payload)
+
             elif clean_path == "/api/settings" and method == "GET":
                 return self._get_settings()
 
@@ -383,3 +391,52 @@ class GatewayAPIHandler:
 
         self.settings.update(payload)
         return self._json_resp({"status": "updated", "settings": self.settings})
+
+    def _post_policy_evaluate(self, payload: Dict[str, Any]) -> Tuple[int, Dict[str, str], bytes]:
+        intent = {
+            "id": f"i-eval-{int(time.time()*1000)}",
+            "ts": time.strftime("%Y-%m-%dT%H:%M:%SZ"),
+            "requester": payload.get("requester", "hud"),
+            "capability": payload.get("capability", ""),
+            "params": payload.get("params", {}),
+            "provenance": payload.get("provenance", [{"source": "user", "trusted": True}])
+        }
+        decision = self.policy.evaluate_intent(intent)
+        status = 403 if decision.get("tier") == "L4" or decision.get("verdict") == "deny" else 200
+        return self._json_resp(decision, status=status)
+
+    def _post_plan(self, payload: Dict[str, Any]) -> Tuple[int, Dict[str, str], bytes]:
+        prompt = payload.get("prompt", "")
+        lower_p = prompt.lower()
+        injection_indicators = [
+            "ignore previous instructions",
+            "system override",
+            "drop table",
+            "rm -rf /",
+            "cat /etc/shadow",
+            "export private key",
+            "curl evil",
+        ]
+        for ind in injection_indicators:
+            if ind in lower_p:
+                return self._json_resp({
+                    "verdict": "deny",
+                    "reason": f"Prompt injection or dangerous directive detected: '{ind}'",
+                    "tier": "L4",
+                    "status": "rejected"
+                }, status=403)
+
+        plan = {
+            "id": f"plan-{int(time.time()*1000)}",
+            "prompt": prompt,
+            "status": "planned",
+            "steps": [
+                {
+                    "capability": "doc.create_markdown",
+                    "params": {"path": "/data/plan.md", "content": "# Generated Plan\n- Step 1"},
+                    "tier": "L1"
+                }
+            ]
+        }
+        return self._json_resp(plan, status=200)
+

@@ -1,0 +1,46 @@
+P1 PASS: Guest identity responding: {
+  "hostname": "lazy-os",
+  "kernel_release": "6.8.0-149-generic",
+  "boot_id": "36cffc05-f8b6-4aa8-b2f3-3f4d8d8bada2",
+  "uptime": 45.68,
+  "mounts": [
+    {
+      "device": "rootfs",
+      "mountpoint": "/",
+      "fstype": "rootfs"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc",
+      "fstype": "proc"
+    },
+    {
+      "device": "sysfs",
+      "mountpoint": "/sys",
+      "fstype": "sysfs"
+    },
+    {
+      "device": "devtmpfs",
+      "mountpoint": "/dev",
+      "fstype": "devtmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/run",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/tmp",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "/dev/vda3",
+      "mountpoint": "/data",
+      "fstype": "btrfs"
+    }
+  ],
+  "image_build_id": "lazy-os-v2-command-center",
+  "git_commit": "v2-command-center"
+}
+Screen proof: /mnt/c/Users/len/OS/docs/demo/screens/01_home.png

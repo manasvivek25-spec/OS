@@ -1,0 +1,9 @@
+{
+  "/api/identity": 200,
+  "/api/build-info": 200,
+  "/api/metrics": 200,
+  "/api/services": 200,
+  "/api/capabilities": 200,
+  "/api/audit": 200,
+  "/api/fs?path=/data": 200
+}

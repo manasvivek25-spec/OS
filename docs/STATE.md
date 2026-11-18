@@ -1,20 +1,17 @@
-NEXT_ACTION: Complete. Final Summary delivered.
+NEXT_ACTION: Milestone V3.1: Buildroot foundation (lazy-br2 external tree, defconfig, custom kernel fragments, initial boot in QEMU).
 
 ## Current Milestone
-Completed all milestones V2.A1 through V2.E4.
+Completed Milestone V3.0 (Branch v3-product, Acceptance Suite, FROZEN.sha256, BLOCKED.md). Commencing Milestone V3.1.
 
 ## Active Phase
-Phase E & Final Summary Delivery.
+Milestone V3.1: Buildroot Foundation & Custom Kernel Boot.
 
-## Verification & Health Check (2026-11-19)
-- `make status`: All 32 v1 milestones and all 19 V2 milestones marked done.
-- `make verify`: 408/408 tests passed in 184.86s (402 unit tests + 6 attack suite tests). Zero failures, zero regressions.
-- `scripts/demo-e2e.py`: 8/8 canonical demo operations passed with 100% success rate against live QEMU guest.
-- VM Status: QEMU guest daemon running online on port 8766 (forwarding to in-guest 8765), `/data` persistent Btrfs mounted on `/dev/vda3`.
+## Acceptance Baseline (V3.0 Run)
+- `scripts/accept.sh`: 25 PASS, 5 PARTIAL, 0 BLOCKED, 0 FAIL (Total Tested: 30). Exit code 0.
+- `docs/acceptance/FROZEN.sha256`: SHA-256 signatures frozen for `ACCEPTANCE.md` and `accept.sh`.
+- `docs/BLOCKED.md`: Active tracking of partial/blocked items and human-only resource gates.
+- Guest VM: Running QEMU x86_64 guest on port 8766 with persistent Btrfs `/data`.
+- Test Suites: 408/408 unit and attack tests passing (`make verify`).
 
 ## Execution Summary
-- **Phase A (Audit)**: V2.A1 to V2.A5 completed, documented in `docs/audit/`.
-- **Phase B (Truth Fixes)**: V2.B1 to V2.B5 completed; real persistent Btrfs partition on `/dev/vda3`, honest `/api/identity` and `/api/build-info` endpoints, 5-run cold-boot benchmark methodology (`bench/METHOD.md`), and guest LLM labelled `SIMULATED`.
-- **Phase C (Command Center)**: V2.C1 to V2.C5 completed; full offline Command Center SPA in `hud/`, headless Chromium screenshots of all 8 modules in `docs/demo/screens/`, `manifest.json` generated, WCAG AAA accessibility confirmed.
-- **Phase D (Real Demo)**: V2.D1 to V2.D3 completed; operational scripts `run-lazy.sh` / `stop-lazy.sh`, automated suite `scripts/demo-e2e.py` passed 8/8 canonical tests, `docs/demo/DEMO.md` and `docs/demo/DEMO_REPORT.md` written.
-- **Phase E (Academic)**: V2.E1 to V2.E4 completed; `docs/BUILD_ENV_PLAN.md`, resource gate evaluated, metadata statically validated in `docs/audit/METADATA_VALIDATION.md`, booted kernel `.config` and package manifest archived in `docs/academic/`, and presentation deck inputs aligned.
+- **V3.0 Completed**: Merged `v2-command-center` to `main`, branched `v3-product`, created `USER_GUIDE.md`, implemented `/api/policy/evaluate` and `/api/plan`, initialized and froze acceptance contract.
