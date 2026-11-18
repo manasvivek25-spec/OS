@@ -1,0 +1,19 @@
+======================================================================
+          LAZY OS PHYSICAL HARDWARE CAPABILITY SELF-TEST              
+======================================================================
+Date:     2026-11-18T22:13:27Z
+Kernel:   6.6.87.2-microsoft-standard-WSL2
+Hostname: MANAS
+Arch:     x86_64
+======================================================================
+[1/6] Checking Backlight Sysfs (/sys/class/backlight)... VM-UNAVAILABLE (No physical backlight controller detected)
+[2/6] Checking Battery Sysfs (/sys/class/power_supply)... OK (Device: AC1, Status: Unknown, Capacity: N/A%)
+[3/6] Checking CPU Frequency Governors (/sys/devices/system/cpu)... VM-UNAVAILABLE (cpufreq scaling driver not virtualized)
+[4/6] Checking RFKill Switch (/dev/rfkill or rfkill command)... VM-UNAVAILABLE (No rfkill interface found)
+[5/6] Checking Audio Sound Cards (/proc/asound or /dev/snd)... OK (/dev/snd character devices present)
+[6/6] Checking USB Subsystem (/sys/bus/usb/devices)... VM-UNAVAILABLE (No USB controller detected)
+======================================================================
+Self-Test Summary: PASS=2, VM-UNAVAILABLE=4 (Total: 6)
+Note: Interfaces labeled VM-UNAVAILABLE are fully expected in virtualized
+QEMU/WSL environments and map to synthetic fallback brokers (Rule K10).
+======================================================================

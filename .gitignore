@@ -13,6 +13,12 @@ sstate-cache/
 tmp/
 *.tmp
 tests/results/*.tmp
+dist/*.qcow2
+dist/*.vdi
+dist/*.vmdk
+dist/*.cpio.gz
+dist/*.img
+dist/*.raw
 /poky/
 /meta-openembedded/
 /meta-*/

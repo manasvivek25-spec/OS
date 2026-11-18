@@ -120,6 +120,8 @@ setsid nohup qemu-system-x86_64 \
     -kernel "${KERNEL}" \
     -initrd "${INITRD}" \
     -drive file="${DISK}",format=raw,if=virtio \
+    -vga virtio \
+    -device virtio-tablet-pci \
     -append "console=ttyS0 console=tty0 quiet panic=1 lazy_interactive=1" \
     ${DISPLAY_OPT} \
     -serial file:"${REPO_DIR}/build-logs/serial.log" \

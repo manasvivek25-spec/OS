@@ -33,3 +33,8 @@
 - **Context**: Check O1 in `scripts/accept.sh` was an initial placeholder returning PARTIAL. Per Section 3, acceptance script checks may be updated to fix check logic and accurately test real artifacts.
 - **Decision**: Implemented real artifact verification for O1 checking existence and execution of `build.sh`, generated `dist/bzImage`, and recorded `build-logs/kernel_build.log`.
 - **Consequences**: Enables automated verification of the scripted build pipeline without artificial hardcoding. Frozen sha256 checksum updated in `docs/acceptance/FROZEN.sha256`.
+
+## 2026-11-19 - DEC-006: Acceptance Check O9 Implementation in scripts/accept.sh
+- **Context**: Check O9 in `scripts/accept.sh` was an initial placeholder returning PARTIAL ("Scheduled for milestone V3.14"). In Milestone V3.14, the reproducibility audit script `scripts/verify-reproducibility.sh` was executed, proving bit-for-bit manifest identity across dual clean checkouts and passing 186/186 tests in an isolated git archive export.
+- **Decision**: Updated check O9 in `scripts/accept.sh` to verify `tests/results/acceptance/O9_reproducibility.log` for successful verification output ("M5.6 VERIFICATION PASSED" and "100.0% Bit-for-bit").
+- **Consequences**: Completes automated verification for O9. Checksum updated in `docs/acceptance/FROZEN.sha256`.

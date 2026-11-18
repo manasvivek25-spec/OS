@@ -12,12 +12,12 @@ if [ ! -f "${DISK}" ]; then
     DISK="${REPO_ROOT}/build/v2/lazy-disk.img"
 fi
 
-KERNEL="${REPO_ROOT}/build/br2-output/images/bzImage"
+KERNEL="${REPO_ROOT}/dist/bzImage"
+if [ ! -f "${KERNEL}" ]; then
+    KERNEL="${REPO_ROOT}/build/br2-output/images/bzImage"
+fi
 if [ ! -f "${KERNEL}" ]; then
     KERNEL="/boot/vmlinuz-6.8.0-149-generic"
-    if [ ! -f "${KERNEL}" ]; then
-        KERNEL=$(ls -1 /boot/vmlinuz-*-generic 2>/dev/null | sort -V | tail -n 1)
-    fi
 fi
 
 INITRD="${REPO_ROOT}/build/br2-output/images/rootfs.cpio.gz"

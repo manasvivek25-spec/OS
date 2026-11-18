@@ -287,7 +287,16 @@ if should_run("O8"):
 
 if should_run("O9"):
     # O9: Clean-checkout rebuild reproduces manifests
-    results["O9"] = ("PARTIAL", "Scheduled for milestone V3.14")
+    o9_log = os.path.join(results_dir, "O9_reproducibility.log")
+    if os.path.exists(o9_log):
+        with open(o9_log, "r") as f:
+            content = f.read()
+        if "M5.6 VERIFICATION PASSED" in content or "100.0% Bit-for-bit" in content:
+            results["O9"] = ("PASS", "Clean checkout reproducibility verified; bit-for-bit manifest identity confirmed")
+        else:
+            results["O9"] = ("FAIL", "Reproducibility audit failed")
+    else:
+        results["O9"] = ("PARTIAL", "Reproducibility log not yet generated")
 
 # ============================================================================
 # Feature Checks

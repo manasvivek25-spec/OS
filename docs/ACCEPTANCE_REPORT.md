@@ -1,8 +1,8 @@
 # Lazy OS v3 Acceptance Report
 
-**Generated**: 2026-11-18T22:05:32.058183+00:00
+**Generated**: 2026-11-18T22:28:06.877067+00:00
 **Target URL**: http://127.0.0.1:8766
-**Summary**: PASS=29, PARTIAL=1, BLOCKED=0, FAIL=0
+**Summary**: PASS=30, PARTIAL=0, BLOCKED=0, FAIL=0
 
 | Check ID | Status | Details |
 | :--- | :---: | :--- |
@@ -21,7 +21,7 @@
 | **O6** | **PASS** | Package manifest and SBOM cataloged in docs/academic/ |
 | **O7** | **PASS** | Build-system resource comparison documented with empirical gate analysis |
 | **O8** | **PASS** | Standardized benchmark method active, 5-run empirical baseline recorded |
-| **O9** | **PARTIAL** | Scheduled for milestone V3.14 |
+| **O9** | **PASS** | Clean checkout reproducibility verified; bit-for-bit manifest identity confirmed |
 | **FT1** | **PASS** | In-guest llama.cpp operational |
 | **FT2** | **PASS** | Task suite verified 100% in M2.4 and V2 regression tests |
 | **FT3** | **PASS** | Dialogue manager handles corrections, plan preview, and rollback |

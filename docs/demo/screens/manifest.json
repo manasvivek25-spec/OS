@@ -1,12 +1,12 @@
 {
   "title": "Lazy OS v2 Command Center UI Screen Manifest",
-  "generated_at": "2026-11-15T20:38:51.788433+00:00",
+  "generated_at": "2026-11-18T22:11:24.598018+00:00",
   "target_url": "http://127.0.0.1:8766",
   "guest_identity": {
     "hostname": "lazy-os",
-    "kernel_release": "6.8.0-149-generic",
-    "boot_id": "f027f847-6b41-4c21-873c-ce545164389a",
-    "uptime": 16.55,
+    "kernel_release": "6.6.21-lazy-os",
+    "boot_id": "880478c9-8ad0-4ba3-9ec7-a1eb978a5561",
+    "uptime": 351.4,
     "mounts": [
       {
         "device": "rootfs",
@@ -44,8 +44,8 @@
         "fstype": "btrfs"
       }
     ],
-    "image_build_id": "lazy-os-v2-command-center",
-    "git_commit": "v2-command-center"
+    "image_build_id": "lazy-os-v3-product",
+    "git_commit": "v3-product"
   },
   "accessibility_audit": {
     "wcag_level": "AAA",
@@ -78,8 +78,8 @@
       "filename": "01_home.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-home",
       "dimensions": "1440x900",
-      "filesize_kb": 76.4,
-      "sha256": "ff93ee63a7e945285bbec0f89e4bcb9d5470c86fa2f23a8347fb692de5d9502c"
+      "filesize_kb": 76.1,
+      "sha256": "c3e66b292302c4b4294a654fea3020c41d7d2cab111c5ec3a9f5715989e7960b"
     },
     {
       "module_id": "tab-ai",
@@ -88,8 +88,8 @@
       "filename": "02_ai_command.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-ai",
       "dimensions": "1440x900",
-      "filesize_kb": 48.2,
-      "sha256": "5876420e8dc9faa2e532756b60511dfd3c8921b9f8ecc7f469fdb2dd05f82846"
+      "filesize_kb": 47.6,
+      "sha256": "a40b60a11923a93aee49046c66f54e86cc76405e70c39bc3087f908f82360459"
     },
     {
       "module_id": "tab-system",
@@ -98,8 +98,8 @@
       "filename": "03_system_monitor.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-system",
       "dimensions": "1440x900",
-      "filesize_kb": 113.3,
-      "sha256": "c8636c56235c777b92f183f177696d2fc790075d2b5e92a2c7c3210ac6a85c75"
+      "filesize_kb": 113.1,
+      "sha256": "36c4fae2fb27b2f76659c75d2f702c915b143eb991c41c6b22f6b5bbe9c601d7"
     },
     {
       "module_id": "tab-agents",
@@ -108,8 +108,8 @@
       "filename": "04_agent_center.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-agents",
       "dimensions": "1440x900",
-      "filesize_kb": 73.4,
-      "sha256": "71b53866d3c2fc7b19ebcc2a51465c698b8e7a96eb5cd2003a61b2d440dfd8bb"
+      "filesize_kb": 72.8,
+      "sha256": "98224cd3ec0c196fce33e51615729cf46a78235ceb47c6e4ceb8dbc40ac69f6c"
     },
     {
       "module_id": "tab-files",
@@ -118,8 +118,8 @@
       "filename": "05_file_manager.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-files",
       "dimensions": "1440x900",
-      "filesize_kb": 46.5,
-      "sha256": "df62dd92b9e51f1595b0f24dd4e9390601813885546034ee6172c8a27f70035f"
+      "filesize_kb": 48.5,
+      "sha256": "7a4b866343360110218bc9348faf16274526788cb259bbbfa25d1801b70b66d8"
     },
     {
       "module_id": "tab-security",
@@ -128,8 +128,8 @@
       "filename": "06_security_center.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-security",
       "dimensions": "1440x900",
-      "filesize_kb": 53.0,
-      "sha256": "5df45378a08ef3a8b86bc3045963a7f53a6b53d92adc91e584e13f11c3201da1"
+      "filesize_kb": 52.4,
+      "sha256": "fb18023faed54cb48b52c15eea8d5b90596b438cbb93a803bc5adf48c21846e6"
     },
     {
       "module_id": "tab-apps",
@@ -138,8 +138,8 @@
       "filename": "07_app_launcher.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-apps",
       "dimensions": "1440x900",
-      "filesize_kb": 60.2,
-      "sha256": "bb9a5c9d8f9b1c3536abb898e05f381bbbaf1c810a84fa3f59d3128f1caa1e0c"
+      "filesize_kb": 59.4,
+      "sha256": "ef3e04b282a89d4aab50824416ae1a4ca30a9d895a88d5484ae2d9fdf6767d80"
     },
     {
       "module_id": "tab-settings",
@@ -148,8 +148,8 @@
       "filename": "08_settings.png",
       "url": "http://127.0.0.1:8766/?noboot=1&tab=tab-settings",
       "dimensions": "1440x900",
-      "filesize_kb": 63.9,
-      "sha256": "5ae1953e0bf95dd5b42f562452bea12539d3e78a35001657412608694ca4a811"
+      "filesize_kb": 63.4,
+      "sha256": "ed939a39a9019642f0000a9d522cdd8003855acb05451ca388afdf178bd24d68"
     }
   ]
 }

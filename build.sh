@@ -9,6 +9,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="${SCRIPT_DIR}"
 BUILD_SYSTEM="${BUILD_SYSTEM:-buildroot}"
 PROFILE="${1:-base}"
+if [ "$PROFILE" != "base" ] && [ "$PROFILE" != "full" ]; then
+    echo "ERROR: Invalid target profile '$PROFILE'. Usage: ./build.sh [base|full]" >&2
+    exit 1
+fi
 BUILD_LOGS="${REPO_ROOT}/build-logs"
 LOG_FILE="${BUILD_LOGS}/build.log"
 
