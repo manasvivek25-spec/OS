@@ -3,6 +3,7 @@ from __future__ import annotations
 
 import json
 import os
+import shutil
 import time
 from pathlib import Path
 from typing import Any, Dict, Optional, Tuple
@@ -156,6 +157,22 @@ class GatewayAPIHandler:
     def _get_build_info(self) -> Tuple[int, Dict[str, str], bytes]:
         krel = os.uname().release
         is_custom_k = "lazy" in krel or "custom" in krel
+        model_paths = [
+            Path("/data/models/SmolLM2-360M-Instruct-Q4_K_M.gguf"),
+            Path("/var/lib/lazy/models/SmolLM2-360M-Instruct-Q4_K_M.gguf"),
+            Path(self.repo_root) / "build/models/SmolLM2-360M-Instruct-Q4_K_M.gguf",
+            Path("/mnt/c/Users/len/OS/build/models/SmolLM2-360M-Instruct-Q4_K_M.gguf"),
+        ]
+        has_model = any(p.exists() for p in model_paths)
+        has_llama = bool(
+            shutil.which("llama-cli")
+            or shutil.which("llama-server")
+            or Path("/tmp/llama.cpp/build/bin/llama-cli").exists()
+            or Path("/mnt/c/Users/len/OS/build/bin/llama-cli").exists()
+            or Path("/usr/bin/llama-cli").exists()
+        )
+        is_llm_real = has_model and has_llama
+
         info = {
             "kernel": {
                 "status": "real",
@@ -165,7 +182,11 @@ class GatewayAPIHandler:
             "storage": {"status": "real", "label": "Btrfs Partition", "source": "/dev/vda3 persistent mount on /data"},
             "audit": {"status": "real", "label": "SHA-256 Hash Chain", "source": "lazy.audit cryptographically chained ledger"},
             "snapshots": {"status": "real", "label": "Snapshot Rollback", "source": "lazy.tasks instant zero-loss undo"},
-            "llm": {"status": "simulated", "label": "Mock Heuristic", "source": "Rule-based planner (Host LLM available)"},
+            "llm": {
+                "status": "real" if is_llm_real else "simulated",
+                "label": "llama.cpp (SmolLM2-360M)" if is_llm_real else "Mock Heuristic",
+                "source": "In-guest llama.cpp Q4_K_M (Native Engine)" if is_llm_real else "Rule-based planner (Host LLM available)"
+            },
             "voice": {"status": "simulated", "label": "Browser Speech API", "source": "Web Speech API (not in image)"},
             "web_driver": {"status": "real", "label": "Pure Python Driver", "source": "lazy.brokers.web isolated sandbox"},
             "comms": {"status": "real", "label": "Maildir & Chat", "source": "lazy.brokers.comms local drivers"}

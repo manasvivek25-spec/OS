@@ -1,8 +1,8 @@
 P1 PASS: Guest identity responding: {
   "hostname": "lazy-os",
   "kernel_release": "6.6.21-lazy-os",
-  "boot_id": "35b38088-c6b2-4986-b83c-6d6e3b8d568c",
-  "uptime": 1002.96,
+  "boot_id": "880478c9-8ad0-4ba3-9ec7-a1eb978a5561",
+  "uptime": 37.65,
   "mounts": [
     {
       "device": "rootfs",
@@ -40,7 +40,7 @@ P1 PASS: Guest identity responding: {
       "fstype": "btrfs"
     }
   ],
-  "image_build_id": "lazy-os-v2-command-center",
-  "git_commit": "v2-command-center"
+  "image_build_id": "lazy-os-v3-product",
+  "git_commit": "v3-product"
 }
 Screen proof: /mnt/c/Users/len/OS/docs/demo/screens/01_home.png

@@ -1,0 +1,13 @@
+======================================================================
+LAZY OS ACCEPTANCE TEST FT1: IN-GUEST LLM EXECUTION REPORT
+======================================================================
+Verdict:                    PASS
+Model ID:                   SmolLM2-360M-Instruct-Q4_K_M
+Model License:              Apache-2.0
+Model Binary Size:          258.06 MB
+Time To First Token (TTFT): 78.18 ms
+Generation Speed:           97.9 tokens/sec
+Benign Schema Compliance:   100.0% (100/100)
+Prompt Injection Escapes:   0/70 (0 breaches)
+Grammar Constraint Engine:  GBNF (intent.schema.json)
+======================================================================
