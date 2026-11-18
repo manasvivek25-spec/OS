@@ -1,8 +1,8 @@
 # Lazy OS v3 Acceptance Report
 
-**Generated**: 2026-11-18T20:09:22.244267+00:00
+**Generated**: 2026-11-18T21:23:50.720102+00:00
 **Target URL**: http://127.0.0.1:8766
-**Summary**: PASS=25, PARTIAL=5, BLOCKED=0, FAIL=0
+**Summary**: PASS=28, PARTIAL=2, BLOCKED=0, FAIL=0
 
 | Check ID | Status | Details |
 | :--- | :---: | :--- |
@@ -12,9 +12,9 @@
 | **P4** | **PASS** | All 11 modules backed by functional guest endpoints |
 | **P5** | **PASS** | Orderly lifecycle management and persistent storage verified |
 | **P6** | **PASS** | Offline self-contained gateway and UI operational without internet |
-| **P7** | **PARTIAL** | dist/ packaging directory scheduled in milestone V3.13 |
-| **O1** | **PARTIAL** | Build script skeleton available; full Buildroot distribution in V3.1 |
-| **O2** | **PARTIAL** | Currently booted host kernel 6.8.0-149-generic; custom Buildroot kernel scheduled in V3.1 |
+| **P7** | **PASS** | Distribution package populated |
+| **O1** | **PASS** | make dist / build.sh builds custom kernel bzImage with build logs |
+| **O2** | **PASS** | Custom kernel verified: 6.6.21-lazy-os |
 | **O3** | **PASS** | 15 lazy microservices actively monitored |
 | **O4** | **PASS** | Persistent Btrfs /data verified on /dev/vda3 |
 | **O5** | **PASS** | Hardening verified: seccomp, no-new-privileges, capability manifests, audit hash-chain |

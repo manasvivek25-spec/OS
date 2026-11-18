@@ -6,7 +6,7 @@ VENV ?= .venv
 VENV_BIN ?= $(VENV)/bin
 PYTEST ?= $(if $(wildcard $(VENV_BIN)/pytest),$(VENV_BIN)/pytest,pytest)
 
-.PHONY: all setup status verify verify-image eval-tasks eval-llm eval demo image-base image-full handoff clean
+.PHONY: all setup status verify verify-image eval-tasks eval-llm eval demo dist image-base image-full handoff clean
 
 all: status
 
@@ -142,6 +142,10 @@ eval: eval-tasks eval-llm
 
 demo:
 	@$(PYTHON) src/lazy/demo_runner.py
+
+dist:
+	@chmod +x build.sh
+	@./build.sh base
 
 image-base:
 	@./scripts/build-yocto.sh base

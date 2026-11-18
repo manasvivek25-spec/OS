@@ -148,14 +148,20 @@ class GatewayAPIHandler:
             "boot_id": boot_id,
             "uptime": uptime_s,
             "mounts": mounts,
-            "image_build_id": "lazy-os-v2-command-center",
-            "git_commit": "v2-command-center"
+            "image_build_id": "lazy-os-v3-product",
+            "git_commit": "v3-product"
         }
         return self._json_resp(data)
 
     def _get_build_info(self) -> Tuple[int, Dict[str, str], bytes]:
+        krel = os.uname().release
+        is_custom_k = "lazy" in krel or "custom" in krel
         info = {
-            "kernel": {"status": "real", "label": "Host Kernel", "source": "Ubuntu 6.8 with custom initramfs"},
+            "kernel": {
+                "status": "real",
+                "label": "Custom Kernel" if is_custom_k else "Host Kernel",
+                "source": f"Linux {krel} compiled from repo fragments" if is_custom_k else "Ubuntu 6.8 with custom initramfs"
+            },
             "storage": {"status": "real", "label": "Btrfs Partition", "source": "/dev/vda3 persistent mount on /data"},
             "audit": {"status": "real", "label": "SHA-256 Hash Chain", "source": "lazy.audit cryptographically chained ledger"},
             "snapshots": {"status": "real", "label": "Snapshot Rollback", "source": "lazy.tasks instant zero-loss undo"},

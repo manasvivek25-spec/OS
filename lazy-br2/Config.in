@@ -1,0 +1,2 @@
+source "$BR2_EXTERNAL_LAZY_OS_PATH/package/lazy-os/Config.in"
+source "$BR2_EXTERNAL_LAZY_OS_PATH/package/llama-cpp/Config.in"

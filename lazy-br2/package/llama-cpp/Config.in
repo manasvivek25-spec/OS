@@ -1,0 +1,5 @@
+config BR2_PACKAGE_LLAMA_CPP
+	bool "llama-cpp"
+	depends on BR2_INSTALL_LIBSTDCPP
+	help
+	  llama.cpp lightweight tensor inference engine for in-guest LLMs.

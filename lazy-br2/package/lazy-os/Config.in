@@ -1,0 +1,7 @@
+config BR2_PACKAGE_LAZY_OS
+	bool "lazy-os"
+	select BR2_PACKAGE_PYTHON3
+	select BR2_PACKAGE_PYTHON_PYYAML
+	help
+	  Lazy OS core microservices, REST gateway, HUD Command Center,
+	  and systemd sandbox units.

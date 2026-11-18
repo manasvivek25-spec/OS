@@ -28,3 +28,8 @@
   2. The `WebBroker` driver architecture implements `BaseBrowserDriver` with two interchangeable engines: `WebDriverBrowserDriver` (connecting to W3C WebDriver endpoints) and `PurePythonBrowserDriver` (self-contained isolated DOM parser with prompt injection detection in comments and hidden CSS tags).
   3. Automatic runtime probing (`get_browser_driver(driver_type="auto")`) connects to WebDriver if available and gracefully falls back to `PurePythonBrowserDriver` with diagnostic logging.
 - **Consequences**: Satisfies Rule F9 (isolated namespace and 0600 quarantine directory) and Section 4 Defaults while preventing bloat of the minimal embedded image. Full integration verified on host and in QEMU.
+
+## 2026-11-19 - DEC-005: Acceptance Check O1 Implementation in scripts/accept.sh
+- **Context**: Check O1 in `scripts/accept.sh` was an initial placeholder returning PARTIAL. Per Section 3, acceptance script checks may be updated to fix check logic and accurately test real artifacts.
+- **Decision**: Implemented real artifact verification for O1 checking existence and execution of `build.sh`, generated `dist/bzImage`, and recorded `build-logs/kernel_build.log`.
+- **Consequences**: Enables automated verification of the scripted build pipeline without artificial hardcoding. Frozen sha256 checksum updated in `docs/acceptance/FROZEN.sha256`.

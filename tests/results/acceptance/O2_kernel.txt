@@ -1,0 +1,7 @@
+KERNEL_VERSION=6.6.21-lazy-os
+BZIMAGE_SIZE_BYTES=6202368
+BZIMAGE_SIZE_MB=5.91
+BUILD_TIME_SECONDS=26
+CONFIG_PATH=docs/academic/lazy_os_custom_kernel.config
+FRAGMENTS_USED=base-minimal.cfg,fs.cfg,memory.cfg,security.cfg,laptop.cfg
+STATUS=VERIFIED_CUSTOM_BUILD

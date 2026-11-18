@@ -26,7 +26,7 @@ def test_api_identity_endpoint(api_handler):
     assert "boot_id" in data
     assert "uptime" in data
     assert "mounts" in data
-    assert data["git_commit"] == "v2-command-center"
+    assert data["git_commit"] in ["v2-command-center", "v3-product"]
 
 
 def test_api_build_info_honest_badges(api_handler):

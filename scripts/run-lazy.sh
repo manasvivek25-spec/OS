@@ -28,10 +28,16 @@ if [ -f "${PID_FILE}" ]; then
 fi
 
 # Locate kernel and boot images
-KERNEL="/boot/vmlinuz-6.8.0-149-generic"
+KERNEL="${REPO_DIR}/dist/bzImage"
 if [ ! -f "${KERNEL}" ]; then
-    # Fallback to any installed generic kernel
-    KERNEL=$(ls -1 /boot/vmlinuz-*-generic 2>/dev/null | sort -V | tail -n 1)
+    KERNEL="${REPO_DIR}/build/br2-output/images/bzImage"
+fi
+if [ ! -f "${KERNEL}" ]; then
+    KERNEL="/boot/vmlinuz-6.8.0-149-generic"
+    if [ ! -f "${KERNEL}" ]; then
+        # Fallback to any installed generic kernel
+        KERNEL=$(ls -1 /boot/vmlinuz-*-generic 2>/dev/null | sort -V | tail -n 1)
+    fi
 fi
 
 INITRD="${REPO_DIR}/build/v2/lazy-os-boot.cpio.gz"
