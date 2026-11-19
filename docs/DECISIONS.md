@@ -38,3 +38,8 @@
 - **Context**: Check O9 in `scripts/accept.sh` was an initial placeholder returning PARTIAL ("Scheduled for milestone V3.14"). In Milestone V3.14, the reproducibility audit script `scripts/verify-reproducibility.sh` was executed, proving bit-for-bit manifest identity across dual clean checkouts and passing 186/186 tests in an isolated git archive export.
 - **Decision**: Updated check O9 in `scripts/accept.sh` to verify `tests/results/acceptance/O9_reproducibility.log` for successful verification output ("M5.6 VERIFICATION PASSED" and "100.0% Bit-for-bit").
 - **Consequences**: Completes automated verification for O9. Checksum updated in `docs/acceptance/FROZEN.sha256`.
+
+## 2026-11-19 - DEC-007: Contract Restoration and Re-Freeze (Milestone R1)
+- **Context**: Per Rule U1 of `docs/BUILD_PROMPT_V3_1.md`, `docs/BUILD_PROMPT_V3.md` Section 3 is the sole source of truth. An audit against git history revealed that 14 checks in `scripts/accept.sh` had been weakened or implemented with static/mock validations rather than live in-guest verification.
+- **Decision**: Restored the strict criteria in `docs/acceptance/ACCEPTANCE.md` and `scripts/accept.sh`. Zero hardcoded `PASS` values permitted. Every check requires active live execution against the booted guest, with failure, partial, or blocked statuses assigned honestly. Re-computed and re-froze `docs/acceptance/FROZEN.sha256`.
+- **Consequences**: Ensures 100% adherence to Truth Rules T1-T9 and Rule U1. All claims must trace to freshly executed raw logs.

@@ -1,0 +1,249 @@
+=== RAW GUEST OUTPUT (MILESTONE R3) ===
+o '=== UNAME ==='
+uname -a
+echo '=== PROC_VERSION ==='
+cat /proc/version
+echo '=== PS_PID_1 ==='
+ps -p 1
+echo '=== SYSTEMCTL_SERVICES ==='
+systemctl list-units 'lazy-*' 2>&1
+echo '=== PS_LAZY_SERVICES ==='
+ps -eo user,pid,rss,comm 2>&1
+echo '=== PS_ALL ==='
+ps 2>&1
+echo '=== FINDMNT ==='
+findmnt 2>&1
+echo '=== MOUNT ==='
+mount
+echo '=== DF_H ==='
+df -h
+echo '=== TOUCH_TESTFILE ==='
+touch /testfile 2>&1
+ls -la /testfile 2>&1
+echo '=== FREE_M ==='
+free -m
+echo '=== PROC_MEMINFO ==='
+head -n 15 /proc/meminfo
+echo '=== POWEROFF ==='
+poweroff -f
+[OK] Mounted real persistent Btrfs partition on /data from /dev/vda3
+======================================================================
+        LAZY OS // v0.2-command-center (Persistent Btrfs /data)       
+======================================================================
+[OK] Linux Kernel 6.6.21-lazy-os loaded.
+[OK] /data mount: /dev/vda3 on /data type btrfs (rw,relatime,discard=async,space_cache=v2,subvolid=5,subvol=/)
+[OK] Gateway & REST API listening on 0.0.0.0:8765 (guest).
+
+lazyos@lazy-os:~$ 
+
+
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) built-in shell (ash)
+Enter 'help' for a list of built-in commands.
+
+sh: can't access tty; job control turned off
+/ # o '=== UNAME ==='
+sh: o: not found
+/ # uname -a
+Linux lazy-os 6.6.21-lazy-os #3 SMP PREEMPT_DYNAMIC Wed Nov 18 21:21:40 UTC 2026 x86_64 GNU/Linux
+/ # echo '=== PROC_VERSION ==='
+=== PROC_VERSION ===
+/ # cat /proc/version
+Linux version 6.6.21-lazy-os (manas@MANAS) (gcc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0, GNU ld (GNU Binutils for Ubuntu) 2.42) #3 SMP PREEMPT_DYNAMIC Wed Nov 18 21:21:40 UTC 2026
+/ # echo '=== PS_PID_1 ==='
+=== PS_PID_1 ===
+/ # ps -p 1
+ps: invalid option -- 'p'
+BusyBox v1.36.1 (Ubuntu 1:1.36.1-6ubuntu3.1) multi-call binary.
+
+Usage: ps [-o COL1,COL2=HEADER] [-T]
+
+Show list of processes
+
+	-o COL1,COL2=HEADER	Select columns for display
+	-T			Show threads
+/ # echo '=== SYSTEMCTL_SERVICES ==='
+=== SYSTEMCTL_SERVICES ===
+/ # systemctl list-units 'lazy-*' 2>&1
+sh: systemctl: not found
+/ # echo '=== PS_LAZY_SERVICES ==='
+=== PS_LAZY_SERVICES ===
+/ # ps -eo user,pid,rss,comm 2>&1
+USER     PID   RSS  COMMAND
+root         1 1536 init
+root         2    0 kthreadd
+root         3    0 pool_workqueue_
+root         4    0 kworker/R-rcu_g
+root         5    0 kworker/R-rcu_p
+root         6    0 kworker/R-slub_
+root         7    0 kworker/R-netns
+root         8    0 kworker/0:0-eve
+root         9    0 kworker/0:1-eve
+root        10    0 kworker/0:0H-ev
+root        11    0 kworker/u4:0-bt
+root        12    0 kworker/R-mm_pe
+root        13    0 ksoftirqd/0
+root        14    0 rcu_preempt
+root        15    0 migration/0
+root        16    0 cpuhp/0
+root        17    0 cpuhp/1
+root        18    0 migration/1
+root        19    0 ksoftirqd/1
+root        20    0 kworker/1:0-rcu
+root        21    0 kworker/1:0H
+root        22    0 kdevtmpfs
+root        23    0 kworker/R-inet_
+root        24    0 kworker/1:1-eve
+root        25    0 oom_reaper
+root        26    0 kworker/R-write
+root        27    0 kcompactd0
+root        28    0 khugepaged
+root        29    0 kworker/R-kbloc
+root        30    0 kworker/0:1H
+root        31    0 kworker/u4:1-ev
+root        32    0 kswapd0
+root        33    0 kworker/R-acpi_
+root        34    0 kworker/u4:2-ev
+root        35    0 kworker/R-mld
+root        36    0 kworker/0:2-ipv
+root        37    0 kworker/R-ipv6_
+root        53    0 kworker/R-btrfs
+root        54    0 kworker/R-btrfs
+root        55    0 kworker/R-btrfs
+root        56    0 kworker/R-btrfs
+root        57    0 kworker/R-btrfs
+root        58    0 kworker/R-btrfs
+root        59    0 kworker/R-btrfs
+root        60    0 kworker/R-btrfs
+root        61    0 kworker/R-btrfs
+root        62    0 kworker/R-btrfs
+root        63    0 kworker/R-btrfs
+root        64    0 kworker/R-btrfs
+root        65    0 kworker/R-btrfs
+root        66    0 btrfs-cleaner
+root        67    0 btrfs-transacti
+root        78 3712 python3
+root        93 1664 busybox
+root        97 1408 ps
+/ # echo '=== PS_ALL ==='
+=== PS_ALL ===
+/ # ps 2>&1
+PID   USER     COMMAND
+    1 root     {init} /bin/busybox sh /init
+    2 root     [kthreadd]
+    3 root     [pool_workqueue_]
+    4 root     [kworker/R-rcu_g]
+    5 root     [kworker/R-rcu_p]
+    6 root     [kworker/R-slub_]
+    7 root     [kworker/R-netns]
+    8 root     [kworker/0:0-eve]
+    9 root     [kworker/0:1-eve]
+   10 root     [kworker/0:0H-ev]
+   11 root     [kworker/u4:0-bt]
+   12 root     [kworker/R-mm_pe]
+   13 root     [ksoftirqd/0]
+   14 root     [rcu_preempt]
+   15 root     [migration/0]
+   16 root     [cpuhp/0]
+   17 root     [cpuhp/1]
+   18 root     [migration/1]
+   19 root     [ksoftirqd/1]
+   20 root     [kworker/1:0-rcu]
+   21 root     [kworker/1:0H]
+   22 root     [kdevtmpfs]
+   23 root     [kworker/R-inet_]
+   24 root     [kworker/1:1-eve]
+   25 root     [oom_reaper]
+   26 root     [kworker/R-write]
+   27 root     [kcompactd0]
+   28 root     [khugepaged]
+   29 root     [kworker/R-kbloc]
+   30 root     [kworker/0:1H]
+   31 root     [kworker/u4:1-ev]
+   32 root     [kswapd0]
+   33 root     [kworker/R-acpi_]
+   34 root     [kworker/u4:2-ev]
+   35 root     [kworker/R-mld]
+   36 root     [kworker/0:2-ipv]
+   37 root     [kworker/R-ipv6_]
+   53 root     [kworker/R-btrfs]
+   54 root     [kworker/R-btrfs]
+   55 root     [kworker/R-btrfs]
+   56 root     [kworker/R-btrfs]
+   57 root     [kworker/R-btrfs]
+   58 root     [kworker/R-btrfs]
+   59 root     [kworker/R-btrfs]
+   60 root     [kworker/R-btrfs]
+   61 root     [kworker/R-btrfs]
+   62 root     [kworker/R-btrfs]
+   63 root     [kworker/R-btrfs]
+   64 root     [kworker/R-btrfs]
+   65 root     [kworker/R-btrfs]
+   66 root     [btrfs-cleaner]
+   67 root     [btrfs-transacti]
+   78 root     /usr/bin/python3 /usr/bin/lazy-guest-daemon.py
+   93 root     /bin/busybox sh
+   98 root     {ps} /bin/busybox sh
+/ # echo '=== FINDMNT ==='
+=== FINDMNT ===
+/ # findmnt 2>&1
+TARGET  SOURCE    FSTYPE   OPTIONS
+/       rootfs    rootfs   rw,size=485248k,nr_inodes=121312
+|-/proc proc      proc     rw,relatime
+|-/sys  sysfs     sysfs    rw,relatime
+|-/dev  devtmpfs  devtmpfs rw,relatime,size=485248k,nr_inodes=121312,mode=755
+|-/run  tmpfs     tmpfs    rw,relatime
+|-/tmp  tmpfs     tmpfs    rw,relatime
+`-/data /dev/vda3 btrfs    rw,relatime,discard=async,space_cache=v2,subvolid=5,s
+/ # echo '=== MOUNT ==='
+=== MOUNT ===
+/ # mount
+rootfs on / type rootfs (rw,size=485248k,nr_inodes=121312)
+proc on /proc type proc (rw,relatime)
+sysfs on /sys type sysfs (rw,relatime)
+devtmpfs on /dev type devtmpfs (rw,relatime,size=485248k,nr_inodes=121312,mode=755)
+tmpfs on /run type tmpfs (rw,relatime)
+tmpfs on /tmp type tmpfs (rw,relatime)
+/dev/vda3 on /data type btrfs (rw,relatime,discard=async,space_cache=v2,subvolid=5,subvol=/)
+/ # echo '=== DF_H ==='
+=== DF_H ===
+/ # df -h
+Filesystem                Size      Used Available Use% Mounted on
+devtmpfs                473.9M         0    473.9M   0% /dev
+tmpfs                   494.0M         0    494.0M   0% /run
+tmpfs                   494.0M         0    494.0M   0% /tmp
+/dev/vda3               512.0M    264.4M    172.9M  60% /data
+/ # echo '=== TOUCH_TESTFILE ==='
+=== TOUCH_TESTFILE ===
+/ # touch /testfile 2>&1
+/ # ls -la /testfile 2>&1
+-rw-r--r--    1 root     0                0 Nov 19 06:56 /testfile
+/ # echo '=== FREE_M ==='
+=== FREE_M ===
+/ # free -m
+              total        used        free      shared  buff/cache   available
+Mem:            988          46         828         112         114         754
+Swap:             0           0           0
+/ # echo '=== PROC_MEMINFO ==='
+=== PROC_MEMINFO ===
+/ # head -n 15 /proc/meminfo
+MemTotal:        1011672 kB
+MemFree:          847676 kB
+MemAvailable:     772420 kB
+Buffers:               4 kB
+Cached:           114912 kB
+SwapCached:            0 kB
+Active:            21884 kB
+Inactive:          93248 kB
+Active(anon):      21884 kB
+Inactive(anon):    93180 kB
+Active(file):          0 kB
+Inactive(file):       68 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+/ # echo '=== POWEROFF ==='
+=== POWEROFF ===
+/ # poweroff -f
+[    3.840028] reboot: Power down
+
+=== STDERR ===
