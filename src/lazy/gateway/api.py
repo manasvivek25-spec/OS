@@ -158,6 +158,7 @@ class GatewayAPIHandler:
         krel = os.uname().release
         is_custom_k = "lazy" in krel or "custom" in krel
         model_paths = [
+            Path("/usr/share/lazy/models/SmolLM2-360M-Instruct-Q4_K_M.gguf"),
             Path("/data/models/SmolLM2-360M-Instruct-Q4_K_M.gguf"),
             Path("/var/lib/lazy/models/SmolLM2-360M-Instruct-Q4_K_M.gguf"),
             Path(self.repo_root) / "build/models/SmolLM2-360M-Instruct-Q4_K_M.gguf",

@@ -1,0 +1,14 @@
+[Unit]
+Description=Lazy OS First-Boot Storage Initialization
+DefaultDependencies=no
+After=local-fs.target
+Before=sysinit.target multi-user.target
+ConditionPathExists=!/data/.initialized
+
+[Service]
+Type=oneshot
+ExecStart=/usr/bin/lazy-firstboot.sh
+RemainAfterExit=yes
+
+[Install]
+WantedBy=sysinit.target

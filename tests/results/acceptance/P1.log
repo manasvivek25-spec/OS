@@ -1,18 +1,13 @@
 P1 PASS: Guest identity responding: {
   "hostname": "lazy-os",
   "kernel_release": "6.6.21-lazy-os",
-  "boot_id": "880478c9-8ad0-4ba3-9ec7-a1eb978a5561",
-  "uptime": 1301.27,
+  "boot_id": "ebd1bfe8-e403-49ad-972c-50fa61b0346e",
+  "uptime": 19.74,
   "mounts": [
     {
-      "device": "rootfs",
+      "device": "/dev/root",
       "mountpoint": "/",
-      "fstype": "rootfs"
-    },
-    {
-      "device": "proc",
-      "mountpoint": "/proc",
-      "fstype": "proc"
+      "fstype": "squashfs"
     },
     {
       "device": "sysfs",
@@ -20,9 +15,9 @@ P1 PASS: Guest identity responding: {
       "fstype": "sysfs"
     },
     {
-      "device": "devtmpfs",
-      "mountpoint": "/dev",
-      "fstype": "devtmpfs"
+      "device": "cgroup2",
+      "mountpoint": "/sys/fs/cgroup",
+      "fstype": "cgroup2"
     },
     {
       "device": "tmpfs",
@@ -31,13 +26,123 @@ P1 PASS: Guest identity responding: {
     },
     {
       "device": "tmpfs",
+      "mountpoint": "/etc/machine-id",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
       "mountpoint": "/tmp",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/var/log",
       "fstype": "tmpfs"
     },
     {
       "device": "/dev/vda3",
       "mountpoint": "/data",
       "fstype": "btrfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/dev",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "devpts",
+      "mountpoint": "/dev/pts",
+      "fstype": "devpts"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/dev/shm",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "mqueue",
+      "mountpoint": "/dev/mqueue",
+      "fstype": "mqueue"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc",
+      "fstype": "proc"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/acpi",
+      "fstype": "proc"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/asound",
+      "fstype": "proc"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/bus",
+      "fstype": "proc"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/fs",
+      "fstype": "proc"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/irq",
+      "fstype": "proc"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/proc/kallsyms",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/proc/kmsg",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/mtrr",
+      "fstype": "proc"
+    },
+    {
+      "device": "proc",
+      "mountpoint": "/proc/sys",
+      "fstype": "proc"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/run/credentials",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/run/lazy",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/run/systemd/incoming",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/run/user",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/tmp",
+      "fstype": "tmpfs"
+    },
+    {
+      "device": "tmpfs",
+      "mountpoint": "/var/tmp",
+      "fstype": "tmpfs"
     }
   ],
   "image_build_id": "lazy-os-v3-product",

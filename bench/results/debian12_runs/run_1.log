@@ -1,0 +1,9 @@
+=== DEBIAN 12 MINIMAL RUN 1 ===
+Measured Boot Time: 2.0014 s
+
+=== RAW SERIAL OUTPUT ===
+o READY
+cat /proc/meminfo
+poweroff -f
+
+=== STDERR ===

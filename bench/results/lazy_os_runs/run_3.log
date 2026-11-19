@@ -1,0 +1,62 @@
+=== LAZY OS GENUINE RUN 3 ===
+Measured Boot Time: 2.6807 s
+
+=== RAW SERIAL OUTPUT ===
+
+
+Welcome to Lazy OS v3.2 Command Center
+lazy-os login: root (automatic login)
+
+
+# echo READY_LAZY
+READY_LAZY
+# cat /proc/meminfo
+MemTotal:        1011668 kB
+MemFree:          748068 kB
+MemAvailable:     699732 kB
+Buffers:            1644 kB
+Cached:            57040 kB
+SwapCached:            0 kB
+Active:            25616 kB
+Inactive:         198292 kB
+Active(anon):        152 kB
+Inactive(anon):   168952 kB
+Active(file):      25464 kB
+Inactive(file):    29340 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Dirty:                32 kB
+Writeback:             0 kB
+AnonPages:        165300 kB
+Mapped:            27060 kB
+Shmem:              3880 kB
+KReclaimable:       6620 kB
+Slab:              23936 kB
+SReclaimable:       6620 kB
+SUnreclaim:        17316 kB
+KernelStack:        1392 kB
+PageTables:         2024 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:      505832 kB
+Committed_AS:     204680 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:        3656 kB
+VmallocChunk:          0 kB
+Percpu:              520 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+DirectMap4k:       22388 kB
+DirectMap2M:     1026048 kB
+DirectMap1G:           0 kB
+# poweroff -f
+Powering off.
+
+[    3.564155] reboot: Power down

@@ -1,0 +1,133 @@
+=== RAW SYSTEMD-ANALYZE SECURITY AUDIT (15 MICROSERVICES) ===
+
+
+Welcome to Lazy OS v3.2 Command Center
+lazy-os login: root (automatic login)
+
+
+# echo '=== SYSTEMD_SECURITY_SCORES ==='
+=== SYSTEMD_SECURITY_SCORES ===
+# echo '--- lazy-audit.service ---'
+--- lazy-audit.service ---
+# systemd-analyze security lazy-audit.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-audit.service: 3.3 OK 🙂
+# echo '--- lazy-policy.service ---'
+--- lazy-policy.service ---
+# systemd-analyze security lazy-policy.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-policy.service: 3.3 OK 🙂
+# echo '--- lazy-planner.service ---'
+--- lazy-planner.service ---
+# systemd-analyze security lazy-planner.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-planner.service: 3.3 OK 🙂
+# echo '--- lazy-tasks.service ---'
+--- lazy-tasks.service ---
+# systemd-analyze security lazy-tasks.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-tasks.service: 3.4 OK 🙂
+# echo '--- lazy-secrets.service ---'
+--- lazy-secrets.service ---
+# systemd-analyze security lazy-secrets.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-secrets.service: 3.3 OK 🙂
+# echo '--- lazy-broker-fs.service ---'
+--- lazy-broker-fs.service ---
+# systemd-analyze security lazy-broker-fs.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-broker-fs.service: 3.5 OK 🙂
+# echo '--- lazy-broker-web.service ---'
+--- lazy-broker-web.service ---
+# systemd-analyze security lazy-broker-web.service --no-pager | tail -n 5
+✓ ProtectKernelTunables=                                      Service cannot alter kernel tunables (/proc/sys, …)                           
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-broker-web.service: 3.5 OK 🙂
+# echo '--- lazy-broker-hw.service ---'
+--- lazy-broker-hw.service ---
+# systemd-analyze security lazy-broker-hw.service --no-pager | tail -n 5
+✓ ProtectKernelTunables=                                      Service cannot alter kernel tunables (/proc/sys, …)                           
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-broker-hw.service: 6.1 MEDIUM 😐
+# echo '--- lazy-broker-sys.service ---'
+--- lazy-broker-sys.service ---
+# systemd-analyze security lazy-broker-sys.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-broker-sys.service: 3.5 OK 🙂
+# echo '--- lazy-broker-comms.service ---'
+--- lazy-broker-comms.service ---
+# systemd-analyze security lazy-broker-comms.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-broker-comms.service: 3.4 OK 🙂
+# echo '--- lazy-routines.service ---'
+--- lazy-routines.service ---
+# systemd-analyze security lazy-routines.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-routines.service: 3.4 OK 🙂
+# echo '--- lazy-fetcher.service ---'
+--- lazy-fetcher.service ---
+# systemd-analyze security lazy-fetcher.service --no-pager | tail -n 5
+✓ ProtectKernelTunables=                                      Service cannot alter kernel tunables (/proc/sys, …)                           
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-fetcher.service: 3.5 OK 🙂
+# echo '--- lazy-outbox.service ---'
+--- lazy-outbox.service ---
+# systemd-analyze security lazy-outbox.service --no-pager | tail -n 5
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ IPAddressDeny=                                              Service blocks all IP address ranges                                          
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-outbox.service: 3.3 OK 🙂
+# echo '--- lazy-llm.service ---'
+--- lazy-llm.service ---
+# systemd-analyze security lazy-llm.service --no-pager | tail -n 5
+✓ ProtectKernelTunables=                                      Service cannot alter kernel tunables (/proc/sys, …)                           
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-llm.service: 3.5 OK 🙂
+# echo '--- lazy-gateway.service ---'
+--- lazy-gateway.service ---
+# systemd-analyze security lazy-gateway.service --no-pager | tail -n 5
+✓ ProtectKernelTunables=                                      Service cannot alter kernel tunables (/proc/sys, …)                           
+✓ CapabilityBoundingSet=~CAP_MAC_*                            Service cannot adjust SMACK MAC                                               
+✓ UMask=                                                      Files created by service are accessible only by service's own user by default 
+
+→ Overall exposure level for lazy-gateway.service: 3.6 OK 🙂
+# poweroff -f
+Powering off.
+
+[   12.382188] reboot: Power down

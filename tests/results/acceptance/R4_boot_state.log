@@ -1,0 +1,137 @@
+=== RAW GUEST OUTPUT (MILESTONE R4 READ-ONLY ROOT & PERSISTENT DATA) ===
+
+
+Welcome to Lazy OS v3.2 Command Center
+lazy-os login: root (automatic login)
+
+
+# echo '=== UNAME ==='
+=== UNAME ===
+# uname -a
+Linux lazy-os 6.6.21-lazy-os #1 SMP PREEMPT_DYNAMIC Thu Nov 19 20:23:48 UTC 2026 x86_64 GNU/Linux
+# echo '=== PROC_VERSION ==='
+=== PROC_VERSION ===
+# cat /proc/version
+Linux version 6.6.21-lazy-os (manas@MANAS) (x86_64-linux-gcc.br_real (Buildroot 2021.11-12449-g1bef613319) 13.3.0, GNU ld (GNU Binutils) 2.41) #1 SMP PREEMPT_DYNAMIC Thu Nov 19 20:23:48 UTC 2026
+# echo '=== PS_PID1 ==='
+=== PS_PID1 ===
+# ps -o pid,comm,user | grep ' 1 ' || ps -eo pid,comm,user | head -n 5
+    1 systemd          root
+# echo '=== SYSTEMCTL_LAZY ==='
+=== SYSTEMCTL_LAZY ===
+# systemctl list-units 'lazy-*' --no-pager
+[0;4m [0m[0;4m [0m[0;4mUNIT                     [0m[0;4m [0m[0;4mLOAD  [0m[0;4m [0m[0;4mACTIVE[0m[0;4m [0m[0;4mSUB    [0m[0;4m [0m[0;4mDESCRIPTION                   [0m
+  lazy-audit.service        loaded active running Lazy OS Cryptographic Audit L…
+  lazy-broker-comms.service loaded active running Lazy OS Communications Broker…
+  lazy-broker-fs.service    loaded active running Lazy OS Filesystem Broker (la…
+  lazy-broker-hw.service    loaded active running Lazy OS Hardware Control Brok…
+  lazy-broker-sys.service   loaded active running Lazy OS System Administration…
+  lazy-broker-web.service   loaded active running Lazy OS Web Browser Broker (l…
+  lazy-fetcher.service      loaded active running Lazy OS Sandboxed Web & Feed …
+  lazy-firstboot.service    loaded active exited  Lazy OS First-Boot Storage & …
+  lazy-gateway.service      loaded active running Lazy OS Gateway Service (I/O,…
+  lazy-llm.service          loaded active running Lazy OS LLM Inference Engine …
+  lazy-outbox.service       loaded active running Lazy OS Outbox Queue (Approva…
+  lazy-planner.service      loaded active running Lazy OS Planner & Dialogue Ma…
+  lazy-policy.service       loaded active running Lazy OS Policy Engine & Capab…
+  lazy-routines.service     loaded active running Lazy OS Routines Engine (Brie…
+  lazy-secrets.service      loaded active running Lazy OS Secrets Vault (SO_PEE…
+  lazy-tasks.service        loaded active running Lazy OS Task Manager & Snapsh…
+  lazy-warmup.service       loaded active exited  Lazy OS Model Warm-up and Mem…
+
+LOAD   = Reflects whether the unit definition was properly loaded.
+ACTIVE = The high-level unit activation state, i.e. generalization of SUB.
+SUB    = The low-level unit activation state, values depend on unit type.
+[0;1;39m17 loaded units listed.[0m [0;38;5;245mPass --all to see loaded but inactive units, too.[0m
+[0;38;5;245mTo show all installed unit files use 'systemctl list-unit-files'.[0m
+# echo '=== SYSTEMCTL_FAILED ==='
+=== SYSTEMCTL_FAILED ===
+# systemctl --failed --no-pager
+[0;4m [0m[0;4m [0m[0;4mUNIT[0m[0;4m [0m[0;4mLOAD[0m[0;4m [0m[0;4mACTIVE[0m[0;4m [0m[0;4mSUB[0m[0;4m [0m[0;4mDESCRIPTION[0m
+0 loaded units listed.
+# echo '=== PS_LAZY_SERVICES ==='
+=== PS_LAZY_SERVICES ===
+# ps -eo user,pid,rss,comm | grep lazy || true
+lazy-llm   151  26m python3
+lazy-pla   152  26m python3
+lazy-aud   153  17m python3
+lazy-pol   154  26m python3
+lazy-gw    155  28m python3
+lazy-bro   159  27m python3
+lazy-bro   160  27m python3
+lazy-bro   161  27m python3
+lazy-bro   162  27m python3
+lazy-out   163  26m python3
+lazy-sec   164  13m python3
+lazy-tas   165  17m python3
+lazy-bro   166  27m python3
+lazy-fet   168  22m python3
+lazy-rou   169  17m python3
+# echo '=== MOUNT_TABLE ==='
+=== MOUNT_TABLE ===
+# mount
+/dev/vda2 on / type squashfs (ro,relatime,errors=continue)
+devtmpfs on /dev type devtmpfs (rw,relatime,size=1019608k,nr_inodes=254902,mode=755)
+proc on /proc type proc (rw,nosuid,nodev,noexec,relatime)
+sysfs on /sys type sysfs (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /dev/shm type tmpfs (rw,nosuid,nodev)
+devpts on /dev/pts type devpts (rw,nosuid,noexec,relatime,gid=5,mode=620,ptmxmode=000)
+tmpfs on /run type tmpfs (rw,nosuid,nodev,size=408468k,nr_inodes=819200,mode=755)
+cgroup2 on /sys/fs/cgroup type cgroup2 (rw,nosuid,nodev,noexec,relatime,nsdelegate,memory_recursiveprot)
+tmpfs on /etc/machine-id type tmpfs (ro,size=408468k,nr_inodes=819200,mode=755)
+mqueue on /dev/mqueue type mqueue (rw,nosuid,nodev,noexec,relatime)
+tmpfs on /var/log type tmpfs (rw,nosuid,nodev,relatime,mode=755)
+tmpfs on /tmp type tmpfs (rw,nosuid,nodev,relatime)
+/dev/vda3 on /data type btrfs (rw,noatime,compress=zstd:3,discard=async,space_cache=v2,subvolid=5,subvol=/)
+# echo '=== DF_H ==='
+=== DF_H ===
+# df -h
+Filesystem                Size      Used Available Use% Mounted on
+/dev/root               315.4M    315.4M         0 100% /
+devtmpfs                995.7M         0    995.7M   0% /dev
+tmpfs                   997.2M         0    997.2M   0% /dev/shm
+tmpfs                   398.9M      6.3M    392.6M   2% /run
+tmpfs                   398.9M      6.3M    392.6M   2% /etc/machine-id
+tmpfs                   997.2M         0    997.2M   0% /var/log
+tmpfs                   997.2M         0    997.2M   0% /tmp
+/dev/vda3               256.0M      5.8M    175.0M   3% /data
+# echo '=== TOUCH_ROOT_TESTFILE ==='
+=== TOUCH_ROOT_TESTFILE ===
+# touch /testfile 2>&1 || true
+touch: /testfile: Read-only file system
+# ls -la /testfile 2>&1 || true
+ls: /testfile: No such file or directory
+# echo '=== TOUCH_PERSISTENT_DATA ==='
+=== TOUCH_PERSISTENT_DATA ===
+# touch /data/r4_persist_test && ls -la /data/r4_persist_test
+-rw-r--r--    1 root     root             0 Nov 19 21:39 [0;0m/data/r4_persist_test[m
+# echo '=== FREE_M ==='
+=== FREE_M ===
+# free -m
+              total        used        free      shared  buff/cache   available
+Mem:           1994         261        1667           6          67        1557
+Swap:             0           0           0
+# echo '=== PROC_MEMINFO ==='
+=== PROC_MEMINFO ===
+# cat /proc/meminfo | head -n 15
+MemTotal:        2042324 kB
+MemFree:         1706636 kB
+MemAvailable:    1594652 kB
+Buffers:            1644 kB
+Cached:            60188 kB
+SwapCached:            0 kB
+Active:            20236 kB
+Inactive:         267820 kB
+Active(anon):        172 kB
+Inactive(anon):   232528 kB
+Active(file):      20064 kB
+Inactive(file):    35292 kB
+Unevictable:           0 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+# echo '=== POWEROFF ==='
+=== POWEROFF ===
+# poweroff -f
+Powering off.
+
+[   13.391374] reboot: Power down

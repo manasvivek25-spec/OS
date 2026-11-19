@@ -1,0 +1,69 @@
+=== DEBIAN 12 MINIMAL RUN 8 ===
+Measured Boot Time: 2.0008 s
+
+=== RAW SERIAL OUTPUT ===
+o READY
+cat /proc/meminfo
+poweroff -f
+/bin/sh: 0: can't access tty; job control turned off
+# /bin/sh: 1: o: not found
+# MemTotal:         983484 kB
+MemFree:          914356 kB
+MemAvailable:     850524 kB
+Buffers:             784 kB
+Cached:             2084 kB
+SwapCached:            0 kB
+Active:              776 kB
+Inactive:           2136 kB
+Active(anon):          8 kB
+Inactive(anon):      228 kB
+Active(file):        768 kB
+Inactive(file):     1908 kB
+Unevictable:           8 kB
+Mlocked:               0 kB
+SwapTotal:             0 kB
+SwapFree:              0 kB
+Zswap:                 0 kB
+Zswapped:              0 kB
+Dirty:                 0 kB
+Writeback:             0 kB
+AnonPages:           120 kB
+Mapped:             1484 kB
+Shmem:               116 kB
+KReclaimable:      12060 kB
+Slab:              21356 kB
+SReclaimable:      12060 kB
+SUnreclaim:         9296 kB
+KernelStack:        1088 kB
+PageTables:           16 kB
+SecPageTables:         0 kB
+NFS_Unstable:          0 kB
+Bounce:                0 kB
+WritebackTmp:          0 kB
+CommitLimit:      491740 kB
+Committed_AS:       1032 kB
+VmallocTotal:   34359738367 kB
+VmallocUsed:        8480 kB
+VmallocChunk:          0 kB
+Percpu:              544 kB
+HardwareCorrupted:     0 kB
+AnonHugePages:         0 kB
+ShmemHugePages:        0 kB
+ShmemPmdMapped:        0 kB
+FileHugePages:         0 kB
+FilePmdMapped:         0 kB
+HugePages_Total:       0
+HugePages_Free:        0
+HugePages_Rsvd:        0
+HugePages_Surp:        0
+Hugepagesize:       2048 kB
+Hugetlb:               0 kB
+DirectMap4k:       36724 kB
+DirectMap2M:     1011712 kB
+# [0;1;38;5;185mFailed to write wtmp record, ignoring: Read-only file system[0m
+
+Powering off.
+
+[    5.647579] reboot: Power down
+
+=== STDERR ===

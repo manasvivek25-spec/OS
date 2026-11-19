@@ -4,10 +4,8 @@ After=local-fs.target
 
 [Service]
 Type=simple
-User=lazy-brk-sys
-Group=lazy-brk-sys
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-broker-sys
+Group=lazy-broker-sys
 WorkingDirectory=/var/lib/lazy
 ExecStart=/usr/bin/python3 -m lazy.brokers.sys_service --socket /run/lazy/broker-sys.sock
 Restart=on-failure
@@ -16,7 +14,17 @@ RestartSec=2s
 # Sandboxing Directives
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
+IPAddressDeny=any
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes

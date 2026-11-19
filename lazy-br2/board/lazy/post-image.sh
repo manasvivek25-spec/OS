@@ -6,8 +6,12 @@ set -euo pipefail
 
 BINARIES_DIR="$1"
 BOARD_DIR="$(dirname "$0")"
+HOST_DIR="${HOST_DIR:-$(dirname "${BINARIES_DIR}")/host}"
+export PATH="${HOST_DIR}/sbin:${HOST_DIR}/bin:${PATH}"
 GENIMAGE_CFG="${BOARD_DIR}/genimage.cfg"
-GENIMAGE_TMP="${BINARIES_DIR}/genimage.tmp"
+ROOTPATH_TMP="$(mktemp -d)"
+GENIMAGE_TMP="$(mktemp -d)"
+trap 'rm -rf "${ROOTPATH_TMP}" "${GENIMAGE_TMP}"' EXIT
 
 echo "=== Lazy OS Post-Image: Assembling UEFI Disk Image ==="
 
@@ -22,10 +26,12 @@ cat << 'EOF' > "${BINARIES_DIR}/efi-part/startup.nsh"
 \EFI\BOOT\bootx64.efi console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet
 EOF
 
-rm -rf "${GENIMAGE_TMP}"
+# Create persistent Btrfs data partition image
+truncate -s 256M "${BINARIES_DIR}/lazy-data.btrfs"
+"${HOST_DIR}/bin/mkfs.btrfs" -f -L "LAZY_DATA" "${BINARIES_DIR}/lazy-data.btrfs"
 
 genimage \
-    --rootpath "${BINARIES_DIR}" \
+    --rootpath "${ROOTPATH_TMP}" \
     --tmppath "${GENIMAGE_TMP}" \
     --inputpath "${BINARIES_DIR}" \
     --outputpath "${BINARIES_DIR}" \

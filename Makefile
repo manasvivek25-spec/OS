@@ -143,9 +143,19 @@ eval: eval-tasks eval-llm
 demo:
 	@$(PYTHON) src/lazy/demo_runner.py
 
+# Production distribution build (Item 3: Uses ONLY build system from source and custom kernel)
 dist:
 	@chmod +x build.sh
 	@./build.sh base
+
+# Development only image (Item 3: Host-copy path, strictly labeled DEV ONLY, never used for dist, benchmarks, or acceptance)
+dev-image:
+	@echo "======================================================================"
+	@echo "  WARNING: BUILDING DEVELOPMENT IMAGE USING HOST BINARIES (DEV ONLY)"
+	@echo "  THIS IMAGE IS NOT A PRODUCTION BUILD AND CANNOT BE USED FOR DIST,"
+	@echo "  BENCHMARKS, ACCEPTANCE CHECKS, OR ANY REPORTED FIGURES."
+	@echo "======================================================================"
+	@$(PYTHON) scripts/build_systemd_rootfs.py
 
 image-base:
 	@./scripts/build-yocto.sh base

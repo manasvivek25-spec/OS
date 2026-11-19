@@ -76,7 +76,10 @@ class CopyBackend(SnapshotBackend):
     def __init__(self, target_dir: Path | str, snapshots_root: Optional[Path | str] = None):
         super().__init__(target_dir)
         if snapshots_root is None:
-            self.snapshots_root = self.target_dir.parent / ".snapshots"
+            if self.target_dir.parent == Path("/"):
+                self.snapshots_root = self.target_dir / ".snapshots"
+            else:
+                self.snapshots_root = self.target_dir.parent / ".snapshots"
         else:
             self.snapshots_root = Path(snapshots_root)
         self.snapshots_root.mkdir(parents=True, exist_ok=True)

@@ -4,10 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=lazy-fetch
-Group=lazy-fetch
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-fetcher
+Group=lazy-fetcher
 WorkingDirectory=/var/lib/lazy
 ExecStart=/usr/bin/python3 -m lazy.niche.fetch_service --socket /run/lazy/fetcher.sock
 Restart=on-failure
@@ -16,8 +14,17 @@ RestartSec=2s
 # Sandboxing Directives (Rule F3: untrusted content isolation)
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy /data
 ProtectHome=yes
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes
@@ -34,7 +41,6 @@ MemoryMax=256M
 CPUWeight=50
 IOWeight=50
 Nice=10
-CPUAffinity=2-3
 TasksMax=32
 
 [Install]

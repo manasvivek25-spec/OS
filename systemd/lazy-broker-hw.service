@@ -3,13 +3,11 @@ Description=Lazy OS Hardware Control Broker (lazy-broker-hw)
 After=local-fs.target
 
 [Service]
+ReadWritePaths=/run/lazy /sys/class/backlight /sys/class/rfkill /sys/devices/system/cpu
 Type=simple
-User=lazy-brk-hw
-Group=lazy-brk-hw
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-broker-hw
+Group=lazy-broker-hw
 WorkingDirectory=/var/lib/lazy
-ReadWritePaths=/sys/class/backlight /sys/class/rfkill /sys/devices/system/cpu
 ExecStart=/usr/bin/python3 -m lazy.brokers.hw_service --socket /run/lazy/broker-hw.sock
 Restart=on-failure
 RestartSec=2s
@@ -17,8 +15,17 @@ RestartSec=2s
 # Sandboxing Directives
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy /sys/class/backlight /sys/class/rfkill /sys/devices/system/cpu
 ProtectHome=yes
 PrivateTmp=yes
+# PrivateDevices omitted for hw broker
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+UMask=0077
+RemoveIPC=yes
+IPAddressDeny=any
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes

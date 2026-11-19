@@ -42,7 +42,15 @@ class ContractValidationError(Exception):
 
 
 def get_contracts_dir() -> Path:
-    """Find the docs/contracts directory relative to repo root."""
+    """Find the docs/contracts directory relative to repo root or system share."""
+    system_paths = [
+        Path("/usr/share/lazy/contracts"),
+        Path("/etc/lazy/contracts"),
+    ]
+    for sp in system_paths:
+        if sp.is_dir():
+            return sp
+
     candidate = Path(__file__).resolve().parent
     for _ in range(5):
         schema_path = candidate / "docs" / "contracts"

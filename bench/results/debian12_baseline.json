@@ -1,0 +1,97 @@
+{
+  "distribution": "Debian 12 Minimal",
+  "kernel_version": "6.1.0-56-amd64",
+  "runs_count": 10,
+  "boot_time_mean_s": 2.0,
+  "boot_time_std_s": 0.0,
+  "idle_ram_used_mean_mb": 115.27,
+  "idle_ram_used_std_mb": 40.18,
+  "package_count": 281,
+  "kernel_image_mb": 7.87,
+  "initrd_image_mb": 28.81,
+  "rootfs_installed_mb": 924.0,
+  "modules_dir_mb": 396.0,
+  "timestamp": "2026-11-19T18:20:16Z",
+  "runs": [
+    {
+      "run": 1,
+      "boot_time_s": 2.0014,
+      "mem_total_mb": 0.0,
+      "mem_available_mb": 0.0,
+      "mem_used_mb": 0.0,
+      "log_path": "bench/results/debian12_runs/run_1.log"
+    },
+    {
+      "run": 2,
+      "boot_time_s": 2.0006,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 841.2,
+      "mem_used_mb": 119.23,
+      "log_path": "bench/results/debian12_runs/run_2.log"
+    },
+    {
+      "run": 3,
+      "boot_time_s": 2.0007,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 827.41,
+      "mem_used_mb": 133.02,
+      "log_path": "bench/results/debian12_runs/run_3.log"
+    },
+    {
+      "run": 4,
+      "boot_time_s": 2.0022,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 842.25,
+      "mem_used_mb": 118.18,
+      "log_path": "bench/results/debian12_runs/run_4.log"
+    },
+    {
+      "run": 5,
+      "boot_time_s": 2.0018,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 837.4,
+      "mem_used_mb": 123.03,
+      "log_path": "bench/results/debian12_runs/run_5.log"
+    },
+    {
+      "run": 6,
+      "boot_time_s": 2.0018,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 851.75,
+      "mem_used_mb": 108.68,
+      "log_path": "bench/results/debian12_runs/run_6.log"
+    },
+    {
+      "run": 7,
+      "boot_time_s": 2.001,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 811.7,
+      "mem_used_mb": 148.73,
+      "log_path": "bench/results/debian12_runs/run_7.log"
+    },
+    {
+      "run": 8,
+      "boot_time_s": 2.0008,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 830.59,
+      "mem_used_mb": 129.84,
+      "log_path": "bench/results/debian12_runs/run_8.log"
+    },
+    {
+      "run": 9,
+      "boot_time_s": 2.0012,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 835.01,
+      "mem_used_mb": 125.43,
+      "log_path": "bench/results/debian12_runs/run_9.log"
+    },
+    {
+      "run": 10,
+      "boot_time_s": 2.0009,
+      "mem_total_mb": 960.43,
+      "mem_available_mb": 813.86,
+      "mem_used_mb": 146.57,
+      "log_path": "bench/results/debian12_runs/run_10.log"
+    }
+  ]
+}

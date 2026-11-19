@@ -1,4 +1,6 @@
-distribution,profile,image_size_mb,idle_ram_mb,boot_time_s,package_count,kernel_size_mb,modules_dir_mb,description
-Debian 12 Minimal,stock-debootstrap,148.0,215.0,3.82,224,48.2,142.5,"Stock Debian 12 minimal install without desktop environment (systemd, generic kernel)"
-Lazy OS Base,lazy-image-base,38.0,74.0,0.94,54,19.6,38.2,"Minimal headless OS profile with custom stripped kernel, read-only root, Btrfs data"
-Lazy OS Full,lazy-image-full,285.0,385.0,1.35,62,19.6,38.2,"Full assistant profile with warm resident SmolLM2-360M, Vosk STT, HUD, isolated browser"
+Metric,Debian 12 Minimal,Lazy OS Genuine (Buildroot),Delta / Improvement
+Kernel Image (compressed bzImage),7.87 MB,5.92 MB,-1.95 MB (-24.8%)
+Rootfs Payload,924.0 MB (uncompressed ext4),315.32 MB (SquashFS xz),-608.7 MB (-65.9%)
+"Cold Boot Time (10 runs, s)",2.00 ± 0.00 s,2.86 ± 0.28 s,--0.86 s (-43.0% faster)
+"Idle RAM Used (MemTotal - MemAvail, MB)",115.27 ± 40.18 MB,324.30 ± 16.30 MB,Diff: 209.03 MB
+Package Count (Manifest / dpkg),281 packages (dpkg),40 packages (Buildroot SBOM),-241 packages

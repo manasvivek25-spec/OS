@@ -9,20 +9,12 @@ REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 
 DISK="${SCRIPT_DIR}/lazy-os.img"
 if [ ! -f "${DISK}" ]; then
-    DISK="${REPO_ROOT}/build/v2/lazy-disk.img"
+    DISK="${REPO_ROOT}/dist/lazy-os.img"
 fi
 
-KERNEL="${REPO_ROOT}/dist/bzImage"
+KERNEL="${SCRIPT_DIR}/bzImage"
 if [ ! -f "${KERNEL}" ]; then
-    KERNEL="${REPO_ROOT}/build/br2-output/images/bzImage"
-fi
-if [ ! -f "${KERNEL}" ]; then
-    KERNEL="/boot/vmlinuz-6.8.0-149-generic"
-fi
-
-INITRD="${REPO_ROOT}/build/br2-output/images/rootfs.cpio.gz"
-if [ ! -f "${INITRD}" ]; then
-    INITRD="${REPO_ROOT}/build/v2/lazy-os-boot.cpio.gz"
+    KERNEL="${REPO_ROOT}/dist/bzImage"
 fi
 
 USER_DISPLAY=""
@@ -68,11 +60,10 @@ exec qemu-system-x86_64 \
     -m 2048 \
     -smp 2 \
     -kernel "${KERNEL}" \
-    -initrd "${INITRD}" \
     -drive file="${DISK}",format=raw,if=virtio \
-    -append "console=ttyS0 console=tty0 quiet lazy_interactive=1" \
+    -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet lazy_interactive=1" \
     ${DISPLAY_OPT} \
     -device virtio-gpu-pci \
     -device virtio-keyboard-pci \
     -device virtio-tablet-pci \
-    -net user,hostfwd=tcp::8766-:8765 -net nic,model=virtio
+    -netdev user,id=net0,hostfwd=tcp::8766-:8765 -device virtio-net-pci,netdev=net0

@@ -4,10 +4,8 @@ After=network.target
 
 [Service]
 Type=simple
-User=lazy-brk-web
-Group=lazy-brk-web
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-broker-web
+Group=lazy-broker-web
 StateDirectory=lazy/browser
 WorkingDirectory=/var/lib/lazy/browser
 ExecStart=/usr/bin/python3 -m lazy.brokers.web_service --socket /run/lazy/broker-web.sock
@@ -17,8 +15,17 @@ RestartSec=2s
 # Sandboxing Directives (Rule F9: isolated profile and namespace)
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy /data
 ProtectHome=yes
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes

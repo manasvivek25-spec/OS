@@ -4,13 +4,10 @@ After=lazy-policy.service
 
 [Service]
 Type=simple
-User=lazy-task
-Group=lazy-task
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-tasks
+Group=lazy-tasks
 StateDirectory=lazy/snapshots
 WorkingDirectory=/var/lib/lazy
-ReadWritePaths=/var/lib/lazy/snapshots
 ExecStart=/usr/bin/python3 -m lazy.tasks.service --socket /run/lazy/tasks.sock
 Restart=on-failure
 RestartSec=2s
@@ -18,8 +15,18 @@ RestartSec=2s
 # Sandboxing Directives (Rule F5, F7)
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy /data /var/lib/lazy
 ProtectHome=read-only
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
+IPAddressDeny=any
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes

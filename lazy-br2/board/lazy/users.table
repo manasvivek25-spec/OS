@@ -1,0 +1,21 @@
+# Lazy OS Systemd Service Users Table for Buildroot
+# Syntax: <username> <uid> <group> <gid> <password> <home> <shell> <groups> <comment>
+lazy-gw -1 lazy-gw -1 * /var/lib/lazy /bin/false - Lazy OS Gateway
+lazy-audit -1 lazy-audit -1 * /var/lib/lazy/audit /bin/false - Lazy OS Audit
+lazy-policy -1 lazy-policy -1 * /var/lib/lazy /bin/false - Lazy OS Policy
+lazy-planner -1 lazy-planner -1 * /var/lib/lazy /bin/false - Lazy OS Planner
+lazy-tasks -1 lazy-tasks -1 * /var/lib/lazy /bin/false - Lazy OS Tasks
+lazy-secrets -1 lazy-secrets -1 * /var/lib/lazy /bin/false - Lazy OS Secrets
+lazy-broker-fs -1 lazy-broker-fs -1 * /var/lib/lazy /bin/false - Lazy OS FS Broker
+lazy-broker-web -1 lazy-broker-web -1 * /var/lib/lazy /bin/false - Lazy OS Web Broker
+lazy-broker-hw -1 lazy-broker-hw -1 * /var/lib/lazy /bin/false - Lazy OS HW Broker
+lazy-broker-sys -1 lazy-broker-sys -1 * /var/lib/lazy /bin/false - Lazy OS Sys Broker
+lazy-broker-comms -1 lazy-broker-comms -1 * /var/lib/lazy /bin/false - Lazy OS Comms Broker
+lazy-routines -1 lazy-routines -1 * /var/lib/lazy /bin/false - Lazy OS Routines
+lazy-fetcher -1 lazy-fetcher -1 * /var/lib/lazy /bin/false - Lazy OS Fetcher
+lazy-outbox -1 lazy-outbox -1 * /var/lib/lazy /bin/false - Lazy OS Outbox
+lazy-llm -1 lazy-llm -1 * /var/lib/lazy /bin/false - Lazy OS LLM
+lazy-sandbox -1 lazy-sandbox -1 * /tmp /bin/false - Lazy OS Code Sandbox
+dovecot -1 dovecot -1 * /var/empty /bin/false - Dovecot System User
+dovenull -1 dovenull -1 * /var/empty /bin/false - Dovecot Null User
+lazy -1 lazy -1 * /home/lazy /bin/sh - Lazy OS User

@@ -39,8 +39,11 @@ class GatewayServer:
         if hud_dir:
             self.hud_dir = Path(hud_dir)
         else:
-            repo_root = Path(__file__).resolve().parent.parent.parent.parent
-            self.hud_dir = repo_root / "hud"
+            candidates = [
+                Path("/usr/share/lazy/hud"),
+                Path(__file__).resolve().parent.parent.parent.parent / "hud",
+            ]
+            self.hud_dir = next((c for c in candidates if c.is_dir()), candidates[0])
 
         self.api_handler = GatewayAPIHandler(repo_root=Path(__file__).resolve().parent.parent.parent.parent)
 
@@ -282,3 +285,27 @@ class GatewayServer:
                 client_sock.close()
             except Exception:
                 pass
+
+
+def main():
+    import argparse
+    import time
+    parser = argparse.ArgumentParser(description="Lazy OS Gateway Service")
+    parser.add_argument("--host", default="127.0.0.1", help="Bind host")
+    parser.add_argument("--port", type=int, default=8765, help="Bind port")
+    parser.add_argument("--hud-dir", default=None, help="Path to HUD directory")
+    args = parser.parse_args()
+
+    server = GatewayServer(host=args.host, port=args.port, hud_dir=args.hud_dir)
+    server.start()
+    print(f"Lazy OS Gateway Service online on {args.host}:{args.port}")
+    try:
+        while True:
+            time.sleep(3600)
+    except (KeyboardInterrupt, SystemExit):
+        server.stop()
+
+
+if __name__ == "__main__":
+    main()
+

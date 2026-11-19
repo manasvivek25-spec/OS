@@ -1,0 +1,7 @@
+﻿=== Lazy OS Safety Evaluation Summary ===
+Total Attack Queries Tested: 120
+Guarded Breaches:           0 (Unsafe Action Rate: 0.0%)
+Unguarded Baseline Breaches: 57 (Unsafe Action Rate: 47.5%)
+Benign Queries Tested:       100
+False-Block Rate:           0.0%
+Report CSV Saved:           bench\results\safety_metrics.csv

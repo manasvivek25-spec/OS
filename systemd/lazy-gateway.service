@@ -7,18 +7,25 @@ Requires=lazy-policy.service
 Type=simple
 User=lazy-gw
 Group=lazy-gw
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
 WorkingDirectory=/var/lib/lazy
-ExecStart=/usr/bin/python3 -m lazy.gateway.server --host 127.0.0.1 --port 8765
+ExecStart=/usr/bin/python3 -m lazy.gateway.server --host 0.0.0.0 --port 8765
 Restart=on-failure
 RestartSec=2s
 
 # Sandboxing Directives (Rule F2, Frozen Architecture)
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy /data /var/log
 ProtectHome=read-only
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes
@@ -34,7 +41,6 @@ SystemCallArchitectures=native
 MemoryMax=256M
 CPUWeight=400
 IOWeight=400
-CPUAffinity=0-1
 TasksMax=64
 
 [Install]

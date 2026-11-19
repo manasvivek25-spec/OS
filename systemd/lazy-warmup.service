@@ -8,7 +8,6 @@ Type=oneshot
 User=lazy-llm
 Group=lazy-llm
 LimitMEMLOCK=infinity
-CPUAffinity=0-1
 Nice=-5
 ExecStart=/usr/bin/python3 -m lazy.tuning.warmup --socket /run/lazy/llm.sock
 RemainAfterExit=yes

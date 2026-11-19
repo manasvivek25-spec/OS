@@ -45,7 +45,10 @@ class PolicyEngine:
         manifest_loader: Optional[ManifestLoader] = None,
         rate_limiter: Optional[RateLimiter] = None,
         allowlist_domains: Optional[Set[str]] = None,
+        capabilities_dir: Optional[Path | str] = None,
     ):
+        if manifest_loader is None and capabilities_dir is not None:
+            manifest_loader = ManifestLoader([capabilities_dir])
         self.loader = manifest_loader or ManifestLoader()
         self.rate_limiter = rate_limiter or RateLimiter()
         self.allowlist_domains = allowlist_domains or {

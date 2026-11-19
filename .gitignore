@@ -23,3 +23,9 @@ dist/*.raw
 /meta-openembedded/
 /meta-*/
 !yocto/meta-lazy/
+dist/*.squashfs
+dist/*.btrfs
+dist/legal-info/sources/
+dist/legal-info/host-sources/
+docs/academic/legal-info/sources/
+docs/academic/legal-info/host-sources/

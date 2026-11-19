@@ -10,7 +10,7 @@ MONITOR_SOCK="/tmp/lazy-qemu-monitor.sock"
 if [ ! -f "${PID_FILE}" ]; then
     echo "Lazy OS is not running (no PID file found at ${PID_FILE})."
     # Check if any stray QEMU processes exist
-    STRAYS=$(pgrep -f "lazy-os-boot.cpio.gz" || true)
+    STRAYS=$(pgrep -f "lazy-os.img" || true)
     if [ -n "${STRAYS}" ]; then
         echo "Found orphaned QEMU process(es): ${STRAYS}. Terminating..."
         kill -15 ${STRAYS} 2>/dev/null || true

@@ -5,10 +5,8 @@ Requires=lazy-llm.service
 
 [Service]
 Type=simple
-User=lazy-plan
-Group=lazy-plan
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-planner
+Group=lazy-planner
 WorkingDirectory=/var/lib/lazy
 ExecStart=/usr/bin/python3 -m lazy.planner.service --socket /run/lazy/planner.sock
 Restart=on-failure
@@ -17,8 +15,18 @@ RestartSec=2s
 # Sandboxing Directives (Rule F2, Frozen Architecture)
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy
 ProtectHome=yes
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
+IPAddressDeny=any
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes
@@ -35,7 +43,6 @@ SystemCallArchitectures=native
 MemoryMax=512M
 CPUWeight=400
 IOWeight=400
-CPUAffinity=0-1
 TasksMax=32
 
 [Install]

@@ -4,10 +4,8 @@ After=local-fs.target
 
 [Service]
 Type=simple
-User=lazy-pol
-Group=lazy-pol
-RuntimeDirectory=lazy
-RuntimeDirectoryMode=0755
+User=lazy-policy
+Group=lazy-policy
 WorkingDirectory=/var/lib/lazy
 ReadOnlyPaths=/etc/lazy/capabilities /etc/lazy/policy.yaml
 ExecStart=/usr/bin/python3 -m lazy.policy.service --socket /run/lazy/policy.sock
@@ -17,8 +15,18 @@ RestartSec=2s
 # Sandboxing Directives (Rule F1, F6)
 NoNewPrivileges=yes
 ProtectSystem=strict
+ReadWritePaths=/run/lazy
 ProtectHome=yes
 PrivateTmp=yes
+PrivateDevices=yes
+ProtectKernelLogs=yes
+ProtectClock=yes
+ProtectHostname=yes
+RestrictNamespaces=yes
+CapabilityBoundingSet=
+UMask=0077
+RemoveIPC=yes
+IPAddressDeny=any
 ProtectKernelTunables=yes
 ProtectControlGroups=yes
 ProtectKernelModules=yes

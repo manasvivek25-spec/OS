@@ -40,15 +40,10 @@ if [ ! -f "${KERNEL}" ]; then
     fi
 fi
 
-INITRD="${REPO_DIR}/build/v2/lazy-os-boot.cpio.gz"
-DISK="${REPO_DIR}/build/v2/lazy-disk.img"
+DISK="${REPO_DIR}/dist/lazy-os.img"
 
 if [ ! -f "${KERNEL}" ]; then
     echo "ERROR: Kernel image not found: ${KERNEL}" >&2
-    exit 1
-fi
-if [ ! -f "${INITRD}" ]; then
-    echo "ERROR: Initrd image not found: ${INITRD}" >&2
     exit 1
 fi
 if [ ! -f "${DISK}" ]; then
@@ -100,7 +95,6 @@ echo "=================================================="
 echo "          Starting Lazy OS v2 Virtual Machine     "
 echo "=================================================="
 echo "Kernel:      ${KERNEL}"
-echo "Initrd:      ${INITRD}"
 echo "Disk:        ${DISK}"
 echo "Memory:      ${VM_MEM_MB} MB"
 echo "KVM:         ${KVM_OPT:-disabled}"
@@ -118,11 +112,10 @@ setsid nohup qemu-system-x86_64 \
     -m "${VM_MEM_MB}" \
     -smp 2 \
     -kernel "${KERNEL}" \
-    -initrd "${INITRD}" \
     -drive file="${DISK}",format=raw,if=virtio \
     -vga virtio \
     -device virtio-tablet-pci \
-    -append "console=ttyS0 console=tty0 quiet panic=1 lazy_interactive=1" \
+    -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet panic=1 lazy_interactive=1" \
     ${DISPLAY_OPT} \
     -serial file:"${REPO_DIR}/build-logs/serial.log" \
     -monitor unix:"${MONITOR_SOCK}",server,nowait \

@@ -27,11 +27,15 @@ echo "Build Tree:   ${BUILD_DIR}"
 echo "Timestamp:    $(date -u +"%Y-%m-%dT%H:%M:%SZ")"
 echo "======================================================================"
 
-# 1. Download source if missing
+# 1. Download source if missing and verify pinned SHA-256
+PINNED_SHA256="ee0b430148da94d2b13608b8d80b007b7d281dc90e3f19b63cf9a9943810e457"
 if [ ! -f "${TAR_FILE}" ]; then
     echo "Downloading Linux ${KERNEL_VERSION} source..."
     wget -q --show-progress -O "${TAR_FILE}" "https://cdn.kernel.org/pub/linux/kernel/v6.x/linux-${KERNEL_VERSION}.tar.xz"
 fi
+
+echo "Verifying pinned SHA-256 for linux-${KERNEL_VERSION}.tar.xz..."
+echo "${PINNED_SHA256}  ${TAR_FILE}" | sha256sum -c -
 
 # 2. Extract source to fast native ext4 filesystem
 if [ ! -d "${BUILD_DIR}" ]; then
