@@ -1,8 +1,8 @@
 P1 PASS: Guest identity responding: {
   "hostname": "lazy-os",
   "kernel_release": "6.6.21-lazy-os",
-  "boot_id": "ebd1bfe8-e403-49ad-972c-50fa61b0346e",
-  "uptime": 19.74,
+  "boot_id": "a10e640c-2107-4a05-a768-aa3ba86dd3f9",
+  "uptime": 30.19,
   "mounts": [
     {
       "device": "/dev/root",

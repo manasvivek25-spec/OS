@@ -1,0 +1,11 @@
+# V3.4 TASK: FINISH THE GENUINE BUILDROOT PRODUCT AND CLOSE THE CONTRACT
+
+Read docs/BUILD_PROMPT_V3.md (the contract), docs/BUILD_PROMPT_V31.md, docs/BUILD_PROMPT_V2.md, docs/BUILD_PROMPT.md, docs/STATE.md, docs/BLOCKED.md and docs/audit/V32_BUILD_PATHS.md first. Do not ask questions. Keep T1 to T9, U1 to U5, R1 to R7 and the V3 stop rule.
+
+0. Finish V3.2: confirm legal-info, the SBOM and docs/BUILD_TIMES.md are complete, run the clean-clone rebuild and scripts/accept.sh, and record the results.
+1. Resource re-check: free -m, nproc, swap and df -h. If WSL now has at least 16 GB available (RAM plus swap), unblock P1 and continue. Otherwise do everything else and mark the kiosk part HUMAN ACTION REQUIRED with the exact .wslconfig values.
+2. Complete the Buildroot external tree so that make dist from a clean clone builds, from source and with no host binaries: systemd with 15 separate lazy-* units under separate users and sandbox options; the Python runtime and all dependencies; Btrfs tools; a read-only SquashFS root with a volatile overlay and a persistent Btrfs /data; our services, gateway and HUD assets; llama.cpp with the chosen model; Vosk and a TTS; a local mail system (Postfix and Dovecot or equivalents); signed-update tooling; hardware tools (rfkill, alsa, usb); and the graphical kiosk (WPE WebKit, Cog and a minimal compositor; verify the package names).
+3. Build the heaviest parts last (wpewebkit) with limited parallelism, in the background with nohup and logs. If the link runs out of memory, raise swap or reduce jobs before declaring it blocked.
+4. In-guest graphical session (R5 of V3.1): run-lazy-os.sh opens only a QEMU window and the guest boots to the full-screen Command Center. No host browser. Evidence: QEMU screendumps.
+5. Run milestones R3 to R15 of docs/BUILD_PROMPT_V31.md against this Buildroot image only (never against dev-image): real boot-state evidence, a real Debian 12 baseline with at least 10 runs, at least 120 attacks and 60 benign cases, feature evidence FT1 to FT9 in the guest, hardening tests, reproducibility, packaging, the walkthrough with screendumps, and a regenerated docs/ACCEPTANCE_REPORT.md.
+6. Same stop rule as V3. Print FINAL SUMMARY at the end.

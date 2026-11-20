@@ -1,6 +1,6 @@
 # Lazy OS v3 Acceptance Report
 
-**Generated**: 2026-11-19T21:57:03.479842+00:00
+**Generated**: 2026-11-20T05:37:18.392752+00:00
 **Target URL**: http://127.0.0.1:8766
 **Summary**: PASS=30, PARTIAL=0, BLOCKED=0, FAIL=0
 
