@@ -11,8 +11,8 @@ RuntimeDirectory=kiosk
 RuntimeDirectoryMode=0700
 Environment=XDG_RUNTIME_DIR=/run/kiosk
 Environment=WLR_RENDERER=pixman
-Environment=WLR_LIBINPUT_NO_DEVICES=1
 Environment=WLR_BACKENDS=drm,libinput
+Environment=CAGE_OUTPUT_MODE=1920x1080
 Environment=WEBKIT_DISABLE_SANDBOX_THIS_IS_DANGEROUS=1
 ExecStart=/usr/bin/cage -s -- /usr/bin/cog --platform=wl http://127.0.0.1:8765
 Restart=always

@@ -46,7 +46,7 @@ fi
 if [ -n "${USER_DISPLAY}" ]; then
     DISPLAY_OPT="-display ${USER_DISPLAY}"
 elif [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
-    DISPLAY_OPT="-display gtk,zoom-to-fit=on"
+    DISPLAY_OPT="-display gtk,full-screen=on,zoom-to-fit=on,grab-on-hover=on,show-menubar=off"
 else
     DISPLAY_OPT="-display none"
 fi
@@ -70,10 +70,10 @@ exec qemu-system-x86_64 \
     -smp 2 \
     -kernel "${KERNEL}" \
     -drive file="${DISK}",format=raw,if=virtio \
-    -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet lazy_interactive=1" \
+    -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet lazy_interactive=1 video=1920x1080" \
     ${DISPLAY_OPT} \
     -vga none \
-    -device virtio-gpu-pci,id=gpu0 \
+    -device virtio-gpu-pci,id=gpu0,xres=1920,yres=1080 \
     -device virtio-keyboard-pci \
     -device virtio-tablet-pci \
     -monitor unix:/tmp/qemu-monitor.sock,server,nowait \

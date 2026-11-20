@@ -1,0 +1,45 @@
+--- a/output.c
++++ b/output.c
+@@ -10,6 +10,7 @@
+ #define _POSIX_C_SOURCE 200112L
+ 
+ #include "config.h"
++#include <stdio.h>
+ 
+ #include <assert.h>
+ #include <stdlib.h>
+@@ -274,8 +275,22 @@ handle_new_output(struct wl_listener *listener, void *data)
+ 	wl_signal_add(&wlr_output->events.frame, &output->frame);
+ 
+ 	if (!wl_list_empty(&wlr_output->modes)) {
+-		struct wlr_output_mode *preferred_mode = wlr_output_preferred_mode(wlr_output);
+-		if (preferred_mode) {
+-			wlr_output_set_mode(wlr_output, preferred_mode);
++		struct wlr_output_mode *chosen_mode = NULL;
++		const char *mode_env = getenv("CAGE_OUTPUT_MODE");
++		int req_w = 0, req_h = 0;
++		if (mode_env && sscanf(mode_env, "%dx%d", &req_w, &req_h) == 2) {
++			struct wlr_output_mode *m;
++			wl_list_for_each (m, &wlr_output->modes, link) {
++				if (m->width == req_w && m->height == req_h) {
++					chosen_mode = m;
++					wlr_log(WLR_INFO, "Selected custom CAGE_OUTPUT_MODE: %dx%d", req_w, req_h);
++					break;
++				}
++			}
++		}
++		if (!chosen_mode) {
++			chosen_mode = wlr_output_preferred_mode(wlr_output);
++		}
++		if (chosen_mode) {
++			wlr_output_set_mode(wlr_output, chosen_mode);
+ 		}
+ 		if (!wlr_output_test(wlr_output)) {
+ 			struct wlr_output_mode *mode;
+ 			wl_list_for_each (mode, &wlr_output->modes, link) {
+-				if (mode == preferred_mode) {
++				if (mode == chosen_mode) {
+ 					continue;
+ 				}
+ 
+ 				wlr_output_set_mode(wlr_output, mode);
