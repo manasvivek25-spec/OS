@@ -1,0 +1,13 @@
+{
+  "status": "READY",
+  "contract": "docs/API_CONTRACT.md",
+  "timestamp": "2026-11-20T21:45:00Z",
+  "endpoints": [
+    "GET /api/metrics",
+    "GET /api/services",
+    "GET /api/briefing",
+    "POST /api/tasks/undo",
+    "POST /api/command",
+    "WS / (CONFIG.wsUrl)"
+  ]
+}
