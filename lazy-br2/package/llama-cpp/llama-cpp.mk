@@ -21,6 +21,13 @@ define LLAMA_CPP_INSTALL_BINARIES
 	if [ -f "$(@D)/bin/llama-bench" ]; then \
 		install -D -m 0755 "$(@D)/bin/llama-bench" "$(TARGET_DIR)/usr/bin/llama-bench"; \
 	fi
+	if [ -f "$(@D)/bin/server" ]; then \
+		install -D -m 0755 "$(@D)/bin/server" "$(TARGET_DIR)/usr/bin/llama-server"; \
+		ln -sf llama-server "$(TARGET_DIR)/usr/bin/server"; \
+	fi
+	if [ -f "$(@D)/bin/llama-server" ]; then \
+		install -D -m 0755 "$(@D)/bin/llama-server" "$(TARGET_DIR)/usr/bin/llama-server"; \
+	fi
 endef
 LLAMA_CPP_POST_INSTALL_TARGET_HOOKS += LLAMA_CPP_INSTALL_BINARIES
 

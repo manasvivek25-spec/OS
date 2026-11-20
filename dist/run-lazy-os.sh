@@ -76,13 +76,13 @@ echo "=================================================="
 echo "Disk:        ${DISK}"
 echo "Display:     ${DISPLAY_OPT}"
 echo "HUD Gateway: http://127.0.0.1:8766/"
-echo "CPU/RAM:     Host CPU / 4 Cores / 4096 MB RAM"
+echo "CPU/RAM:     Host CPU / 4 Cores / 6144 MB RAM"
 echo "=================================================="
 
 exec qemu-system-x86_64 \
     ${KVM_OPT} \
     ${CPU_OPT} \
-    -m 4096 \
+    -m 6144 \
     -smp 4,cores=4 \
     -kernel "${KERNEL}" \
     -drive file="${DISK}",format=raw,if=virtio \

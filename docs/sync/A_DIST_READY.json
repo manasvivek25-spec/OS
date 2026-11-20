@@ -1,0 +1,28 @@
+{
+  "status": "READY",
+  "image": "dist/lazy-os.img",
+  "kernel": "dist/bzImage",
+  "model": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+  "model_size_bytes": 1117320736,
+  "ram_mb": 6144,
+  "vcpus": 4,
+  "services_verified": [
+    "lazy-llm",
+    "lazy-planner",
+    "lazy-gateway",
+    "lazy-tasks",
+    "lazy-audit",
+    "lazy-policy",
+    "lazy-kiosk",
+    "lazy-outbox",
+    "lazy-secrets",
+    "lazy-routines",
+    "lazy-fetcher",
+    "lazy-broker-fs",
+    "lazy-broker-hw",
+    "lazy-broker-sys",
+    "lazy-broker-web",
+    "dovecot"
+  ],
+  "timestamp": "2026-11-20T18:52:00Z"
+}
