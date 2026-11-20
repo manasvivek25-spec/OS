@@ -1,0 +1,82 @@
+{
+  "timestamp": "2026-11-20T17:38:18.079602+00:00",
+  "target_url": "http://127.0.0.1:8766",
+  "total_scenarios": 12,
+  "passed_scenarios": 12,
+  "failed_scenarios": 0,
+  "scenarios": [
+    {
+      "id": 1,
+      "name": "Live Telemetry",
+      "status": "PASS",
+      "screendump": "01_telemetry.png",
+      "http_status": 0
+    },
+    {
+      "id": 2,
+      "name": "File Manager CRUD",
+      "status": "PASS",
+      "screendump": "02_file_manager_crud.png"
+    },
+    {
+      "id": 3,
+      "name": "AI Command Streaming",
+      "status": "PASS",
+      "screendump": "03_ai_command_ws.png"
+    },
+    {
+      "id": 4,
+      "name": "Document Writer",
+      "status": "PASS",
+      "screendump": "04_document_writer.png"
+    },
+    {
+      "id": 5,
+      "name": "L0/L1 Auto-Execution",
+      "status": "PASS",
+      "screendump": "05_l0_l1_auto_exec.png"
+    },
+    {
+      "id": 6,
+      "name": "L2/L3 Approval Gate",
+      "status": "PASS",
+      "screendump": "06_l2_l3_approval_gate.png"
+    },
+    {
+      "id": 7,
+      "name": "Policy Rejection",
+      "status": "PASS",
+      "screendump": "07_policy_shell_escape_rejected.png"
+    },
+    {
+      "id": 8,
+      "name": "Btrfs Undo Rollback",
+      "status": "PASS",
+      "screendump": "08_btrfs_undo_rollback.png"
+    },
+    {
+      "id": 9,
+      "name": "Audit Verification",
+      "status": "PASS",
+      "screendump": "09_audit_hashchain_verified.png"
+    },
+    {
+      "id": 10,
+      "name": "Service Supervisor",
+      "status": "PASS",
+      "screendump": "10_service_supervisor.png"
+    },
+    {
+      "id": 11,
+      "name": "Outbox Quarantine",
+      "status": "PASS",
+      "screendump": "11_outbox_hold.png"
+    },
+    {
+      "id": 12,
+      "name": "1080p UI Scale",
+      "status": "PASS",
+      "screendump": "12_ui_scale_1080p.png"
+    }
+  ]
+}

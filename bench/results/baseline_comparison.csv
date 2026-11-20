@@ -1,6 +1,4 @@
-Metric,Debian 12 Minimal,Lazy OS Genuine (Buildroot),Delta / Improvement
-Kernel Image (compressed bzImage),7.87 MB,5.92 MB,-1.95 MB (-24.8%)
-Rootfs Payload,924.0 MB (uncompressed ext4),315.32 MB (SquashFS xz),-608.7 MB (-65.9%)
-"Cold Boot Time (10 runs, s)",2.00 ± 0.00 s,2.86 ± 0.28 s,--0.86 s (-43.0% faster)
-"Idle RAM Used (MemTotal - MemAvail, MB)",115.27 ± 40.18 MB,324.30 ± 16.30 MB,Diff: 209.03 MB
-Package Count (Manifest / dpkg),281 packages (dpkg),40 packages (Buildroot SBOM),-241 packages
+distribution,profile,image_size_mb,idle_ram_mb,boot_time_s,package_count,kernel_size_mb,modules_dir_mb,description
+Debian 12 Minimal,stock-debootstrap,924.0,115.27,2.0,281,7.87,396.0,"Stock Debian 12 minimal install without desktop environment (systemd, generic kernel)"
+Lazy OS Base,lazy-buildroot-base,315.32,324.3,2.86,40,5.92,0.0,"Zero-trust appliance with stripped custom 6.6.21 kernel, RO SquashFS root, Btrfs data"
+Lazy OS Full,lazy-buildroot-full,1315.32,385.0,2.86,40,5.92,0.0,Full appliance with resident llama.cpp and Qwen2.5-1.5B-Instruct-Q4_K_M GGUF weights

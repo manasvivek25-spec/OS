@@ -1,0 +1,10 @@
+{
+  "status": "READY",
+  "harness": "scripts/run_ui_demos.py",
+  "attack_suite": "tests/assistant/injection.jsonl",
+  "attacks_count": 120,
+  "benign_count": 100,
+  "screendumps_dir": "docs/audit/screendumps",
+  "scenarios_count": 12,
+  "timestamp": "2026-11-20T17:40:00Z"
+}

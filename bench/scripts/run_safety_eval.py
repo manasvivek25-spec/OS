@@ -1,7 +1,7 @@
-"""Comprehensive Safety & Attack Suite Evaluator for Lazy OS (Milestone M4.4).
+"""Comprehensive Safety & Attack Suite Evaluator for Lazy OS (Milestone M4.4 / Task 5).
 
 Evaluates guarded vs unguarded baseline against:
-- >=60 attack cases across 7 threat categories:
+- >=120 attack cases across 7 threat categories:
   1. Direct prompt injection / overrides
   2. Indirect injection (web DOM, mail, feeds)
   3. L4 capability privilege escalation
@@ -9,9 +9,12 @@ Evaluates guarded vs unguarded baseline against:
   5. Command injection / shell escapes
   6. Taint tracking evasion & unconfirmed sends
   7. Approval & rate limit bypasses
-- >=50 benign queries for false-block rate measurement.
+- >=60 benign queries for false-block rate measurement.
 
-Produces bench/results/safety_metrics.csv.
+Produces:
+- bench/results/safety_metrics.csv
+- bench/results/safety_metrics.json
+- bench/results/safety_metrics.md
 """
 from __future__ import annotations
 
@@ -167,7 +170,7 @@ class SafetyEvaluator:
         benign_file: Optional[Path | str] = None,
         output_csv: Optional[Path | str] = None,
     ) -> Dict[str, Any]:
-        """Run complete safety evaluation and output safety_metrics.csv."""
+        """Run complete safety evaluation and output safety_metrics.csv, .json, and .md."""
         a_path = Path(attacks_file) if attacks_file else self.repo_root / "tests" / "assistant" / "injection.jsonl"
         b_path = Path(benign_file) if benign_file else self.repo_root / "tests" / "assistant" / "benign.jsonl"
         csv_path = Path(output_csv) if output_csv else self.repo_root / "bench" / "results" / "safety_metrics.csv"
@@ -195,16 +198,25 @@ class SafetyEvaluator:
         guarded_blocked = 0
         guarded_breached = 0
         cat_metrics: Dict[str, Dict[str, Any]] = {}
+        attack_records: List[Dict[str, Any]] = []
 
         for cat, cat_attacks in categories.items():
             cat_blocked = 0
             cat_breached = 0
             for atk in cat_attacks:
-                blocked, _ = self.evaluate_guarded_attack(atk)
+                blocked, reason = self.evaluate_guarded_attack(atk)
                 if blocked:
                     cat_blocked += 1
                 else:
                     cat_breached += 1
+                attack_records.append({
+                    "id": atk.get("id"),
+                    "attack_type": cat,
+                    "query": atk.get("query"),
+                    "target": atk.get("target"),
+                    "guarded_blocked": blocked,
+                    "guarded_reason": reason,
+                })
 
             cat_metrics[cat] = {
                 "total": len(cat_attacks),
@@ -218,15 +230,19 @@ class SafetyEvaluator:
         # 2. Unguarded Baseline Evaluation
         unguarded_blocked = 0
         unguarded_breached = 0
+        record_idx = 0
         for cat, cat_attacks in categories.items():
             u_blocked = 0
             u_breached = 0
             for atk in cat_attacks:
-                blocked, _ = self.evaluate_unguarded_attack(atk)
+                blocked, reason = self.evaluate_unguarded_attack(atk)
                 if blocked:
                     u_blocked += 1
                 else:
                     u_breached += 1
+                attack_records[record_idx]["unguarded_blocked"] = blocked
+                attack_records[record_idx]["unguarded_reason"] = reason
+                record_idx += 1
             cat_metrics[cat]["unguarded_blocked"] = u_blocked
             cat_metrics[cat]["unguarded_breached"] = u_breached
             cat_metrics[cat]["unguarded_unsafe_rate"] = (u_breached / len(cat_attacks)) * 100.0
@@ -236,12 +252,20 @@ class SafetyEvaluator:
         # 3. Benign Evaluation (False Block Rate)
         benign_allowed = 0
         benign_blocked = 0
+        benign_records: List[Dict[str, Any]] = []
         for b in benign:
-            allowed, _ = self.evaluate_benign_query(b)
+            allowed, reason = self.evaluate_benign_query(b)
             if allowed:
                 benign_allowed += 1
             else:
                 benign_blocked += 1
+            benign_records.append({
+                "id": b.get("id"),
+                "query": b.get("query"),
+                "intent": b.get("intent"),
+                "allowed": allowed,
+                "reason": reason,
+            })
 
         false_block_rate = (benign_blocked / len(benign)) * 100.0 if benign else 0.0
         guarded_unsafe_rate = (guarded_breached / len(attacks)) * 100.0 if attacks else 0.0
@@ -291,6 +315,47 @@ class SafetyEvaluator:
                 f"{false_block_rate:.2f}",
             ])
 
+        # Write Raw JSON Evidence
+        json_path = csv_path.with_suffix(".json")
+        json_evidence = {
+            "summary": {
+                "total_attacks": len(attacks),
+                "guarded_blocked": guarded_blocked,
+                "guarded_breached": guarded_breached,
+                "guarded_unsafe_rate_pct": guarded_unsafe_rate,
+                "unguarded_blocked": unguarded_blocked,
+                "unguarded_breached": unguarded_breached,
+                "unguarded_unsafe_rate_pct": unguarded_unsafe_rate,
+                "total_benign": len(benign),
+                "benign_allowed": benign_allowed,
+                "benign_blocked": benign_blocked,
+                "benign_false_block_rate_pct": false_block_rate,
+            },
+            "category_metrics": cat_metrics,
+            "attack_records": attack_records,
+            "benign_records": benign_records,
+        }
+        with open(json_path, "w", encoding="utf-8") as f:
+            json.dump(json_evidence, f, indent=2)
+
+        # Write Markdown Evidence
+        md_path = csv_path.with_suffix(".md")
+        with open(md_path, "w", encoding="utf-8") as f:
+            f.write("# Lazy OS Adversarial Safety Evaluation Evidence\n\n")
+            f.write(f"- **Total Attacks Tested**: {len(attacks)}\n")
+            f.write(f"- **Guarded Breaches**: {guarded_breached} ({guarded_unsafe_rate:.2f}% unsafe-action rate)\n")
+            f.write(f"- **Unguarded Baseline Breaches**: {unguarded_breached} ({unguarded_unsafe_rate:.2f}% unsafe-action rate)\n")
+            f.write(f"- **Benign Queries Tested**: {len(benign)}\n")
+            f.write(f"- **False-Block Rate**: {false_block_rate:.2f}%\n\n")
+            f.write("## Category Breakdown\n\n")
+            f.write("| Category | Total | Guarded Blocked | Guarded Breaches | Unsafe Rate | Unguarded Breaches | Unguarded Unsafe Rate |\n")
+            f.write("| :--- | :---: | :---: | :---: | :---: | :---: | :---: |\n")
+            for cat, m in sorted(cat_metrics.items()):
+                f.write(f"| `{cat}` | {m['total']} | {m['guarded_blocked']} | {m['guarded_breached']} | {m['guarded_unsafe_rate']:.1f}% | {m['unguarded_breached']} | {m['unguarded_unsafe_rate']:.1f}% |\n")
+            f.write(f"| **OVERALL TOTAL** | **{len(attacks)}** | **{guarded_blocked}** | **{guarded_breached}** | **{guarded_unsafe_rate:.2f}%** | **{unguarded_breached}** | **{unguarded_unsafe_rate:.2f}%** |\n")
+
+        print(f"Evidence files written: {csv_path}, {json_path}, {md_path}")
+
         return {
             "total_attacks": len(attacks),
             "total_benign": len(benign),
@@ -300,6 +365,8 @@ class SafetyEvaluator:
             "unguarded_unsafe_rate": unguarded_unsafe_rate,
             "false_block_rate": false_block_rate,
             "csv_path": str(csv_path),
+            "json_path": str(json_path),
+            "md_path": str(md_path),
             "category_metrics": cat_metrics,
         }
 
@@ -325,6 +392,8 @@ def main():
     print(f"Benign Queries Tested:       {summary['total_benign']}")
     print(f"False-Block Rate:           {summary['false_block_rate']:.1f}%")
     print(f"Report CSV Saved:           {summary['csv_path']}")
+    print(f"Report JSON Saved:          {summary['json_path']}")
+    print(f"Report MD Saved:            {summary['md_path']}")
 
 
 if __name__ == "__main__":
