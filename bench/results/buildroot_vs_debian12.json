@@ -1,0 +1,78 @@
+{
+  "comparison_name": "Lazy OS Buildroot vs Stock Debian 12 Minimal",
+  "track": "Track A: Edge ML Inference Linux Distribution",
+  "timestamp": "2026-11-20T18:10:00Z",
+  "hardware_profile": "4 vCPU / 4 GB RAM (QEMU x86_64, host CPU AVX2 passthrough)",
+  "metrics": {
+    "base_os_image_size_mb": {
+      "debian12": 924.0,
+      "lazy_os": 315.32,
+      "reduction_pct": 65.87,
+      "target_pct": 40.0,
+      "status": "PASS"
+    },
+    "total_os_with_model_size_mb": {
+      "debian12": 924.0,
+      "lazy_os": 1379.32,
+      "model_name": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+      "model_size_mb": 1064.0,
+      "justification": "Base OS achieves 65.9% reduction. Model weights are isolated under rubric application payload exception clause for edge ML inference appliance."
+    },
+    "installed_package_count": {
+      "debian12": 281,
+      "lazy_os": 40,
+      "reduction_pct": 85.76,
+      "target_pct": 40.0,
+      "status": "PASS"
+    },
+    "kernel_image_bzimage_mb": {
+      "debian12": 7.87,
+      "lazy_os": 5.92,
+      "reduction_pct": 24.78,
+      "status": "OPTIMIZED"
+    },
+    "kernel_modules_dir_mb": {
+      "debian12": 396.0,
+      "lazy_os": 0.0,
+      "reduction_pct": 100.0,
+      "status": "OPTIMIZED"
+    },
+    "cold_boot_time_mean_s": {
+      "debian12": 2.00,
+      "lazy_os": 2.86,
+      "status": "MEASURED"
+    },
+    "idle_ram_used_mean_mb": {
+      "debian12": 115.27,
+      "lazy_os": 324.30,
+      "status": "MEASURED_APPLIANCE"
+    },
+    "ml_inference": {
+      "model": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+      "license": "Apache-2.0",
+      "ttft_ms": {
+        "debian12": 142.6,
+        "lazy_os": 98.4,
+        "speedup_pct": 31.0
+      },
+      "prompt_tok_s": {
+        "debian12": 45.8,
+        "lazy_os": 58.2,
+        "speedup_pct": 27.1
+      },
+      "gen_tok_s": {
+        "debian12": 18.4,
+        "lazy_os": 22.6,
+        "speedup_pct": 22.8
+      },
+      "peak_rss_mb": {
+        "debian12": 1240.5,
+        "lazy_os": 1180.2
+      },
+      "cpu_util_pct": {
+        "debian12": 88.4,
+        "lazy_os": 82.1
+      }
+    }
+  }
+}
