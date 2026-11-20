@@ -7,7 +7,13 @@ from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any, Dict, List, Optional
 
-from lazy.tasks.backend import CopyBackend, SnapshotBackend, TreeHasher
+from lazy.tasks.backend import (
+    BtrfsBackend,
+    CopyBackend,
+    OverlayBackend,
+    SnapshotBackend,
+    TreeHasher,
+)
 
 
 class Task:
@@ -39,15 +45,37 @@ class Task:
 class TaskManager:
     """Coordinates job executions, checkpoints, snapshots, and transactional rollbacks."""
 
-    def __init__(self, target_dir: Path | str, backend_type: str = "copy", snapshots_root: Optional[Path | str] = None):
+    def __init__(self, target_dir: Path | str, backend_type: str = "auto", snapshots_root: Optional[Path | str] = None):
         self.target_dir = Path(target_dir)
         self.target_dir.mkdir(parents=True, exist_ok=True)
         self.backend_type = backend_type
 
-        if backend_type == "copy":
-            self.backend: SnapshotBackend = CopyBackend(self.target_dir, snapshots_root)
-        else:
+        if backend_type == "btrfs":
+            self.backend: SnapshotBackend = BtrfsBackend(self.target_dir, snapshots_root)
+        elif backend_type == "overlay":
+            self.backend = OverlayBackend(self.target_dir, snapshots_root)
+        elif backend_type == "copy":
             self.backend = CopyBackend(self.target_dir, snapshots_root)
+        else:
+            # Auto-detect whether target_dir resides on a Btrfs filesystem
+            is_btrfs = False
+            try:
+                import subprocess
+                res = subprocess.run(
+                    ["btrfs", "filesystem", "show", str(self.target_dir)],
+                    capture_output=True,
+                    check=False,
+                )
+                is_btrfs = (res.returncode == 0)
+            except Exception:
+                pass
+
+            if is_btrfs:
+                self.backend = BtrfsBackend(self.target_dir, snapshots_root)
+                self.backend_type = "btrfs"
+            else:
+                self.backend = CopyBackend(self.target_dir, snapshots_root)
+                self.backend_type = "copy"
 
         self._tasks: Dict[str, Task] = {}
 
