@@ -64,8 +64,10 @@ else
 fi
 
 KVM_OPT=""
+CPU_OPT=""
 if [ -w /dev/kvm ]; then
     KVM_OPT="-enable-kvm"
+    CPU_OPT="-cpu host"
 fi
 
 echo "=================================================="
@@ -74,12 +76,14 @@ echo "=================================================="
 echo "Disk:        ${DISK}"
 echo "Display:     ${DISPLAY_OPT}"
 echo "HUD Gateway: http://127.0.0.1:8766/"
+echo "CPU/RAM:     Host CPU / 4 Cores / 4096 MB RAM"
 echo "=================================================="
 
 exec qemu-system-x86_64 \
     ${KVM_OPT} \
-    -m 2048 \
-    -smp 2 \
+    ${CPU_OPT} \
+    -m 4096 \
+    -smp 4,cores=4 \
     -kernel "${KERNEL}" \
     -drive file="${DISK}",format=raw,if=virtio \
     -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet lazy_interactive=1 video=1920x1080" \
