@@ -6,7 +6,7 @@
   --bg-primary: #070b14;
   --bg-secondary: #0d1322;
   --bg-tertiary: #121b30;
-  --bg-card: rgba(18, 27, 48, 0.7);
+  --bg-card: rgba(14, 21, 38, 0.94);
   --border-subtle: rgba(0, 240, 255, 0.15);
   --border-active: #00f0ff;
   --text-main: #e6f1ff;
@@ -185,12 +185,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
   height: 0.6rem;
   background: var(--cyan-accent);
   border-radius: 50%;
-  box-shadow: 0 0 0.6rem var(--cyan-accent);
-  animation: pulse 2s infinite;
-}
-@keyframes pulse {
-  0%, 100% { opacity: 1; transform: scale(1); }
-  50% { opacity: 0.4; transform: scale(0.85); }
+  box-shadow: 0 0 0.4rem var(--cyan-accent);
 }
 .brand-title {
   font-weight: 800;
@@ -370,7 +365,6 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 /* Cards & Layout */
 .card {
   background: var(--bg-card);
-  backdrop-filter: blur(8px);
   border: 1px solid var(--border-subtle);
   border-radius: 0.6rem;
   padding: 1.3rem;
@@ -763,8 +757,7 @@ button:focus-visible, input:focus-visible, select:focus-visible {
 .modal-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(4, 7, 13, 0.75);
-  backdrop-filter: blur(4px);
+  background: rgba(4, 7, 13, 0.88);
   z-index: 200;
   display: flex;
   align-items: flex-start;

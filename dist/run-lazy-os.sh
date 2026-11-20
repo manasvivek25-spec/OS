@@ -55,7 +55,7 @@ export GDK_BACKEND=x11
 if [ -n "${USER_DISPLAY}" ]; then
     DISPLAY_OPT="-display ${USER_DISPLAY}"
 elif [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
-    DISPLAY_OPT="-display gtk,zoom-to-fit=on,show-menubar=on"
+    DISPLAY_OPT="-display gtk,zoom-to-fit=on,show-menubar=on,grab-on-hover=off"
     if [ "${FULLSCREEN_REQ}" -eq 1 ]; then
         DISPLAY_OPT="${DISPLAY_OPT},full-screen=on"
     fi
@@ -68,24 +68,27 @@ CPU_OPT=""
 if [ -w /dev/kvm ]; then
     KVM_OPT="-enable-kvm"
     CPU_OPT="-cpu host"
+else
+    echo "WARNING: /dev/kvm is not writable. Check permissions!"
 fi
 
 echo "=================================================="
-echo "          Starting Lazy OS v3 Product             "
+echo "          Starting Lazy OS v3 Product (Tuned)     "
 echo "=================================================="
 echo "Disk:        ${DISK}"
 echo "Display:     ${DISPLAY_OPT}"
 echo "HUD Gateway: http://127.0.0.1:8766/"
-echo "CPU/RAM:     Host CPU / 4 Cores / 6144 MB RAM"
+echo "CPU/RAM:     Host CPU / 6 Cores / 6144 MB RAM"
+echo "I/O Mode:    VirtIO cache=writeback, aio=threads"
 echo "=================================================="
 
 exec qemu-system-x86_64 \
     ${KVM_OPT} \
     ${CPU_OPT} \
     -m 6144 \
-    -smp 4,cores=4 \
+    -smp 6,cores=6 \
     -kernel "${KERNEL}" \
-    -drive file="${DISK}",format=raw,if=virtio \
+    -drive file="${DISK}",format=raw,if=virtio,cache=writeback,aio=threads \
     -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet lazy_interactive=1 video=1920x1080" \
     ${DISPLAY_OPT} \
     -vga none \

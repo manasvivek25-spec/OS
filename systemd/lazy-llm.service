@@ -38,8 +38,9 @@ SystemCallFilter=@system-service ~@privileged ~@resources
 SystemCallArchitectures=native
 
 # Resource Isolation (Warm resident model with interactive tuning)
+Nice=5
 MemoryMax=3072M
-CPUWeight=500
+CPUWeight=200
 IOWeight=500
 TasksMax=64
 LimitMEMLOCK=infinity
