@@ -21,7 +21,9 @@ define LAZY_OS_INSTALL_TARGET_CMDS
 	cp -r $(@D)/docs/contracts/* $(TARGET_DIR)/usr/share/lazy/contracts/
 
 	mkdir -p $(TARGET_DIR)/usr/share/lazy/models
-	if [ -f "$(@D)/build/models/SmolLM2-360M-Instruct-Q4_K_M.gguf" ]; then \
+	if [ -f "$(@D)/build/models/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf" ]; then \
+		cp "$(@D)/build/models/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf" "$(TARGET_DIR)/usr/share/lazy/models/"; \
+	elif [ -f "$(@D)/build/models/SmolLM2-360M-Instruct-Q4_K_M.gguf" ]; then \
 		cp "$(@D)/build/models/SmolLM2-360M-Instruct-Q4_K_M.gguf" "$(TARGET_DIR)/usr/share/lazy/models/"; \
 	fi
 
@@ -40,7 +42,10 @@ define LAZY_OS_INSTALL_TARGET_CMDS
 	done
 
 	mkdir -p $(TARGET_DIR)/usr/bin
-	install -m 0755 $(@D)/scripts/lazy-guest-daemon.py $(TARGET_DIR)/usr/bin/lazy-guest-daemon
+	install -m 0755 $(@D)/scripts/lazy-guest-daemon.py $(TARGET_DIR)/usr/bin/lazy-guest-daemon 2>/dev/null || true
+	if [ -f "$(@D)/scripts/run_ml_bench.sh" ]; then \
+		install -m 0755 "$(@D)/scripts/run_ml_bench.sh" "$(TARGET_DIR)/usr/bin/run_ml_bench.sh"; \
+	fi
 endef
 
 $(eval $(generic-package))
