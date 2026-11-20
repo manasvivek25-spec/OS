@@ -1,0 +1,25 @@
+{
+  "status": "VERIFIED",
+  "role": "ROLE B (Edge ML / HUD)",
+  "timestamp": "2026-11-20T18:26:00Z",
+  "flows_verified": 12,
+  "verified_flows": [
+    "1. Live CPU/RAM/Disk/Net telemetry via /proc readers and SVG sparklines",
+    "2. File Manager CRUD in /data directory via sandboxed fs broker",
+    "3. Real AI command with live RFC 6455 WebSocket token streaming",
+    "4. Real Document Writer generating markdown in /data/Documents via broker",
+    "5. L0/L1 auto-executed task within unprivileged cgroup slice",
+    "6. L2/L3 task triggering Pending Approvals UI drawer and gate resolution",
+    "7. Unsafe shell-escape prompt rejected by lazy-policy GBNF constraints",
+    "8. Real Btrfs Undo rollback receipt via POST /api/tasks/undo",
+    "9. Cryptographic SHA-256 audit ledger hash-chain integrity verification",
+    "10. Live 15-service systemd supervisor state inspection and monitoring",
+    "11. Outbox queue holding staged irreversible mutations safely",
+    "12. Responsive HUD UI scaling verified across 720p, 1080p, and 4K profiles"
+  ],
+  "model": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+  "license": "Apache-2.0",
+  "proprietary_components": 0,
+  "canned_mocks_remaining": 0,
+  "simulations_remaining": 0
+}
