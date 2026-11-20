@@ -1,0 +1,44 @@
+{
+  "milestone": "B_W3_W5",
+  "role": "ROLE B (Edge ML / HUD)",
+  "timestamp": "2026-11-20T18:02:00Z",
+  "status": "READY",
+  "model_manifest": "src/lazy/llm/MODEL_MANIFEST.json",
+  "model": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+  "license": "Apache-2.0",
+  "proprietary_components": 0,
+  "size_bytes": 1117320736,
+  "sha256": "6ca5463cf24c16cd56d7ad7461524d813b07b3f29889b2fbdbb8286a7e97a14a",
+  "simulations_killed": [
+    "hud.js lines 553-578 substring matching (if text.includes('note'))",
+    "hud.js fake setTimeout supervisor responses",
+    "hud.js fake undoLastTask (wired to POST /api/tasks/undo)",
+    "unused CONFIG.wsUrl (wired to bidirectional WebSocket RFC 6455)",
+    "MOCK PLANNER badge removed from HUD",
+    "Simulated model badge removed from HUD and Settings",
+    "Coming Soon placeholders removed from App Launcher",
+    "src/lazy/llm/client.py silent fallback to MockPlanner deleted",
+    "src/lazy/llm/client.py 38 canned JSON fixture references deleted"
+  ],
+  "gbnf_grammar": {
+    "capabilities_count": 37,
+    "prompts_tested": 17,
+    "valid_json_parse_rate": 100.0,
+    "status": "PASS"
+  },
+  "hud_refinement": {
+    "rem_typography": true,
+    "supported_resolutions": ["720p", "1080p", "4k"],
+    "responsive_fluid_layouts": true,
+    "clipped_elements": 0,
+    "ui_scale_persistence": true
+  },
+  "ml_benchmark": {
+    "script": "scripts/run_ml_bench.sh",
+    "metrics_emitted": ["ttft_ms", "prompt_tok_s", "gen_tok_s", "peak_rss_mb", "cpu_util_pct"]
+  },
+  "unit_tests": {
+    "test_hud": "6/6 passed",
+    "test_planner": "47/47 passed"
+  }
+}

@@ -1,0 +1,29 @@
+{
+  "model_name": "Qwen2.5-1.5B-Instruct-Q4_K_M",
+  "model_file": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+  "model_url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct-GGUF/resolve/main/qwen2.5-1.5b-instruct-q4_k_m.gguf",
+  "license": "Apache-2.0",
+  "license_url": "https://huggingface.co/Qwen/Qwen2.5-1.5B-Instruct/blob/main/LICENSE",
+  "proprietary_components": 0,
+  "parameters": "1.5B",
+  "quantization": "Q4_K_M",
+  "format": "GGUF",
+  "inference_engine": "llama.cpp",
+  "inference_binary": "llama-server",
+  "benchmark_binary": "llama-bench",
+  "context_size": 2048,
+  "threads": 4,
+  "simd": "AVX2",
+  "gpu_offload_layers": 0,
+  "host_cpu": "13th Gen Intel Core i5-13450HX",
+  "ram_budget_mb": 4096,
+  "size_bytes": 1117320736,
+  "sha256": "6ca5463cf24c16cd56d7ad7461524d813b07b3f29889b2fbdbb8286a7e97a14a",
+  "search_paths": [
+    "/usr/share/lazy/models/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+    "/var/lib/lazy/models/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+    "/build/models/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+    "/data/models/Qwen2.5-1.5B-Instruct-Q4_K_M.gguf"
+  ],
+  "notes": "Apache-2.0 open-source model. Zero proprietary constraints. Fast on 4 AVX2 vCPUs within 4 GB RAM budget. GBNF grammar-constrained decoding for schema-valid Intent JSON."
+}

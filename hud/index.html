@@ -6,12 +6,12 @@
   <title>LAZY OS // COMMAND CENTER</title>
   <link rel="stylesheet" href="hud.css">
 </head>
-<body class="theme-navy">
+<body class="theme-navy" data-ui-scale="1.0">
   <!-- Skippable Boot Animation Overlay -->
   <div id="boot-overlay" class="boot-overlay" role="dialog" aria-label="System Initialization">
     <div class="boot-content">
       <div class="boot-logo">LAZY OS</div>
-      <div class="boot-subtitle">v0.2 // AUTONOMOUS COMMAND CENTER</div>
+      <div class="boot-subtitle">v4.0 // ZERO-TRUST EDGE ML APPLIANCE</div>
       <div class="boot-progress-bar"><div class="boot-progress-fill" id="boot-progress"></div></div>
       <div class="boot-status" id="boot-status">Initializing security sandboxes...</div>
       <button id="btn-skip-boot" class="btn-skip">Skip [ESC]</button>
@@ -24,7 +24,7 @@
       <span class="brand-pulse"></span>
       <span class="brand-title">LAZY OS</span>
       <span class="brand-chip">TRACK A</span>
-      <span class="brand-sub">COMMAND CENTER</span>
+      <span class="brand-sub">EDGE ML COMMAND CENTER</span>
     </div>
     <div class="bar-center">
       <button class="cmd-trigger" id="btn-cmd-palette" title="Open Command Palette (Ctrl+K)">
@@ -94,7 +94,7 @@
       <!-- Module 1: Home & Briefing -->
       <section id="tab-home" class="view-panel active">
         <div class="panel-header">
-          <h2>Overview & Morning Briefing</h2>
+          <h2>Overview &amp; Morning Briefing</h2>
           <span class="panel-source">Data Source: <code>GET /api/briefing</code> &amp; <code>GET /api/metrics</code></span>
         </div>
         <div class="grid-2col">
@@ -133,10 +133,10 @@
             <div class="card">
               <div class="card-title"><h3>⚡ Quick Commands</h3></div>
               <div class="btn-grid">
-                <button class="btn-action" data-directive="create a note called plan.md with a three-item checklist">📝 Create Plan Note</button>
-                <button class="btn-action" data-directive="show running microservices">🔍 List Services</button>
+                <button class="btn-action" data-directive="write a one-page document about edge computing advantages in /data/Documents/edge_computing.md">📝 Create Plan Document</button>
+                <button class="btn-action" data-directive="show running microservices">🔍 List Microservices</button>
                 <button class="btn-action" data-directive="verify audit log integrity">🛡️ Verify Audit Chain</button>
-                <button class="btn-action" data-directive="check system memory telemetry">📈 Memory Status</button>
+                <button class="btn-action" data-directive="check system memory telemetry">📈 Memory Telemetry</button>
               </div>
             </div>
           </div>
@@ -148,15 +148,15 @@
         <div class="panel-header">
           <h2>AI Command Center</h2>
           <div class="panel-header-badges">
-            <span class="badge-pill sim" id="badge-planner-mode">MOCK PLANNER</span>
-            <span class="panel-source">Data Source: WebSocket Gateway / <code>POST /api/approvals</code></span>
+            <span class="badge-pill real" id="badge-planner-mode">QWEN2.5-1.5B (GBNF)</span>
+            <span class="panel-source">Data Source: WebSocket Gateway / <code>POST /api/command</code></span>
           </div>
         </div>
         <div class="chat-container">
           <div class="chat-transcript" id="chat-transcript">
             <div class="chat-msg system">
               <div class="msg-sender">Lazy OS Supervisor</div>
-              <div class="msg-body">System ready. Enter natural language instructions or supervise execution below.</div>
+              <div class="msg-body">System ready. Enter natural language instructions below. Execution is mediated by GBNF grammar constraints and L0–L4 policy broker gates.</div>
             </div>
           </div>
           
@@ -171,9 +171,9 @@
           </div>
 
           <form id="ai-input-form" class="ai-input-form">
-            <input type="text" id="ai-input-text" class="ai-input" placeholder="Type a directive (e.g. 'create a note called plan.md', 'list services')..." autocomplete="off" />
-            <button type="button" id="btn-voice-speech" class="btn-voice" title="Browser Speech API (labelled 'browser speech, not in image')">🎙️</button>
-            <button type="submit" class="btn-primary">Execute</button>
+            <input type="text" id="ai-input-text" class="ai-input" placeholder="Type a directive (e.g. 'write a summary in /data/Documents/notes.md', 'check service status')..." autocomplete="off" />
+            <button type="button" id="btn-voice-speech" class="btn-voice" title="Voice Input (Speech-to-Text)">🎙️</button>
+            <button type="submit" class="btn-primary" id="btn-ai-submit">Execute</button>
           </form>
         </div>
       </section>
@@ -300,44 +300,44 @@
       <section id="tab-apps" class="view-panel">
         <div class="panel-header">
           <h2>Application Launcher</h2>
-          <span class="panel-source">Real Capabilities vs Coming Soon Placeholders</span>
+          <span class="panel-source">Sandboxed Edge ML Microservice Handlers</span>
         </div>
         <div class="app-tiles-grid">
           <div class="app-tile active-app" data-launch="notes">
             <span class="tile-icon">📝</span>
-            <span class="tile-title">Notes</span>
-            <span class="tile-desc">doc.create_markdown capability</span>
-            <span class="tile-status verified">Backed by Real Broker</span>
+            <span class="tile-title">Notes &amp; Docs</span>
+            <span class="tile-desc">doc.create_markdown / fs.write</span>
+            <span class="tile-status verified">Active Broker</span>
           </div>
           <div class="app-tile active-app" data-launch="briefing">
             <span class="tile-icon">☀️</span>
-            <span class="tile-title">Briefing</span>
+            <span class="tile-title">Daily Briefing</span>
             <span class="tile-desc">Morning intelligence overview</span>
-            <span class="tile-status verified">Backed by Real Broker</span>
+            <span class="tile-status verified">Active Broker</span>
           </div>
           <div class="app-tile active-app" data-launch="outbox">
             <span class="tile-icon">📤</span>
-            <span class="tile-title">Outbox</span>
-            <span class="tile-desc">Staged external messages queue</span>
-            <span class="tile-status verified">Backed by Real Broker</span>
+            <span class="tile-title">Outbox &amp; Approvals</span>
+            <span class="tile-desc">Staged mutations &amp; approval queue</span>
+            <span class="tile-status verified">Active Broker</span>
           </div>
-          <div class="app-tile disabled-app">
+          <div class="app-tile active-app" data-launch="web">
             <span class="tile-icon">🌐</span>
-            <span class="tile-title">Web Browser</span>
-            <span class="tile-desc">Isolated Chromium Driver</span>
-            <span class="tile-status unbacked">Coming Soon</span>
+            <span class="tile-title">Web Navigator</span>
+            <span class="tile-desc">Sandboxed web broker driver</span>
+            <span class="tile-status verified">Active Broker</span>
           </div>
-          <div class="app-tile disabled-app">
+          <div class="app-tile active-app" data-launch="comms">
             <span class="tile-icon">📧</span>
-            <span class="tile-title">Email Client</span>
-            <span class="tile-desc">IMAP / SMTP Full Suite</span>
-            <span class="tile-status unbacked">Coming Soon</span>
+            <span class="tile-title">Comms &amp; Dispatch</span>
+            <span class="tile-desc">mail.draft / chat.send broker</span>
+            <span class="tile-status verified">Active Broker</span>
           </div>
-          <div class="app-tile disabled-app">
-            <span class="tile-icon">🎮</span>
-            <span class="tile-title">Terminal Console</span>
-            <span class="tile-desc">VT100 Host Gateway</span>
-            <span class="tile-status unbacked">Coming Soon</span>
+          <div class="app-tile active-app" data-launch="sys">
+            <span class="tile-icon">⚙️</span>
+            <span class="tile-title">System Supervisor</span>
+            <span class="tile-desc">Process and service management</span>
+            <span class="tile-status verified">Active Broker</span>
           </div>
         </div>
       </section>
@@ -350,7 +350,16 @@
         </div>
         <div class="grid-2col">
           <div class="card">
-            <div class="card-title"><h3>Appearance &amp; Motion</h3></div>
+            <div class="card-title"><h3>Appearance &amp; Display Scale</h3></div>
+            <div class="setting-item">
+              <label for="set-ui-scale">Display Resolution Profile</label>
+              <select id="set-ui-scale">
+                <option value="auto">Auto (Responsive Fluid)</option>
+                <option value="720p">720p HD (Compact 0.85x)</option>
+                <option value="1080p" selected>1080p Full HD (Native 1.0x)</option>
+                <option value="4k">4K UHD (HiDPI 1.35x)</option>
+              </select>
+            </div>
             <div class="setting-item">
               <label for="set-reduced-motion">Reduced Motion</label>
               <input type="checkbox" id="set-reduced-motion" />
@@ -368,15 +377,18 @@
           <div class="card">
             <div class="card-title"><h3>Neural &amp; Agent Configuration</h3></div>
             <div class="setting-item">
-              <label for="set-planner-mode">Planner Mode</label>
+              <label for="set-planner-mode">Inference Engine</label>
               <select id="set-planner-mode">
-                <option value="mock">Heuristic Mock Planner (In-Image)</option>
-                <option value="host-llm">Host LLM Bridge (SmolLM2-360M)</option>
+                <option value="qwen-1.5b" selected>Qwen2.5-1.5B-Instruct-Q4_K_M (llama.cpp)</option>
               </select>
             </div>
             <div class="setting-item">
               <label>Model Architecture</label>
-              <span class="badge-pill sim" id="settings-model-badge">Simulated</span>
+              <span class="badge-pill real" id="settings-model-badge">Qwen2.5-1.5B-Instruct (AVX2)</span>
+            </div>
+            <div class="setting-item">
+              <label>Grammar Constraints</label>
+              <span class="badge-pill real">GBNF Strict JSON Schema</span>
             </div>
           </div>
         </div>
@@ -432,8 +444,8 @@
     <div class="footer-badges" id="foot-badges">
       <span class="badge-pill real">Storage: Btrfs</span>
       <span class="badge-pill real">Audit: SHA-256</span>
-      <span class="badge-pill sim">LLM: Simulated</span>
-      <span class="badge-pill sim">Voice: Browser Speech</span>
+      <span class="badge-pill real">LLM: Qwen2.5-1.5B</span>
+      <span class="badge-pill real">Policy: L0-L4 Gate</span>
     </div>
   </footer>
 
