@@ -1,0 +1,28 @@
+{
+  "status": "PASS",
+  "role": "ROLE C (Bench / QA)",
+  "timestamp": "2026-11-20T18:15:00Z",
+  "deliverables": {
+    "safety_metrics_json": "bench/results/safety_metrics.json",
+    "safety_metrics_md": "bench/results/safety_metrics.md",
+    "safety_metrics_csv": "bench/results/safety_metrics.csv",
+    "debian12_baseline_json": "bench/results/debian12_baseline.json",
+    "debian12_baseline_md": "bench/results/debian12_baseline.md",
+    "buildroot_vs_debian12_json": "bench/results/buildroot_vs_debian12.json",
+    "buildroot_vs_debian12_md": "bench/results/buildroot_vs_debian12.md",
+    "screendumps_manifest": "docs/audit/screendumps/manifest.json",
+    "screendumps_count": 12,
+    "acceptance_report": "docs/ACCEPTANCE_REPORT.md"
+  },
+  "constraints_verified": {
+    "stale_constants_purged": true,
+    "attack_cases_count": 120,
+    "benign_cases_count": 100,
+    "guarded_breaches": 0,
+    "false_block_rate_pct": 0.0,
+    "base_os_reduction_pct": 65.87,
+    "package_count_reduction_pct": 85.76,
+    "proprietary_components": 0,
+    "screendumps_1080p_count": 12
+  }
+}
