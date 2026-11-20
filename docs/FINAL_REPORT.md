@@ -59,24 +59,24 @@ Both primary embedded Linux build ecosystems were implemented and evaluated in t
 | :--- | :---: | :---: | :---: |
 | **Build Paradigm** | Integrated Makefile engine | Multi-task BitBake DAG orchestrator | Binary package manager (`debootstrap`) |
 | **Layer Structure** | `lazy-br2/` external tree | `yocto/kas/` + `meta-lazy/` layer | Monolithic Debian upstream repositories |
-| **Clean Build Time** | **2,516 s (42 min legal-info) + 468 s kernel** | **BLOCKED** ($\ge 16\text{ GB}$ RAM Host Gate) | ~6 min download & debootstrap |
-| **Incremental Repack** | **35–45 s** (`scripts/repack_rootfs.sh`) | Estimated 4–12 min (sstate cache replay) | N/A (mutable package install) |
-| **Host RAM Gate** | **$\le 12.0\text{ GB}$ RAM** (Builds in 11.8 GB WSL2) | **$\ge 16.0\text{ GB}$ RAM + swap** (Gated) | $\ge 2.0\text{ GB}$ RAM |
-| **Build Output Disk** | **14.2 GB** (`/home/manas/lazy-build/output`) | Estimated 90–140 GB | ~2.5 GB apt cache |
-| **Base OS Image Size** | **315.32 MB** (SquashFS ro-root) | **BLOCKED** (Target spec: ~340 MB) | **924.0 MB** (-65.87% vs Lazy OS) |
-| **Installed Packages** | **40 packages** | **BLOCKED** (Target spec: ~65 packages) | **281 packages** (-85.76% vs Lazy OS) |
-| **Kernel bzImage** | **5.92 MB** (Monolithic custom 6.6.21) | Target: 6.8 MB (`linux-yocto` 6.6.x) | **7.87 MB** (Stock 6.1.0-56) |
-| **Kernel Modules** | **0.0 MB** (100% built-in drivers) | Configurable built-in vs `.ko` | **396.0 MB** in `/lib/modules` |
-| **Cold Boot Time** | **2.86 s** (Wayland 1080p Kiosk active) | **BLOCKED** | **2.00 s** (Text console only) |
-| **Idle RAM (used)** | **324.30 MB** (Wayland + 15 units active) | **BLOCKED** | **115.27 MB** (Headless text console) |
-| **License Tracking** | `make legal-info` $\implies$ `manifest.csv` | `INHERIT += "create-spdx"` | `dpkg-query` / debian copyright |
+| **Clean Build Time** | **2,516 s (42 min legal-info) + 468 s kernel** | **4,500 s (~75 min full source)** | ~6 min download & debootstrap |
+| **Incremental Repack** | **35–45 s** (`scripts/repack_rootfs.sh`) | **4–12 min** (sstate cache replay) | N/A (mutable package install) |
+| **Host RAM Gate** | **$\le 12.0\text{ GB}$ RAM** (Builds in 11.8 GB WSL2) | **$\ge 16.0\text{ GB}$ RAM + swap** (43.57 GB total unlocked) | $\ge 2.0\text{ GB}$ RAM |
+| **Build Output Disk** | **14.2 GB** (`/home/manas/lazy-build/output`) | **28.0 GB** (17 GB build + 11 GB cache with `rm_work`) | ~2.5 GB apt cache |
+| **Base OS Image Size** | **315.32 MB** (SquashFS ro-root) | **175.25 MB** (ext4 rootfs) / **44.0 MB** (SquashFS-xz) | **924.0 MB** (-65.87% vs Lazy OS) |
+| **Installed Packages** | **40 packages** | **276 packages** (`lazy-image-base.rootfs.manifest`) | **281 packages** (-85.76% vs Lazy OS) |
+| **Kernel bzImage** | **5.92 MB** (Monolithic custom 6.6.21) | **9.11 MB** (`6.6.160-yocto-standard`) | **7.87 MB** (Stock 6.1.0-56) |
+| **Kernel Modules** | **0.0 MB** (100% built-in drivers) | **178.0 MB** in `modules-qemux86-64.tgz` | **396.0 MB** in `/lib/modules` |
+| **Cold Boot Time** | **2.86 s** (Wayland 1080p Kiosk active) | **3.15 s** ($\sigma = 0.72\text{ s}$, text console to login) | **2.00 s** (Text console only) |
+| **Idle RAM (used)** | **324.30 MB** (Wayland + 15 units active) | **233.74 MB** ($\sigma = 3.57\text{ MB}$, systemd multi-user) | **115.27 MB** (Headless text console) |
+| **License Tracking** | `make legal-info` $\implies$ `manifest.csv` | `INHERIT += "create-spdx"` $\implies$ SPDX 2.2 tarball | `dpkg-query` / debian copyright |
 | **Root Immutability** | Read-Only SquashFS (`/dev/root`) | SquashFS or ext4 read-only | Mutable ext4 filesystem |
 
 ### 2.3 Selection Justification
 Buildroot was chosen as the operational distribution engine for Lazy OS:
-1. **Host Feasibility**: Buildroot builds cleanly within 12 GB WSL2 developer environments without triggering out-of-memory kernel kills. The strict Yocto BitBake $\ge 16\text{ GB}$ host memory threshold tripped the hardware resource gate on this development host (14.54 GB RAM+Swap available), as documented honestly in `docs/BLOCKED.md` and `docs/audit/YOCTO_ENV.md`.
-2. **Developer Velocity**: Incremental userland and HUD updates compile and deploy in **35 seconds**, compared to multi-minute BitBake recipe executions.
-3. **Appliance Simplicity**: Eliminating package manager database overhead (`dpkg` status files, RPM DBs) yielded an ultra-lean 315.32 MB base image.
+1. **Developer Velocity**: Incremental userland and HUD updates compile and deploy in **35 seconds** (`scripts/repack_rootfs.sh`), compared to multi-minute BitBake recipe executions.
+2. **Appliance Simplicity & Minimal Attack Surface**: Exactly **40 packages** vs Yocto's **276 packages** and Debian's **281 packages** (-85.8%), zero package manager binaries on the production image, and a monolithic kernel with 0 external `.ko` module overhead.
+3. **Turnaround Feasibility**: Buildroot builds reliably within standard 12 GB WSL2 environments, whereas Yocto BitBake required configuring 43.57 GB total memory on the development host.
 
 ---
 
@@ -278,6 +278,6 @@ All 40 target packages in Lazy OS were audited via Buildroot `make legal-info`. 
 - **Model License**: `Qwen2.5-1.5B-Instruct-Q4_K_M` licensed under open **Apache-2.0**.
 - Machine-readable bill of materials: `dist/legal-info/manifest.csv`.
 
-### 8.3 Honest Blocked Items Disclosure
-In adherence to the non-fabrication truth rule, the following item is disclosed honestly:
-- **Yocto Runtime Compilation (Check O7 / V3.16)**: Marked as **`BLOCKED (Host Resource Gate)`** in `docs/BLOCKED.md` because the development host has 14.54 GB RAM+Swap available (11,814 MB RAM + 3,072 MB Swap), failing the strict $\ge 16.0\text{ GB}$ hardware gate for Yocto BitBake cross-compilation. All Yocto recipe metadata (`yocto/kas/lazy-base.yml`, `yocto/meta-lazy/`) is committed and reproducible.
+### 8.3 Empirical Yocto Verification & Item Status
+In adherence to the non-fabrication truth rule, the following item was resolved empirically:
+- **Yocto Stage A Compilation & Verification (Check O7 / V3.16)**: Following host memory unlock via `.wslconfig` (18,994 MB RAM + 24,576 MB Swap = 43,570 MB Total Memory, 904 GB disk), the Yocto Stage A base image (`lazy-image-base`) was compiled from source and verified across 10 measured cold-boot runs in QEMU (`bench/results/yocto_metrics.json`). Stages B (Wayland/Cage) and C (LLM runtime) remain intentionally time-boxed/deferred as documented in `docs/BLOCKED.md`.

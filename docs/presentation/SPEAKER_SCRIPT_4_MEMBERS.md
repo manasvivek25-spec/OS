@@ -47,10 +47,10 @@ For Task 2, we implemented complete configurations for both primary embedded Lin
 - For **Yocto Project (Poky 5.0 Scarthgap)**, we authored a multi-repository Kas specification in `yocto/kas/lazy-base.yml` with a custom `yocto/meta-lazy/` layer.
 
 Here are the critical architectural findings:
-1. **Compilation Feasibility & Host Resource Gate**: Buildroot uses a streamlined Makefile architecture that compiles an entire appliance within 12 gigabytes of host RAM. Conversely, Yocto's BitBake task orchestrator requires parsing hundreds of Python recipes and generates intermediate RPM packages, requiring a strict $\ge 16\text{ GB}$ host memory threshold. On our development host (which has 14.54 GB RAM+Swap available), BitBake tripped the resource gate. Rather than fabricating numbers, we committed the clean Yocto recipes and honestly documented the hardware gate in `docs/BLOCKED.md` and `docs/audit/YOCTO_ENV.md`.
-2. **Turnaround Velocity**: Buildroot allows us to perform an incremental rootfs repack in just **35 seconds** (`scripts/repack_rootfs.sh`), allowing rapid iteration of the HUD and microservices.
-3. **Attack Surface & Footprint**: Buildroot generated an ultra-lean **315.32 megabyte** base operating system image containing exactly **40 packages**, compared to Debian 12's **924.0 megabytes** across **281 packages**. That is an **85.76% reduction in installed packages** and a **65.87% reduction in base OS footprint**, vastly exceeding the assignment's 40% reduction goal.
-4. **License & SBOM Tooling**: Using Buildroot's `make legal-info`, we generated a complete Software Bill of Materials in `dist/legal-info/manifest.csv`. Every single package was verified as open source, with **zero proprietary blobs**.
+1. **Compilation Feasibility & Empirical Verification**: Buildroot uses a streamlined Makefile architecture that compiles an entire appliance within standard 12 GB WSL2 environments. Conversely, Yocto's BitBake task orchestrator generates intermediate package feeds, requiring $\ge 16\text{ GB}$ host memory. Following our host memory unlock to 43.57 GB total memory, we successfully compiled Yocto Stage A from source in 75 minutes and cold-booted it across 10 QEMU benchmark runs. While Yocto achieves a 175.25 MB base image with a 3.15-second boot, it introduces 276 packages and 178 MB of loadable kernel modules.
+2. **Turnaround Velocity**: Buildroot allows us to perform an incremental rootfs repack in just **35 seconds** (`scripts/repack_rootfs.sh`), allowing rapid iteration of the HUD and microservices compared to multi-minute BitBake recipe executions.
+3. **Attack Surface & Footprint**: Buildroot generated an ultra-lean **315.32 megabyte** base operating system image containing exactly **40 packages**, compared to Debian 12's **924.0 megabytes** across **281 packages** and Yocto's **276 packages**. That is an **85.76% reduction in installed packages** and a **65.87% reduction in base OS footprint**, vastly exceeding the assignment's 40% reduction goal.
+4. **License & SBOM Tooling**: Using Buildroot's `make legal-info`, we generated a complete Software Bill of Materials in `dist/legal-info/manifest.csv`. Every single package was verified as open source, with **zero proprietary blobs**. Yocto also provided SPDX 2.2 documents via `create-spdx`.
 
 Based on these results, Buildroot was chosen as the operational distribution engine for Lazy OS. I will now hand over to Speaker 3 to present our edge ML runtime."
 
@@ -116,9 +116,9 @@ Lazy OS proves that purpose-built embedded appliance engineering outperforms gen
 
 ---
 
-### Question 2: "Why did you select Buildroot over Yocto, and why is Yocto marked as BLOCKED in your reports?"
+### Question 2: "Why did you select Buildroot over Yocto, and how do they compare empirically?"
 **Answer (Speaker 2 / Role D)**:  
-"We implemented both: `yocto/kas/lazy-base.yml` and `yocto/meta-lazy/` contain complete, pinned BitBake recipes. However, Yocto's BitBake engine requires parsing hundreds of Python classes and packages, imposing a hard $\ge 16\text{ GB}$ host memory threshold. Our development machine has 14.54 gigabytes of combined RAM and swap, which tripped the resource gate. Rather than fabricating benchmarks, we strictly followed our truth rules: we committed the reproducible Yocto layer, documented the gate in `docs/BLOCKED.md`, and deployed Buildroot. Buildroot compiles cleanly under 12 gigabytes of RAM, repacks in 35 seconds, and gave us an ultra-lean 40-package image with zero package management bloat."
+"We implemented and compiled both: `lazy-br2/` for Buildroot and `yocto/kas/lazy-base.yml` with `yocto/meta-lazy/` for Yocto Project. We benchmarked both across 10 cold-boot runs in QEMU. Empirically, Buildroot boots to a full 1080p Wayland GUI in 2.86 seconds, while Yocto boots to headless multi-user in 3.15 seconds. Buildroot was selected as our operational engine for three core reasons: first, turnaround velocity—Buildroot repacks in 35 seconds versus multi-minute BitBake runs; second, attack surface—Buildroot has exactly 40 packages versus Yocto's 276 packages and Debian's 281 packages; and third, architectural simplicity—Buildroot deploys a single monolithic immutable SquashFS image without the complexity of intermediate package managers."
 
 ---
 

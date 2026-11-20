@@ -1,6 +1,6 @@
 # Yocto Build Environment & Resource Gate Audit
 
-**Date**: 2026-11-20T20:51:00Z  
+**Date**: 2026-11-21T03:05:00+05:30  
 **Branch**: `feat/role-d-backup`  
 **Host Architecture**: x86_64  
 **OS**: Ubuntu 24.04.3 LTS (WSL2 Kernel 5.15.167.4-microsoft-standard-WSL2)  
@@ -13,26 +13,28 @@
 ### Memory (`free -m`)
 ```text
                total        used        free      shared  buff/cache   available
-Mem:           11814         554       11043           3         386       11259
-Swap:           3072           0        3072
-Total Memory (RAM + Swap): 14,886 MB (14.54 GB)
+Mem:           18994         575       18141           3         498       18419
+Swap:          24576           0       24576
+Total Memory (RAM + Swap): 43,570 MB (42.55 GB)
 ```
 
 ### Processor Cores (`nproc`)
 ```text
-16
+8
 ```
 
-### Native Linux Filesystem Disk Capacity (`df -h / ~`)
+### Native Linux Filesystem Disk Capacity (`df -h /home`)
 ```text
 Filesystem      Size  Used Avail Use% Mounted on
-/dev/sdd       1007G   51G  905G   6% /
+/dev/sdd       1007G   53G  904G   6% /
 ```
 
-### Windows Host Configuration (`.wslconfig`)
+### Windows Host Configuration (`C:\Users\len\.wslconfig`)
 ```text
-Path: C:\Users\len\.wslconfig
-Status: NOT PRESENT (Default WSL2 dynamic allocation active)
+[wsl2]
+memory=19GB
+processors=8
+swap=24GB
 ```
 
 ---
@@ -41,17 +43,17 @@ Status: NOT PRESENT (Default WSL2 dynamic allocation active)
 
 | Resource Gate | Minimum Required Threshold | Measured Value | Evaluation Result |
 | :--- | :--- | :--- | :---: |
-| **Native Storage** | $\ge 120\text{ GB}$ free on native ext4 (never `/mnt/c`) | **905 GB** available on `/dev/sdd` | **PASS** |
-| **CPU Concurrency** | $\ge 4$ cores | **16 cores** (`nproc`) | **PASS** |
-| **RAM + Swap** | $\ge 16.0\text{ GB}$ ($16,384\text{ MB}$) | **14.54 GB** ($14,886\text{ MB}$) | **FAIL (GATE TRIPPED)** |
+| **Native Storage** | $\ge 120\text{ GB}$ free on native ext4 (never `/mnt/c`) | **904 GB** available on `/dev/sdd` (`/home`) | **PASS** |
+| **CPU Concurrency** | $\ge 4$ cores | **8 cores** (`nproc`) | **PASS** |
+| **RAM + Swap** | $\ge 16.0\text{ GB}$ ($16,384\text{ MB}$) | **42.55 GB** ($43,570\text{ MB}$) | **PASS** |
 
 ---
 
 ## 3. Resource Gate Determination
 
-The host environment satisfies the storage requirement (905 GB available vs 120 GB required) and core concurrency (16 vCPUs), but fails the strict $\ge 16\text{ GB}$ RAM + swap gate (14.54 GB total memory). 
+Following the Windows host `.wslconfig` memory unlock and clean restart, the host environment satisfies all strict criteria:
+- **Native Storage**: 904 GB free (Threshold $\ge 120\text{ GB}$).
+- **CPU Concurrency**: 8 physical/virtual vCPUs (Threshold $\ge 4$ cores).
+- **RAM + Swap**: 43,570 MB (Threshold $\ge 16,384\text{ MB}$).
 
-Per **Step 2.3 of the Operating Directive**:
-- The exact measured values and required thresholds are recorded in `docs/BLOCKED.md` under `HUMAN ACTION REQUIRED / HOST RESOURCE GATE`.
-- The pinned Yocto layers (`yocto/kas/`, `yocto/meta-lazy/`) are committed cleanly so the Yocto recipe structure is reproducible on a $\ge 16\text{ GB}$ instance.
-- Runtime Yocto execution metrics are marked honestly as `BLOCKED (Host Resource Gate: 14.54 GB < 16.0 GB)` rather than fabricated or estimated.
+All resource gates are **UNBLOCKED / PASSED**. Yocto Stage A build is authorized on native ext4 (`~/yocto-build`).

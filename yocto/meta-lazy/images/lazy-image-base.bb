@@ -10,7 +10,7 @@ IMAGE_INSTALL = "\
     packagegroup-core-boot \
     systemd \
     systemd-extra-utils \
-    btrfs-progs \
+    btrfs-tools \
     python3-core \
     python3-json \
     python3-modules \

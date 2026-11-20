@@ -13,7 +13,7 @@ inherit systemd
 SYSTEMD_SERVICE:${PN} = "lazy-first-boot.service"
 SYSTEMD_AUTO_ENABLE = "enable"
 
-RDEPENDS:${PN} += "btrfs-progs util-linux"
+RDEPENDS:${PN} += "btrfs-tools util-linux"
 
 do_install() {
     install -d ${D}${sbindir}

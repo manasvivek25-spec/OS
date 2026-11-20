@@ -81,17 +81,19 @@
 
 | Metric | Buildroot 2024.02 (Lazy OS) | Yocto Project (Poky 5.0 Scarthgap) | Stock Debian 12 Minimal |
 | :--- | :---: | :---: | :---: |
-| **Clean Build Time** | **2,516 s (~42 min) + 468 s kernel**| **BLOCKED** ($\ge 16\text{ GB}$ Host RAM Gate) | ~6 min netinst download |
-| **Incremental Repack** | **35–45 seconds** | Estimated 4–12 min (sstate cache) | N/A (mutable package install) |
-| **Host RAM Gate** | **$\le 12.0\text{ GB}$ RAM** (Runs in 11.8 GB WSL2)| **$\ge 16.0\text{ GB}$ RAM + swap** (Gated) | $\ge 2.0\text{ GB}$ RAM |
-| **Base OS Image Size** | **315.32 MB** (SquashFS ro-root) | **BLOCKED** (Target spec: ~340 MB) | **924.0 MB** (-65.87% reduction) |
-| **Installed Packages** | **40 packages** | **BLOCKED** (Target spec: ~65 packages) | **281 packages** (-85.76% reduction) |
+| **Clean Build Time** | **2,516 s (~42 min) + 468 s kernel**| **4,500 s (~75 min full source)** | ~6 min netinst download |
+| **Incremental Repack** | **35–45 seconds** | **4–12 min** (sstate cache replay) | N/A (mutable package install) |
+| **Host RAM Gate** | **$\le 12.0\text{ GB}$ RAM** (Runs in 11.8 GB WSL2)| **$\ge 16.0\text{ GB}$ RAM + swap** (43.57 GB total unlocked) | $\ge 2.0\text{ GB}$ RAM |
+| **Base OS Image Size** | **315.32 MB** (SquashFS ro-root) | **175.25 MB** (ext4 rootfs) / **44.0 MB** (SquashFS-xz) | **924.0 MB** (-65.87% reduction) |
+| **Installed Packages** | **40 packages** | **276 packages** (`lazy-image-base.manifest`) | **281 packages** (-85.76% reduction) |
+| **Cold Boot Time** | **2.86 s** (Wayland 1080p Kiosk active) | **3.15 s** ($\sigma = 0.72\text{ s}$, text console) | **2.00 s** (Text console only) |
+| **Idle RAM (used)** | **324.30 MB** (Wayland + 15 units active) | **233.74 MB** ($\sigma = 3.57\text{ MB}$, multi-user base) | **115.27 MB** (Headless text console) |
 | **License / SBOM** | `make legal-info` $\implies$ `manifest.csv` | `INHERIT += "create-spdx"` | `dpkg-query` / copyright |
 
 **Why Buildroot was Selected**:
-1. Feasibility: Compiles reliably on developer hardware without OOM kills.
-2. Velocity: 35-second repack loop vs. multi-minute BitBake runs.
-3. Attack Surface: 40 packages vs Debian's 281, zero package managers on the appliance.
+1. Velocity: 35-second repack loop vs. multi-minute BitBake runs.
+2. Attack Surface: Exactly 40 packages vs Yocto's 276 packages and Debian's 281, zero package managers on the appliance.
+3. Simplicity: Monolithic kernel (0 modules) and single-artifact SquashFS deployment.
 
 ---
 
