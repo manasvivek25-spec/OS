@@ -93,5 +93,21 @@
       "mem_used_mb": 146.57,
       "log_path": "bench/results/debian12_runs/run_10.log"
     }
-  ]
+  ],
+  "ml_inference": {
+    "model": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+    "license": "Apache-2.0",
+    "engine": "llama.cpp",
+    "parameters": "1.5B",
+    "quantization": "Q4_K_M",
+    "threads": 4,
+    "simd": "AVX2",
+    "context_size": 2048,
+    "hardware_profile": "4 vCPU / 4 GB RAM (QEMU x86_64, host CPU passthrough)",
+    "ttft_ms": 142.6,
+    "prompt_tok_s": 45.8,
+    "gen_tok_s": 18.4,
+    "peak_rss_mb": 1240.5,
+    "cpu_util_pct": 88.4
+  }
 }
