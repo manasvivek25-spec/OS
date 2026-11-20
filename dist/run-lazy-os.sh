@@ -18,10 +18,15 @@ if [ ! -f "${KERNEL}" ]; then
 fi
 
 USER_DISPLAY=""
+FULLSCREEN_REQ=0
 while [[ $# -gt 0 ]]; do
     case "$1" in
         --headless|-n)
             USER_DISPLAY="none"
+            shift
+            ;;
+        --fullscreen|-f)
+            FULLSCREEN_REQ=1
             shift
             ;;
         --display|-d)
@@ -43,10 +48,17 @@ if [ -z "${WAYLAND_DISPLAY:-}" ] && [ -e /mnt/wslg/runtime-dir/wayland-0 ]; then
     export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
 fi
 
+# Prefer X11 backend for GTK under WSLg to avoid Wayland seat grab assertion failures
+# and ensure the host window receives mouse selection, focus, and titlebar controls cleanly
+export GDK_BACKEND=x11
+
 if [ -n "${USER_DISPLAY}" ]; then
     DISPLAY_OPT="-display ${USER_DISPLAY}"
-elif [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
-    DISPLAY_OPT="-display gtk,full-screen=on,zoom-to-fit=on,grab-on-hover=on,show-menubar=off"
+elif [ -n "${DISPLAY:-}" ] || [ -n "${WAYLAND_DISPLAY:-}" ]; then
+    DISPLAY_OPT="-display gtk,zoom-to-fit=on,show-menubar=on"
+    if [ "${FULLSCREEN_REQ}" -eq 1 ]; then
+        DISPLAY_OPT="${DISPLAY_OPT},full-screen=on"
+    fi
 else
     DISPLAY_OPT="-display none"
 fi

@@ -6,7 +6,8 @@
 #>
 
 param (
-    [switch]$Headless
+    [switch]$Headless,
+    [switch]$FullScreen
 )
 
 $ScriptDir = Split-Path -Parent $MyInvocation.MyCommand.Path
@@ -18,8 +19,12 @@ Write-Host "==================================================" -ForegroundColor
 Write-Host "Command Center URL: http://127.0.0.1:8766/" -ForegroundColor Green
 Write-Host "==================================================" -ForegroundColor Cyan
 
+$Args = ""
 if ($Headless) {
-    wsl.exe -d Ubuntu -- bash -c "/mnt/c/Users/len/OS/dist/run-lazy-os.sh --headless"
-} else {
-    wsl.exe -d Ubuntu -- bash -c "/mnt/c/Users/len/OS/dist/run-lazy-os.sh"
+    $Args += " --headless"
 }
+if ($FullScreen) {
+    $Args += " --fullscreen"
+}
+
+wsl.exe -d Ubuntu -- bash -c "/mnt/c/Users/len/OS/dist/run-lazy-os.sh$Args"
