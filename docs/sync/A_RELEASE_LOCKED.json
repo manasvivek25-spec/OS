@@ -1,0 +1,7 @@
+{
+  "rev": 1,
+  "commit": "49f1ad7be7ec3db0d070a8e50d0f6a01d182fe83",
+  "image": "dist/lazy-os.img",
+  "model": "Qwen2.5-1.5B-Instruct-Q4_K_M.gguf",
+  "timestamp": "2026-11-20T18:53:00Z"
+}
