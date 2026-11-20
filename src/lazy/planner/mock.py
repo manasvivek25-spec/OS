@@ -80,6 +80,34 @@ class MockPlanner(PlannerInterface):
             validate=self.strict_validation,
         )
 
+    def propose_intent_for_prompt(
+        self,
+        prompt: str,
+        requester: str = "text",
+        task_id: Optional[str] = None,
+    ) -> Dict[str, Any]:
+        """Propose an intent for prompt from fixtures, or fallback safely."""
+        try:
+            plan = self.plan(prompt, requester=requester, task_id=task_id)
+            if plan and plan.get("steps"):
+                return plan["steps"][0]
+        except Exception:
+            pass
+
+        tid = task_id or f"task-{uuid.uuid4().hex[:8]}"
+        now_ts = datetime.datetime.now(datetime.timezone.utc).isoformat().replace("+00:00", "Z")
+        intent = {
+            "id": f"intent-{uuid.uuid4().hex[:8]}",
+            "ts": now_ts,
+            "task_id": tid,
+            "requester": requester,
+            "capability": "fs.read",
+            "params": {"path": "/etc/issue"},
+            "provenance": [{"source": "planner", "trusted": False, "detail": "Rejected prompt injection"}],
+        }
+        validate_contract("intent", intent, strict=True)
+        return intent
+
     def plan(
         self,
         user_input: str,

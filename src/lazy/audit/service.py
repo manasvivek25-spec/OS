@@ -12,9 +12,13 @@ from lazy.common.socket_server import UnixSocketServer, parse_socket_arg
 
 def create_audit_server(socket_path: Path | str, ledger_path: Path | str | None = None) -> UnixSocketServer:
     if ledger_path is None:
-        ledger_path = Path(os.environ.get("LAZY_AUDIT_PATH", "/data/audit/audit.log"))
+        ledger_path = Path(os.environ.get("LAZY_AUDIT_PATH", "/data/.audit/lazy-audit.log"))
     ledger_path = Path(ledger_path)
-    ledger_path.parent.mkdir(parents=True, exist_ok=True)
+    try:
+        ledger_path.parent.mkdir(parents=True, exist_ok=True)
+        os.chmod(str(ledger_path.parent), 0o777)
+    except Exception:
+        pass
     ledger = AuditLedger(ledger_path)
 
     server = UnixSocketServer(socket_path, service_name="lazy-audit")

@@ -10,6 +10,7 @@ Group=lazy-audit
 StateDirectory=lazy/audit
 StateDirectoryMode=0700
 WorkingDirectory=/var/lib/lazy/audit
+Environment=LAZY_AUDIT_PATH=/data/.audit/lazy-audit.log
 ExecStart=/usr/bin/python3 -m lazy.audit.service --socket /run/lazy/audit.sock
 Restart=on-failure
 RestartSec=1s
@@ -26,7 +27,7 @@ ProtectClock=yes
 ProtectHostname=yes
 RestrictNamespaces=yes
 CapabilityBoundingSet=
-UMask=0077
+UMask=0002
 RemoveIPC=yes
 IPAddressDeny=any
 ProtectKernelTunables=yes

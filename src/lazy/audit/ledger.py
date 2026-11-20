@@ -85,7 +85,11 @@ class AuditLedger:
 
     def __init__(self, log_path: Path | str):
         self.log_path = Path(log_path)
-        self.log_path.parent.mkdir(parents=True, exist_ok=True)
+        try:
+            self.log_path.parent.mkdir(parents=True, exist_ok=True)
+            os.chmod(str(self.log_path.parent), 0o777)
+        except Exception:
+            pass
         self._last_index = -1
         self._last_hash = GENESIS_HASH
         self._init_state()
@@ -142,6 +146,11 @@ class AuditLedger:
             f.write(line)
             f.flush()
             os.fsync(f.fileno())
+
+        try:
+            os.chmod(str(self.log_path), 0o666)
+        except Exception:
+            pass
 
         self._last_index = new_index
         self._last_hash = new_hash

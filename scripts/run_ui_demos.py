@@ -64,6 +64,72 @@ def http_req(base_url: str, method: str, path: str, data: Optional[Dict[str, Any
         return 0, {"error": str(e)}
 
 
+def ppm_to_png(ppm_path: str | Path, png_path: str | Path) -> bool:
+    """Convert PPM P6 image to PNG using PIL if available, or pure Python fallback."""
+    try:
+        from PIL import Image
+        with Image.open(str(ppm_path)) as img:
+            img.save(str(png_path), "PNG")
+        return True
+    except Exception:
+        pass
+
+    try:
+        data = Path(ppm_path).read_bytes()
+        idx = 0
+        tokens = []
+        while len(tokens) < 4 and idx < len(data):
+            while idx < len(data) and data[idx:idx+1].isspace():
+                idx += 1
+            if idx < len(data) and data[idx:idx+1] == b'#':
+                while idx < len(data) and data[idx:idx+1] not in (b'\n', b'\r'):
+                    idx += 1
+                continue
+            tok_start = idx
+            while idx < len(data) and not data[idx:idx+1].isspace():
+                idx += 1
+            if tok_start < idx:
+                tokens.append(data[tok_start:idx].decode('ascii', errors='ignore'))
+
+        if len(tokens) < 4 or tokens[0] != 'P6':
+            return False
+
+        while idx < len(data) and data[idx:idx+1].isspace():
+            idx += 1
+            break
+
+        width = int(tokens[1])
+        height = int(tokens[2])
+        pixel_data = data[idx:]
+        row_len = width * 3
+
+        if len(pixel_data) < row_len * height:
+            return False
+
+        raw_scanlines = bytearray()
+        for y in range(height):
+            raw_scanlines.append(0)
+            row_start = y * row_len
+            raw_scanlines.extend(pixel_data[row_start:row_start + row_len])
+
+        def png_chunk(chunk_type: bytes, chunk_data: bytes) -> bytes:
+            chunk_len = struct.pack(">I", len(chunk_data))
+            crc = struct.pack(">I", zlib.crc32(chunk_type + chunk_data) & 0xffffffff)
+            return chunk_len + chunk_type + chunk_data + crc
+
+        png_bytes = bytearray(b"\x89PNG\r\n\x1a\n")
+        ihdr_data = struct.pack(">IIBBBBB", width, height, 8, 2, 0, 0, 0)
+        png_bytes.extend(png_chunk(b"IHDR", ihdr_data))
+        compressed = zlib.compress(bytes(raw_scanlines), level=6)
+        png_bytes.extend(png_chunk(b"IDAT", compressed))
+        png_bytes.extend(png_chunk(b"IEND", b""))
+        Path(png_path).write_bytes(png_bytes)
+        return True
+    except Exception as e:
+        print(f"    [PPM->PNG Error] {e}")
+        return False
+
+
 def create_1080p_png(output_path: Path, title: str, subtitle: str, color_theme: str = "#0d1117") -> None:
     """Generate a valid, high-fidelity 1920x1080 24-bit PNG with zero external dependencies."""
     output_path.parent.mkdir(parents=True, exist_ok=True)
@@ -131,7 +197,34 @@ class UIDemoHarness:
 
     def capture_screendump(self, filename: str, title: str, subtitle: str) -> Path:
         out_file = self.output_dir / filename
-        # If reference screenshot exists in docs/demo/screens, use it or synthesize
+        # Prioritize live QEMU monitor scanout if running
+        sock_path = "/tmp/lazy-qemu-monitor.sock"
+        ppm_path = f"/tmp/{filename}.ppm"
+        if os.path.exists(sock_path):
+            try:
+                import socket
+                s = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+                s.settimeout(3.0)
+                s.connect(sock_path)
+                time.sleep(0.2)
+                try:
+                    s.recv(1024)
+                except Exception:
+                    pass
+                s.sendall(f"screendump {ppm_path}\n".encode("utf-8"))
+                time.sleep(1.2)
+                s.close()
+                if os.path.exists(ppm_path):
+                    ok = ppm_to_png(ppm_path, out_file)
+                    try:
+                        os.unlink(ppm_path)
+                    except Exception:
+                        pass
+                    if ok:
+                        return out_file
+            except Exception as e:
+                print(f"    [Warning] QEMU screendump attempt failed: {e}")
+        # Fallback to synthesized demo card only if no live QEMU scanout
         create_1080p_png(out_file, title, subtitle)
         return out_file
 

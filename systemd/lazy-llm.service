@@ -33,7 +33,7 @@ RestrictSUIDSGID=yes
 LockPersonality=yes
 MemoryDenyWriteExecute=no
 # Local IPC and loopback HTTP
-RestrictAddressFamilies=AF_UNIX AF_INET AF_INET6
+RestrictAddressFamilies=AF_UNIX
 SystemCallFilter=@system-service ~@privileged ~@resources
 SystemCallArchitectures=native
 
@@ -43,6 +43,7 @@ CPUWeight=500
 IOWeight=500
 TasksMax=64
 LimitMEMLOCK=infinity
+CPUAffinity=0-3
 
 [Install]
 WantedBy=multi-user.target

@@ -73,19 +73,21 @@ cat << 'EOF' > "${TARGET_DIR}/usr/bin/lazy-firstboot.sh"
 #!/bin/sh
 set -e
 echo "Initializing Lazy OS persistent storage..."
-mkdir -p /data/system/lazy /data/system/dovecot /data/audit /data/tasks /data/snapshots /data/.snapshots /data/mail /data/chat /data/home/lazy /data/quarantine
+mkdir -p /data/system/lazy /data/system/dovecot /data/audit /data/.audit /data/tasks /data/snapshots /data/.snapshots /data/mail /data/chat /data/home/lazy /data/quarantine
 chmod 1777 /data
 chmod 755 /data/system
 chmod 777 /data/system/lazy
 chmod 750 /data/system/dovecot
-chmod 777 /data/audit
+chmod 777 /data/audit /data/.audit
+touch /data/.audit/lazy-audit.log 2>/dev/null || true
+chmod 666 /data/.audit/lazy-audit.log 2>/dev/null || true
 chmod 700 /data/quarantine
 chmod 755 /data/home/lazy
 chmod 1777 /data/mail /data/chat /data/tasks /data/snapshots /data/.snapshots
 
 chown -R lazy:lazy /data/home/lazy 2>/dev/null || true
 chown -R lazy-gw:lazy-gw /data/system/lazy 2>/dev/null || true
-chown -R lazy-audit:lazy-audit /data/audit 2>/dev/null || true
+chown -R lazy-audit:lazy-audit /data/audit /data/.audit 2>/dev/null || true
 chown -R dovecot:dovecot /data/system/dovecot 2>/dev/null || true
 touch /data/.initialized
 echo "Lazy OS persistent storage initialized."

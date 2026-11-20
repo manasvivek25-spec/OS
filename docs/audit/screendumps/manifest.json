@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-11-20T17:38:18.079602+00:00",
+  "timestamp": "2026-11-20T20:29:41.683071+00:00",
   "target_url": "http://127.0.0.1:8766",
   "total_scenarios": 12,
   "passed_scenarios": 12,
@@ -10,7 +10,7 @@
       "name": "Live Telemetry",
       "status": "PASS",
       "screendump": "01_telemetry.png",
-      "http_status": 0
+      "http_status": 200
     },
     {
       "id": 2,

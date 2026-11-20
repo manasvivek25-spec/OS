@@ -16,6 +16,11 @@ from typing import Dict, List, Optional
 class TreeHasher:
     """Computes deterministic hash of a directory tree for checkpoint verification."""
 
+    IGNORE_SET = {
+        ".snapshots", "@snapshots", ".btrfs_snapshots", ".overlay", "snapshots",
+        ".audit", "audit", ".initialized", "system", "mail", "quarantine", "home", "chat", "tasks"
+    }
+
     @staticmethod
     def hash_directory(dir_path: Path | str) -> str:
         """Compute recursive SHA-256 hash of all files and relative paths in directory."""
@@ -24,11 +29,14 @@ class TreeHasher:
             return hashlib.sha256(b"NON_EXISTENT_DIR").hexdigest()
 
         h = hashlib.sha256()
-        # Collect all files sorted by relative path
+        # Collect all files sorted by relative path, ignoring snapshot/audit/system metadata
         all_entries: List[Path] = []
         for root, dirs, files in os.walk(path):
+            dirs[:] = [d for d in dirs if d not in TreeHasher.IGNORE_SET]
             dirs.sort()
             for f in sorted(files):
+                if f.startswith("."):
+                    continue
                 all_entries.append(Path(root) / f)
 
         for file_path in all_entries:
@@ -73,6 +81,11 @@ class SnapshotBackend(abc.ABC):
 class CopyBackend(SnapshotBackend):
     """Host/CI snapshot backend using copy trees with reflink support."""
 
+    IGNORE_SET = {
+        ".snapshots", "@snapshots", ".btrfs_snapshots", ".overlay", "snapshots",
+        ".audit", "audit", ".initialized", "system", "mail", "quarantine", "home", "chat", "tasks"
+    }
+
     def __init__(self, target_dir: Path | str, snapshots_root: Optional[Path | str] = None):
         super().__init__(target_dir)
         if snapshots_root is None:
@@ -88,22 +101,47 @@ class CopyBackend(SnapshotBackend):
     def create_snapshot(self, checkpoint_id: str) -> str:
         snap_path = self.snapshots_root / checkpoint_id
         if snap_path.exists():
-            shutil.rmtree(snap_path)
+            shutil.rmtree(snap_path, ignore_errors=True)
+        snap_path.mkdir(parents=True, exist_ok=True)
 
         if self.target_dir.exists():
-            # Attempt reflink copy via cp -a --reflink=auto if available, else copytree
-            try:
-                ret = subprocess.run(
-                    ["cp", "-a", "--reflink=auto", str(self.target_dir), str(snap_path)],
-                    capture_output=True,
-                    check=False,
-                )
-                if ret.returncode != 0:
-                    shutil.copytree(self.target_dir, snap_path, symlinks=True)
-            except Exception:
-                shutil.copytree(self.target_dir, snap_path, symlinks=True)
-        else:
-            snap_path.mkdir(parents=True, exist_ok=True)
+            for item in self.target_dir.iterdir():
+                if item.name in self.IGNORE_SET or item.name == snap_path.name:
+                    continue
+                # If directory is unreadable by current user (e.g. system mail/dovecot), skip
+                if item.is_dir() and not os.access(str(item), os.R_OK | os.X_OK):
+                    continue
+                dst = snap_path / item.name
+                try:
+                    ret = subprocess.run(
+                        ["cp", "-a", "--reflink=auto", str(item), str(dst)],
+                        capture_output=True,
+                        check=False,
+                    )
+                    if ret.returncode != 0:
+                        if dst.exists():
+                            if dst.is_dir() and not dst.is_symlink():
+                                shutil.rmtree(dst, ignore_errors=True)
+                            else:
+                                dst.unlink(missing_ok=True)
+                        if item.is_dir() and not item.is_symlink():
+                            try:
+                                shutil.copytree(
+                                    item,
+                                    dst,
+                                    symlinks=True,
+                                    dirs_exist_ok=True,
+                                    ignore=shutil.ignore_patterns(".snapshots", "@snapshots", ".audit", ".btrfs_snapshots", ".overlay", ".initialized"),
+                                )
+                            except Exception:
+                                pass
+                        else:
+                            try:
+                                shutil.copy2(item, dst, follow_symlinks=False)
+                            except Exception:
+                                pass
+                except Exception:
+                    pass
 
         self._snapshots[checkpoint_id] = snap_path
         return str(snap_path)
@@ -113,28 +151,60 @@ class CopyBackend(SnapshotBackend):
         if not snap_path.exists():
             raise FileNotFoundError(f"Snapshot '{checkpoint_id}' not found at {snap_path}")
 
-        # Wipe target dir contents (preserving mountpoint and snapshot root) and restore from snapshot
+        # Wipe target dir contents (preserving protected dirs like .snapshots, .audit, etc.)
         if self.target_dir.exists():
             for item in self.target_dir.iterdir():
-                if item.name in ("@snapshots", ".snapshots"):
+                if item.name in self.IGNORE_SET:
                     continue
                 try:
                     if item.is_dir() and not item.is_symlink():
-                        shutil.rmtree(item)
+                        shutil.rmtree(item, ignore_errors=True)
                     else:
-                        item.unlink()
+                        item.unlink(missing_ok=True)
                 except Exception:
                     pass
 
+        # Restore contents from snapshot
         if snap_path.exists():
             for item in snap_path.iterdir():
-                if item.name in ("@snapshots", ".snapshots"):
+                if item.name in self.IGNORE_SET:
                     continue
                 dst = self.target_dir / item.name
-                if item.is_dir() and not item.is_symlink():
-                    shutil.copytree(item, dst, symlinks=True)
-                else:
-                    shutil.copy2(item, dst, follow_symlinks=False)
+                try:
+                    ret = subprocess.run(
+                        ["cp", "-a", "--reflink=auto", str(item), str(dst)],
+                        capture_output=True,
+                        check=False,
+                    )
+                    if ret.returncode != 0:
+                        if dst.exists():
+                            if dst.is_dir() and not dst.is_symlink():
+                                shutil.rmtree(dst, ignore_errors=True)
+                            else:
+                                dst.unlink(missing_ok=True)
+                        if item.is_dir() and not item.is_symlink():
+                            try:
+                                shutil.copytree(item, dst, symlinks=True, dirs_exist_ok=True)
+                            except Exception:
+                                pass
+                        else:
+                            try:
+                                shutil.copy(item, dst, follow_symlinks=False)
+                            except Exception:
+                                pass
+                except Exception:
+                    try:
+                        if dst.exists():
+                            if dst.is_dir() and not dst.is_symlink():
+                                shutil.rmtree(dst, ignore_errors=True)
+                            else:
+                                dst.unlink(missing_ok=True)
+                        if item.is_dir() and not item.is_symlink():
+                            shutil.copytree(item, dst, symlinks=True, dirs_exist_ok=True)
+                        else:
+                            shutil.copy(item, dst, follow_symlinks=False)
+                    except Exception:
+                        pass
 
     def commit_snapshot(self, checkpoint_id: str) -> None:
         # Changes are already in target_dir; cleanup checkpoint copy

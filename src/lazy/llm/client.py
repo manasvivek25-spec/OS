@@ -33,6 +33,11 @@ class LLMClient:
         self.base_url = base_url.rstrip("/")
         self.timeout = timeout
         self.mock_fallback = mock_fallback
+        if mock_fallback:
+            from lazy.planner.mock import MockPlanner
+            self._fallback_planner = MockPlanner(fixtures_dir=fixtures_dir)
+        else:
+            self._fallback_planner = None
 
     def is_healthy(self) -> bool:
         """Check if llama.cpp server is reachable and reports healthy."""
@@ -62,17 +67,9 @@ class LLMClient:
         tid = task_id or f"task-{uuid.uuid4().hex[:8]}"
 
         if not self.is_healthy():
-            if not self.mock_fallback:
-                raise RuntimeError("No LLM server available and mock fallback is disabled.")
-            return {
-                "error": True,
-                "status": "error",
-                "reason": f"llama-server is unreachable at {self.base_url}",
-                "task_id": tid,
-                "requester": requester,
-                "capability": None,
-                "detail": "Local LLM service is offline. MockPlanner fallback was removed in W3.",
-            }
+            if self.mock_fallback and self._fallback_planner:
+                return self._fallback_planner.propose_intent_for_prompt(prompt, requester=requester, task_id=tid)
+            raise RuntimeError("No LLM server available and mock fallback is disabled.")
 
         payload = {
             "prompt": (

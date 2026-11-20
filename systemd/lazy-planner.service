@@ -44,6 +44,7 @@ MemoryMax=512M
 CPUWeight=400
 IOWeight=400
 TasksMax=32
+CPUAffinity=0-3
 
 [Install]
 WantedBy=multi-user.target
