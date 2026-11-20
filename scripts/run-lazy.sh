@@ -76,6 +76,15 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Auto-detect WSLg display if not explicitly exported in subshell
+if [ -z "${DISPLAY:-}" ] && [ -e /tmp/.X11-unix/X0 ]; then
+    export DISPLAY=:0
+fi
+if [ -z "${WAYLAND_DISPLAY:-}" ] && [ -e /mnt/wslg/runtime-dir/wayland-0 ]; then
+    export WAYLAND_DISPLAY=wayland-0
+    export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+fi
+
 # Check display: GTK if WSLg / X11 / Wayland is available, else nographic/none
 if [ -n "${USER_DISPLAY}" ]; then
     DISPLAY_OPT="-display ${USER_DISPLAY}"

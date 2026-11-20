@@ -34,6 +34,15 @@ while [[ $# -gt 0 ]]; do
     esac
 done
 
+# Auto-detect WSLg display if not explicitly exported in subshell
+if [ -z "${DISPLAY:-}" ] && [ -e /tmp/.X11-unix/X0 ]; then
+    export DISPLAY=:0
+fi
+if [ -z "${WAYLAND_DISPLAY:-}" ] && [ -e /mnt/wslg/runtime-dir/wayland-0 ]; then
+    export WAYLAND_DISPLAY=wayland-0
+    export XDG_RUNTIME_DIR=/mnt/wslg/runtime-dir
+fi
+
 if [ -n "${USER_DISPLAY}" ]; then
     DISPLAY_OPT="-display ${USER_DISPLAY}"
 elif [ -n "${WAYLAND_DISPLAY:-}" ] || [ -n "${DISPLAY:-}" ]; then
@@ -63,7 +72,10 @@ exec qemu-system-x86_64 \
     -drive file="${DISK}",format=raw,if=virtio \
     -append "console=ttyS0 console=tty0 root=/dev/vda2 ro rootwait quiet lazy_interactive=1" \
     ${DISPLAY_OPT} \
-    -device virtio-gpu-pci \
+    -vga none \
+    -device virtio-gpu-pci,id=gpu0 \
     -device virtio-keyboard-pci \
     -device virtio-tablet-pci \
+    -monitor unix:/tmp/qemu-monitor.sock,server,nowait \
+    -serial unix:/tmp/qemu-serial.sock,server,nowait \
     -netdev user,id=net0,hostfwd=tcp::8766-:8765 -device virtio-net-pci,netdev=net0

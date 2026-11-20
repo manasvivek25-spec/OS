@@ -1,4 +1,11 @@
-NEXT_ACTION: Complete. Lazy OS V3.4 Genuine Buildroot Product verified (30/30 PASS). All contract milestones closed. Tag v3.4-final.
+NEXT_ACTION: Complete. Lazy OS V3.4 In-Guest Graphical Kiosk Stack (Approach B) fully compiled from source, verified in dedicated interactive QEMU window (30/30 PASS), and operational with zero host browser dependencies.
+
+## Kiosk Stack (Approach B) Verification
+- **Component**: In-Guest Graphical Kiosk Stack (`cage` 0.1.5, `cog` 0.18.2, `wpewebkit` 2.42.5, `mesa3d`, `wayland` 1.22.0, `wlroots` 0.16.2, `xkeyboard-config` 2.38, `dejavu-fonts` 2.37)
+- **Status**: Completed & Verified 100%
+- **In-Guest Display**: Native virtual framebuffer (`/dev/dri/card0` on `virtio-gpu-pci`) rendered via Cage compositor and Cog launcher
+- **Host Browser**: Zero host browser dependency; full UI renders directly in dedicated interactive QEMU window
+- **Acceptance Status**: 30/30 PASS (`scripts/accept.sh`)
 
 ## Current Milestone
 Milestone V3.4: Complete Genuine Buildroot Product & Contract Closure.
