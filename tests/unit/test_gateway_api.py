@@ -10,7 +10,9 @@ def api_handler(tmp_path):
     data_dir = tmp_path / "data"
     data_dir.mkdir(parents=True, exist_ok=True)
     audit_file = tmp_path / "lazy-audit.log"
+    repo_root = Path(__file__).resolve().parent.parent.parent
     return GatewayAPIHandler(
+        repo_root=repo_root,
         data_dir=data_dir,
         audit_log_path=audit_file
     )
