@@ -1,0 +1,117 @@
+{
+  "distribution": "Yocto Project (Poky 5.0 Scarthgap)",
+  "target_image": "lazy-image-base",
+  "machine": "qemux86-64",
+  "kernel_version": "6.6.160-yocto-standard",
+  "runs_count": 10,
+  "boot_time_mean_s": 3.15,
+  "boot_time_std_s": 0.72,
+  "idle_ram_used_mean_mb": 233.74,
+  "idle_ram_used_std_mb": 3.57,
+  "package_count": 276,
+  "kernel_image_mb": 9.11,
+  "rootfs_installed_mb": 175.25,
+  "timestamp": "2026-11-20T23:31:09Z",
+  "runs": [
+    {
+      "run": 1,
+      "boot_time_s": 2.9817,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1750.21,
+      "mem_used_mb": 236.64,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_1.log"
+    },
+    {
+      "run": 2,
+      "boot_time_s": 3.0684,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1757.47,
+      "mem_used_mb": 229.38,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_2.log"
+    },
+    {
+      "run": 3,
+      "boot_time_s": 2.8869,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1750.49,
+      "mem_used_mb": 236.36,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_3.log"
+    },
+    {
+      "run": 4,
+      "boot_time_s": 2.8332,
+      "mem_total_mb": 1986.84,
+      "mem_available_mb": 1751.98,
+      "mem_used_mb": 234.86,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_4.log"
+    },
+    {
+      "run": 5,
+      "boot_time_s": 2.8206,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1749.72,
+      "mem_used_mb": 237.13,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_5.log"
+    },
+    {
+      "run": 6,
+      "boot_time_s": 2.8699,
+      "mem_total_mb": 1986.84,
+      "mem_available_mb": 1756.7,
+      "mem_used_mb": 230.14,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_6.log"
+    },
+    {
+      "run": 7,
+      "boot_time_s": 2.8744,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1748.54,
+      "mem_used_mb": 238.31,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_7.log"
+    },
+    {
+      "run": 8,
+      "boot_time_s": 2.9073,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1757.48,
+      "mem_used_mb": 229.37,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_8.log"
+    },
+    {
+      "run": 9,
+      "boot_time_s": 5.3085,
+      "mem_total_mb": 1986.84,
+      "mem_available_mb": 1750.74,
+      "mem_used_mb": 236.1,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_9.log"
+    },
+    {
+      "run": 10,
+      "boot_time_s": 2.9498,
+      "mem_total_mb": 1986.85,
+      "mem_available_mb": 1757.78,
+      "mem_used_mb": 229.07,
+      "kernel_release": "6.6.160-yocto-standard",
+      "systemd_state": "",
+      "log_path": "bench/results/yocto_runs/run_10.log"
+    }
+  ]
+}

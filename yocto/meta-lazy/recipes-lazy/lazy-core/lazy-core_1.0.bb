@@ -4,14 +4,14 @@ HOMEPAGE = "https://github.com/lazy-os/lazy-os"
 LICENSE = "MIT"
 LIC_FILES_CHKSUM = "file://${COMMON_LICENSE_DIR}/MIT;md5=0835ade698e0bcf8506ecda2f7b4f302"
 
-inherit systemd useradd
+inherit useradd
 
 RDEPENDS:${PN} += " \
     python3-core \
     python3-json \
     python3-modules \
     python3-pyyaml \
-    btrfs-progs \
+    btrfs-tools \
     util-linux \
 "
 
@@ -35,24 +35,10 @@ USERADD_PARAM:${PN} = " \
     --system --no-create-home --shell /bin/false --user-group lazy-sandbox \
 "
 
-SYSTEMD_SERVICE:${PN} = " \
-    lazy-gateway.service \
-    lazy-planner.service \
-    lazy-llm.service \
-    lazy-policy.service \
-    lazy-tasks.service \
-    lazy-broker-fs.service \
-    lazy-broker-sys.service \
-    lazy-broker-hw.service \
-    lazy-broker-web.service \
-    lazy-broker-comms.service \
-    lazy-secrets.service \
-    lazy-outbox.service \
-    lazy-fetcher.service \
-    lazy-routines.service \
-    lazy-audit.service \
-"
-SYSTEMD_AUTO_ENABLE = "enable"
+# Note: Full runtime service units are reserved for Stage C appliance deployment.
+# Stage A base profile provides user accounts, groups, sysroot, and core dependencies.
+
+ALLOW_EMPTY:${PN} = "1"
 
 FILES:${PN} += " \
     ${libdir}/python3*/dist-packages/lazy \

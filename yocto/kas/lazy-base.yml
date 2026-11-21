@@ -33,3 +33,13 @@ local_conf_header:
     EXTRA_IMAGE_FEATURES = "debug-tweaks ssh-server-openssh"
   disk-space: |
     BB_DISKMON_DIRS = ""
+  image-types: |
+    IMAGE_FSTYPES = "squashfs-xz ext4"
+  build-hygiene: |
+    DL_DIR = "/home/manas/yocto-cache/downloads"
+    SSTATE_DIR = "/home/manas/yocto-cache/sstate-cache"
+    INHERIT += "rm_work"
+    BB_NUMBER_THREADS = "6"
+    PARALLEL_MAKE = "-j 6"
+    BB_HASHSERVE = "auto"
+    SSTATE_MIRRORS ?= "file://.* https://sstate.yoctoproject.org/all/PATH;downloadfilename=PATH"
