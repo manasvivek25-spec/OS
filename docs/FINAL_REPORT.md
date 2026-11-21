@@ -61,7 +61,7 @@ Both primary embedded Linux build ecosystems were implemented and evaluated in t
 | **Layer Structure** | `lazy-br2/` external tree | `yocto/kas/` + `meta-lazy/` layer | Monolithic Debian upstream repositories |
 | **Clean Build Time** | **2,516 s (42 min legal-info) + 468 s kernel** | **4,500 s (~75 min full source)** | ~6 min download & debootstrap |
 | **Incremental Repack** | **35–45 s** (`scripts/repack_rootfs.sh`) | **4–12 min** (sstate cache replay) | N/A (mutable package install) |
-| **Host RAM Gate** | **$\le 12.0\text{ GB}$ RAM** (Builds in 11.8 GB WSL2) | **$\ge 16.0\text{ GB}$ RAM + swap** (43.57 GB total unlocked) | $\ge 2.0\text{ GB}$ RAM |
+| **Host RAM Gate** | **$\le 12.0\text{ GB}$ RAM** (Builds in 11.8 GB WSL2) | **$\ge 16.0\text{ GB}$ RAM + swap** (42.55 GiB (43,570 MiB) unlocked) | $\ge 2.0\text{ GB}$ RAM |
 | **Build Output Disk** | **14.2 GB** (`/home/manas/lazy-build/output`) | **28.0 GB** (17 GB build + 11 GB cache with `rm_work`) | ~2.5 GB apt cache |
 | **Base OS Image Size** | **315.32 MB** (SquashFS ro-root) | **175.25 MB** (ext4 rootfs) / **44.0 MB** (SquashFS-xz) | **924.0 MB** (-65.87% vs Lazy OS) |
 | **Installed Packages** | **40 packages** | **276 packages** (`lazy-image-base.rootfs.manifest`) | **281 packages** (-85.76% vs Lazy OS) |
@@ -76,7 +76,7 @@ Both primary embedded Linux build ecosystems were implemented and evaluated in t
 Buildroot was chosen as the operational distribution engine for Lazy OS:
 1. **Developer Velocity**: Incremental userland and HUD updates compile and deploy in **35 seconds** (`scripts/repack_rootfs.sh`), compared to multi-minute BitBake recipe executions.
 2. **Appliance Simplicity & Minimal Attack Surface**: Exactly **40 packages** vs Yocto's **276 packages** and Debian's **281 packages** (-85.8%), zero package manager binaries on the production image, and a monolithic kernel with 0 external `.ko` module overhead.
-3. **Turnaround Feasibility**: Buildroot builds reliably within standard 12 GB WSL2 environments, whereas Yocto BitBake required configuring 43.57 GB total memory on the development host.
+3. **Turnaround Feasibility**: Buildroot builds reliably within standard 12 GB WSL2 environments, whereas Yocto BitBake required configuring 42.55 GiB (43,570 MiB) total memory on the development host.
 
 ---
 
@@ -280,4 +280,4 @@ All 40 target packages in Lazy OS were audited via Buildroot `make legal-info`. 
 
 ### 8.3 Empirical Yocto Verification & Item Status
 In adherence to the non-fabrication truth rule, the following item was resolved empirically:
-- **Yocto Stage A Compilation & Verification (Check O7 / V3.16)**: Following host memory unlock via `.wslconfig` (18,994 MB RAM + 24,576 MB Swap = 43,570 MB Total Memory, 904 GB disk), the Yocto Stage A base image (`lazy-image-base`) was compiled from source and verified across 10 measured cold-boot runs in QEMU (`bench/results/yocto_metrics.json`). Stages B (Wayland/Cage) and C (LLM runtime) remain intentionally time-boxed/deferred as documented in `docs/BLOCKED.md`.
+- **Yocto Stage A Compilation & Verification (Check O7 / V3.16)**: Following host memory unlock via `.wslconfig` (18,994 MiB RAM + 24,576 MiB Swap = 42.55 GiB (43,570 MiB) Total Memory, 904 GiB disk), the Yocto Stage A base image (`lazy-image-base`) was compiled from source and verified across 10 measured cold-boot runs in QEMU (`bench/results/yocto_metrics.json`). Stages B (Wayland/Cage) and C (LLM runtime) remain intentionally time-boxed/deferred as documented in `docs/BLOCKED.md`.

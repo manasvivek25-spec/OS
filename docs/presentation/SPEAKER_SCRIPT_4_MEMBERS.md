@@ -122,7 +122,25 @@ Lazy OS proves that purpose-built embedded appliance engineering outperforms gen
 
 ---
 
-### Question 3: "How do you prevent an attacker from bypassing your Policy Engine with a prompt injection?"
+### Question 3: "Why is Yocto Stage A SquashFS 44.0 MB while Buildroot's SquashFS is 315.32 MB?"
+**Answer (Speaker 2 / Role D)**:  
+"Yocto Stage A (`lazy-image-base`) is an ultra-minimal headless CLI base image containing only systemd and a minimal shell userland. In contrast, Buildroot's 315.32 MB SquashFS image is a complete, production-ready graphical AI kiosk containing the Wayland display server, Cage compositor, Cog/WPE WebKit browser engine, Python 3.11 microservices, and the full llama.cpp runtime. Even with this complete graphical and AI stack included, Buildroot still achieves a 65.87% base OS reduction compared to stock Debian 12 Minimal (315.32 MB vs 924.0 MB)."
+
+---
+
+### Question 4: "Why is Buildroot's idle RAM 324.30 MB compared to Debian 12 Minimal's 115.27 MB and Yocto's 233.74 MB?"
+**Answer (Speaker 2 / Role D & Speaker 1 / Role A)**:  
+"Both Debian 12 (115.27 MB) and Yocto Stage A (233.74 MB) were measured at a bare headless serial text console with zero graphical subsystems and zero microservices active. Lazy OS Buildroot's 324.30 MB idle RAM includes an active 1080p hardware-accelerated Wayland display pipeline (Cage + WPE WebKit) and 15 isolated microservices. Despite running a full graphical desktop environment, Buildroot cold-boots faster than Yocto (2.86 s vs 3.15 s) thanks to our monolithic 5.92 MB kernel with zero loadable modules and in-kernel virtio drivers."
+
+---
+
+### Question 5: "Why does Yocto report 276 packages while Buildroot reports only 40 packages?"
+**Answer (Speaker 2 / Role D)**:  
+"BitBake's packaging model decomposes every upstream open-source recipe into multiple fine-grained subpackages (such as `-bin`, `-lib`, `-dev`, `-doc`, and `-locale`) to enable dynamic package feeds and granular SPDX 2.2 SBOM license tracking. Buildroot, by contrast, compiles top-level packages directly into a monolithic squashfs rootfs without intermediate packaging splits. Buildroot's model eliminates the memory and attack surface of package management tools like `opkg` or `dpkg`, enforcing strict appliance immutability."
+
+---
+
+### Question 6: "How do you prevent an attacker from bypassing your Policy Engine with a prompt injection?"
 **Answer (Speaker 4 / Role C)**:  
 "We enforce security in depth with three independent layers:
 1. **Grammar Constrained Decoding**: The LLM output is constrained by GBNF grammars at the logit sampler level. The model cannot output free-form shell commands; it can only emit structured JSON conforming to known capability schemas.
@@ -131,13 +149,13 @@ Lazy OS proves that purpose-built embedded appliance engineering outperforms gen
 
 ---
 
-### Question 4: "Why did you use x86_64 UEFI/ACPI instead of an ARM Device Tree (.dtb)?"
+### Question 7: "Why did you use x86_64 UEFI/ACPI instead of an ARM Device Tree (.dtb)?"
 **Answer (Speaker 1 / Role A)**:  
 "The Track A hardware specification targets x86_64 edge appliances (such as Intel Core/Atom industrial PCs with AVX2 SIMD support). In the x86_64 PC architecture, hardware discovery is performed dynamically by the kernel through ACPI (Advanced Configuration and Power Interface) and UEFI system tables rather than static Flattened Device Tree blobs (`.dtb`). Our monolithic kernel has ACPI, PCI, and virtio bus drivers compiled directly into the binary, enabling instantaneous device discovery without external tree files."
 
 ---
 
-### Question 5: "How does your Btrfs Undo work, and what prevents it from rolling back the audit log?"
+### Question 8: "How does your Btrfs Undo work, and what prevents it from rolling back the audit log?"
 **Answer (Speaker 1 / Role A & Speaker 4 / Role C)**:  
 "The persistent volume at `/data` is formatted as Btrfs. When an L1 mutating task is dispatched, `lazy-tasks` creates a timestamped Btrfs subvolume snapshot before applying changes. When the user requests an undo, the subvolume is rolled back to that pre-execution snapshot.  
 Crucially, our audit ledger path at `/data/.audit/lazy-audit.log` is explicitly placed in `CopyBackend.IGNORE_SET` and excluded from snapshot overwrites. Therefore, when a user undoes an action, the filesystem state rolls back, but the audit entry recording the execution and subsequent undo remains permanently appended and hash-chained in the ledger."

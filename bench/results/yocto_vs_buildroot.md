@@ -27,7 +27,7 @@ Both **Yocto Project (Poky 5.0 Scarthgap)** and **Buildroot (2024.02.x)** were i
 | **Layer / Config Definition** | `lazy-br2/` external tree + `lazy_defconfig` | `yocto/kas/lazy-base.yml` + `meta-lazy/` | `debootstrap` / `preseed.cfg` |
 | **Clean Build Time** | **2,516 s (~42 min legal-info) + 468 s (kernel)** | **4,500 s (~75 min full source)** | N/A (pre-built binaries: ~6 min netinst) |
 | **Incremental Repack Time** | **35–45 seconds** (`scripts/repack_rootfs.sh`) | **4–12 min** (sstate-cache replay) | N/A (`dpkg` unpack) |
-| **Host Resource Requirement** | **$\le 12.0\text{ GB}$ RAM** (Runs in 11.8 GB WSL2) | **$\ge 16.0\text{ GB}$ RAM + swap** (43.57 GB total unlocked) | $\ge 2.0\text{ GB}$ RAM |
+| **Host Resource Requirement** | **$\le 12.0\text{ GB}$ RAM** (Runs in 11.8 GB WSL2) | **$\ge 16.0\text{ GB}$ RAM + swap** (42.55 GiB (43,570 MiB) unlocked) | $\ge 2.0\text{ GB}$ RAM |
 | **Disk Space Consumed by Build** | **14.2 GB** (`/home/manas/lazy-build/output`) | **28.0 GB** (17 GB build + 11 GB cache with `rm_work`) | ~2.5 GB (`/var/cache/apt`) |
 | **Base OS Image Size (no weights)** | **315.32 MB** (SquashFS ro-root) | **175.25 MB** (ext4 rootfs) / **44.0 MB** (SquashFS-xz) | **924.0 MB** (-65.87% vs Lazy OS) |
 | **Total Image Size (+1.5B GGUF)**| **1,379.32 MB** (1,064 MB Qwen2.5 weights) | **1,239.25 MB** (ext4 base + 1,064 MB weights) | **924.0 MB** (no model) |
@@ -48,7 +48,7 @@ Both **Yocto Project (Poky 5.0 Scarthgap)** and **Buildroot (2024.02.x)** were i
 
 ### 3.1 Build Complexity & Toolchain Mechanics
 - **Buildroot**: Operates as a coherent, sequential Makefile engine. It builds a cross-toolchain (or wraps a pre-built Bootlin toolchain in 65s), compiles target packages directly into a single staging/target sysroot, and packs the final SquashFS. There is no intermediate package management metadata. This streamlined model enabled incremental rootfs updates in **35 seconds**.
-- **Yocto Project**: Implements a distributed task executor (BitBake) where every recipe produces discrete packages (RPM/IPK) that are subsequently installed into a rootfs by a package manager backend (`dnf-native`). This architecture provides unmatched modularity and fine-grained sstate caching, but introduces Python parsing overhead and requires substantial host memory ($\ge 16\text{ GB}$). Following WSL2 memory allocation to 43.57 GB total memory, all 5,880 tasks compiled cleanly.
+- **Yocto Project**: Implements a distributed task executor (BitBake) where every recipe produces discrete packages (RPM/IPK) that are subsequently installed into a rootfs by a package manager backend (`dnf-native`). This architecture provides unmatched modularity and fine-grained sstate caching, but introduces Python parsing overhead and requires substantial host memory ($\ge 16\text{ GB}$). Following WSL2 memory allocation to 42.55 GiB (43,570 MiB) total memory, all 5,880 tasks compiled cleanly.
 
 ### 3.2 License Tracking & Software Bill of Materials (SBOM)
 - **Buildroot (`make legal-info`)**: Out of the box, Buildroot downloads upstream tarballs, verifies hashes, extracts license texts to `dist/legal-info/licenses/`, and produces a machine-readable `manifest.csv` listing package name, version, license identifier, and source URL. Every one of the 40 target packages in Lazy OS was verified as strictly open source (Apache-2.0, MIT, GPLv2/v3, BSD, LGPL), with **0 proprietary or unverified blobs**.
