@@ -27,4 +27,10 @@ if ($FullScreen) {
     $Args += " --fullscreen"
 }
 
-wsl.exe -d Ubuntu -- bash -c "/mnt/c/Users/len/OS/dist/run-lazy-os.sh$Args"
+# Resolve WSL path dynamically
+try {
+    $WslScriptDir = (wsl.exe -d Ubuntu wslpath -u "$ScriptDir").Trim()
+    wsl.exe -d Ubuntu -- bash -c "'$WslScriptDir/run-lazy-os.sh'$Args"
+} catch {
+    Write-Error "Failed to execute Lazy OS launcher via WSL Ubuntu: $_"
+}
